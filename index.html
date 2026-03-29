@@ -3,48 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonsuzluk İstasyonu | Esra</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>Sonsuzluk İstasyonu | 4 Nisan 2009</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        :root { --purple: #2a0a4d; --neon: #bc13fe; --gold: #ffd700; --deep: #05010a; }
+        :root { --neon: #bc13fe; --gold: #ffd700; --deep: #05010a; --paper: #f4f1ea; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { height: 100%; width: 100%; background: #000; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        body, html { height: 100%; width: 100%; background: #000; color: white; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
 
-        /* GİRİŞ VE FOTO DUVARI AYNI KALIYOR (V4.2'DEN) */
-        #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .gate-input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 30px; text-align: center; width: 260px; outline: none; }
-        .gate-btn { margin-top: 20px; background: var(--neon); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-
-        #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); z-index: 8000; pointer-events: none; opacity: 0; transition: 1.5s; }
+        /* 1. GİRİŞ VE FOTO DUVARI (V4.2'DEN) */
+        #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .gate-input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 30px; text-align: center; outline: none; }
+        #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); z-index: 8000; opacity: 0; transition: 1.5s; pointer-events: none; }
         .photo-item { width: 100%; height: 130px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
+
+        /* 2. ANA EVREN VE SAAT */
+        #main-universe { position: relative; width: 100%; display: none; background: radial-gradient(circle at center, #1a0633 0%, #05010a 100%); }
+        .nebula { position: fixed; inset: 0; background: radial-gradient(circle at 30% 30%, rgba(106, 27, 154, 0.1), transparent 40%); z-index: -1; }
         
-        #neon-text { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Dancing Script', cursive; font-size: 5rem; color: #fff; text-shadow: 0 0 30px var(--neon); z-index: 8500; opacity: 0; transition: 2.5s; pointer-events: none; }
-
-        /* ANA EVREN */
-        #main-universe { position: fixed; inset: 0; opacity: 0; display: none; background: radial-gradient(circle at center, #1a0633 0%, #05010a 100%); z-index: 1000; }
-        .nebula { position: absolute; width: 150%; height: 150%; top: -25%; left: -25%; background: radial-gradient(circle at 30% 30%, rgba(106, 27, 154, 0.15), transparent 40%), radial-gradient(circle at 70% 70%, rgba(188, 19, 254, 0.1), transparent 40%); filter: blur(60px); animation: nebulaRoam 20s infinite alternate; }
-        @keyframes nebulaRoam { from { transform: translate(0,0); } to { transform: translate(5%, 5%); } }
-        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; opacity: 0.3; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-
-        /* SAAT VE SAYAÇLAR */
-        #clock-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; z-index: 2000; opacity: 0; filter: blur(15px); transition: 3s ease-out; }
+        #clock-section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
+        #clock-container { width: 250px; height: 250px; transition: 2s; }
         .analog-clock { width: 100%; height: 100%; border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 50%; position: relative; backdrop-filter: blur(5px); }
-        .brand { position: absolute; top: 28%; width: 100%; text-align: center; font-family: 'Dancing Script', cursive; font-size: 2rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
-        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 10px; transition: transform 3s; }
-        .hour { width: 6px; height: 75px; background: var(--gold); z-index: 3; }
-        .minute { width: 4px; height: 100px; background: #fff; z-index: 2; }
-        
-        /* METİN VE SAYAÇ ALANLARI */
-        .content-layer { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 5vh; opacity: 0; transition: 2s; }
-        .sub-text { font-family: 'Dancing Script'; font-size: 2.2rem; color: #fff; margin-bottom: 20px; text-shadow: 0 0 10px var(--neon); }
-        
-        .timer-grid { display: flex; width: 90%; justify-content: space-between; align-items: flex-start; margin-top: 40px; }
-        .timer-box { width: 40%; text-align: center; }
-        .timer-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); margin-bottom: 10px; line-height: 1.6; }
-        .timer-label { font-family: 'Dancing Script'; font-size: 2.5rem; color: #fff; text-shadow: 0 0 15px var(--neon); }
-        
-        .final-msg { font-family: 'Dancing Script'; font-size: 2.8rem; color: #fff; margin-top: 50px; text-shadow: 0 0 20px var(--gold); opacity: 0; transition: 3s; }
+        .brand { position: absolute; top: 28%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: white; border-radius: 10px; transition: 3s; }
+        .hour { width: 5px; height: 60px; background: var(--gold); }
+        .minute { width: 3px; height: 85px; }
+
+        /* HABERLER BÖLÜMÜ */
+        .news-section { padding: 100px 20px; max-width: 900px; margin: auto; }
+        .news-card { background: var(--paper); color: #222; padding: 30px; border-radius: 5px; margin-bottom: 150px; transform: translateY(50px); opacity: 0; transition: 1s; box-shadow: 10px 10px 0px var(--neon); }
+        .news-card.visible { transform: translateY(0); opacity: 1; }
+        .news-card h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #222; margin-bottom: 15; font-size: 2rem; }
+        .news-card p { line-height: 1.6; font-size: 1.1rem; }
+        .news-img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ddd; }
+
+        /* SAYAÇLAR VE MEKTUP */
+        .final-section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 50px 0; }
+        .timer-container { display: flex; justify-content: space-around; width: 100%; margin: 50px 0; }
+        .timer-box { text-align: center; }
+        .timer-val { font-family: 'Orbitron'; color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; }
+        .timer-label { font-family: 'Dancing Script'; font-size: 2.5rem; }
+
+        /* MEKTUP ANİMASYONU */
+        .envelope-wrapper { position: relative; cursor: pointer; margin-top: 50px; perspective: 1000px; }
+        .envelope { width: 300px; height: 200px; background: #4a148c; position: relative; transition: 0.5s; border-radius: 0 0 10px 10px; }
+        .envelope::before { content: ''; position: absolute; top: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #6a1b9a; transform-origin: top; transition: 0.5s; z-index: 5; }
+        .envelope.open::before { transform: rotateX(180deg); z-index: 0; }
+        .letter { position: absolute; bottom: 0; left: 10px; width: 280px; height: 180px; background: #e1bee7; padding: 20px; color: #4a148c; font-family: 'Dancing Script'; transition: 0.8s; z-index: 2; overflow: hidden; font-size: 1.1rem; }
+        .envelope.open .letter { transform: translateY(-150px); height: 400px; z-index: 10; overflow-y: auto; }
 
     </style>
 </head>
@@ -52,29 +57,52 @@
 
     <div id="gate">
         <input type="password" id="pass" class="gate-input" placeholder="Şifreleme Anahtarı">
-        <button class="gate-btn" onclick="start()">GİRİŞ YAP</button>
+        <button onclick="start()" style="margin-top:15px; background:var(--neon); color:white; border:none; padding:10px 25px; cursor:pointer; border-radius:20px;">Giriş</button>
     </div>
 
     <div id="photo-wall"></div>
-    <div id="neon-text">İyi ki doğdun güzel sevgilim</div>
 
     <div id="main-universe">
         <div class="nebula"></div>
-        <div id="star-field"></div>
         
-        <div id="clock-container">
-            <div class="analog-clock">
-                <div class="brand">Esram</div>
-                <div id="hour-hand" class="hand hour"></div>
-                <div id="min-hand" class="hand minute"></div>
-                <div class="center-dot"></div>
+        <section id="clock-section">
+            <div id="clock-container">
+                <div class="analog-clock">
+                    <div class="brand">Esram</div>
+                    <div id="hour-hand" class="hand hour"></div>
+                    <div id="min-hand" class="hand minute"></div>
+                </div>
             </div>
-        </div>
+            <div id="birth-info" style="position:absolute; left:5%; opacity:0; transition:2s;">
+                <h1 style="font-family:'Dancing Script'; font-size:3rem;">4 Nisan 2009</h1>
+                <p style="font-size:1.5rem; color:var(--gold)">Bugün Ne mi Oldu?</p>
+            </div>
+        </section>
 
-        <div class="content-layer" id="content-ui">
-            <div class="sub-text" id="birth-text">4 Nisan 2009 <br> <span style="font-size:1.8rem; opacity:0.8;">Güzelimin dünyaya gelip;</span></div>
-            
-            <div class="timer-grid">
+        <section class="news-section">
+            <div class="news-card">
+                <img src="https://images-assets.nasa.gov/image/PIA12348/PIA12348~thumb.jpg" class="news-img">
+                <h2>NASA Kayıtları: Uzayın Derinliklerinden Mesaj</h2>
+                <p>O gün Hubble Uzay Teleskobu, NGC 3521 galaksisini görüntülüyordu. Milyonlarca ışık yılı uzaktaki yıldızlar, dünyadaki en parlak yıldızın doğuşunu selamlıyordu.</p>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" class="news-img">
+                <h2>Dijital Çağın Doğuşu</h2>
+                <p>2009 yazı yaklaşıyordu... Dünya sosyal medyanın ve akıllı telefonların gücünü yeni yeni anlarken, hayatımızın en güzel "güncellemesi" 4 Nisan sabahı gerçekleşti.</p>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" class="news-img">
+                <h2>Yılın En Güzel Doğa Olayı</h2>
+                <p>4 Nisan günü gökyüzü her zamankinden daha berraktı. Baharın gelişiyle çiçekler açarken, asıl bahar bir ailenin kucağına Esra ismiyle düştü.</p>
+            </div>
+
+            <h2 style="text-align:center; margin:100px 0; font-family:'Dancing Script'; font-size:3rem; color:var(--gold)">En önemlisine gelince...</h2>
+        </section>
+
+        <section class="final-section">
+            <div class="timer-container">
                 <div class="timer-box">
                     <div id="life-timer" class="timer-val"></div>
                     <div class="timer-label">Dünyayı,</div>
@@ -84,127 +112,93 @@
                     <div class="timer-label">Dünyamı,</div>
                 </div>
             </div>
+            <h1 style="font-family:'Dancing Script'; margin-bottom:30px;">Aydınlatıyorsun balımm <33</h1>
 
-            <div class="final-msg" id="final-msg">Aydınlatıyorsun balımm <33</div>
-        </div>
+            <div class="envelope-wrapper" onclick="document.querySelector('.envelope').classList.toggle('open')">
+                <p style="text-align:center; margin-bottom:10px; color:var(--gold)">Açmak için dokun...</p>
+                <div class="envelope">
+                    <div class="letter">
+                        <h3>Canım Sevgilime,</h3>
+                        <p style="margin-top:15px;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br><br>
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <audio id="music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
 
     <script>
-        // 1. Atmosfer (Yıldızlar vb.)
-        function createAtmos() {
-            const field = document.getElementById('star-field');
-            for(let i=0; i<120; i++) {
-                const s = document.createElement('div');
-                s.className = 'star';
-                s.style.left = Math.random() * 100 + '%';
-                s.style.top = Math.random() * 100 + '%';
-                s.style.width = Math.random() * 3 + 'px';
-                s.style.height = s.style.width;
-                s.style.setProperty('--t', (2 + Math.random() * 4) + 's');
-                field.appendChild(s);
-            }
-        }
-        createAtmos();
-
-        // 2. Fotoğraflar
-        function createPhotos() {
-            const wall = document.getElementById('photo-wall');
-            for(let i=1; i <= 150; i++) {
-                const img = document.createElement('img');
-                img.src = `img/${i}.jpg`; // Klasöründeki gerçek fotolar
-                img.onerror = function() { this.src = `https://picsum.photos/200/300?random=${i}`; }; // Bulamazsa test fotosu
-                img.className = 'photo-item';
-                wall.appendChild(img);
-            }
-        }
-        createPhotos();
-
         function start() {
             if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
                 document.getElementById('gate').style.display = "none";
                 document.getElementById('music').play();
-                startFlow();
-            } else { alert("Şifre hatalı Samet."); }
+                startPhotoWall();
+            }
         }
 
-        function startFlow() {
+        function startPhotoWall() {
             const wall = document.getElementById('photo-wall');
-            const text = document.getElementById('neon-text');
+            for(let i=1; i<=150; i++){
+                const img = document.createElement('img');
+                img.src = `img/${i}.jpg`;
+                img.onerror = function(){ this.src=`https://picsum.photos/200/300?random=${i}`; };
+                img.className = 'photo-item';
+                wall.appendChild(img);
+            }
             wall.style.opacity = "1";
-            document.querySelectorAll('.photo-item').forEach((item, index) => {
-                setTimeout(() => { item.style.opacity = "1"; item.style.transform = "scale(1)"; }, index * 25);
+            document.querySelectorAll('.photo-item').forEach((it, idx) => {
+                setTimeout(() => { it.style.opacity="1"; it.style.transform="scale(1)"; }, idx * 25);
             });
-            setTimeout(() => { text.style.opacity = "1"; }, 4000);
             setTimeout(() => {
-                wall.style.opacity = "0"; text.style.opacity = "0";
-                setTimeout(initUniverse, 2000);
-            }, 9000);
+                wall.style.opacity="0";
+                setTimeout(initUniverse, 1500);
+            }, 8000);
         }
 
         function initUniverse() {
             document.getElementById('main-universe').style.display = "block";
             setTimeout(() => {
-                document.getElementById('main-universe').style.opacity = "1";
-                document.getElementById('clock-container').style.opacity = "1";
-                document.getElementById('clock-container').style.filter = "blur(0px)";
-                animateClock();
+                const hHand = document.getElementById('hour-hand');
+                const mHand = document.getElementById('min-hand');
+                hHand.style.transform = `translate(-50%, 0) rotate(300deg)`;
+                mHand.style.transform = `translate(-50%, 0) rotate(60deg)`;
+                
+                setTimeout(() => {
+                    hHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
+                    mHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
+                    setTimeout(() => {
+                        document.getElementById('birth-info').style.opacity = "1";
+                        document.getElementById('clock-container').style.transform = "scale(0.8) translateX(50px)";
+                    }, 2000);
+                }, 3000);
             }, 100);
         }
 
-        function animateClock() {
-            const hHand = document.getElementById('hour-hand');
-            const mHand = document.getElementById('min-hand');
-            hHand.style.transform = `translate(-50%, 0) rotate(300deg)`;
-            mHand.style.transform = `translate(-50%, 0) rotate(60deg)`;
+        // Scroll İzleme (Haberleri göster)
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.news-card').forEach(card => {
+                if(card.getBoundingClientRect().top < window.innerHeight * 0.8) {
+                    card.classList.add('visible');
+                }
+            });
+        });
 
-            setTimeout(() => {
-                hHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
-                mHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
-                
-                setTimeout(() => {
-                    const clock = document.getElementById('clock-container');
-                    clock.style.top = "20%";
-                    clock.style.transform = "translate(-50%, -50%) scale(0.6)";
-                    
-                    // Arayüzü Göster
-                    setTimeout(() => {
-                        document.getElementById('content-ui').style.opacity = "1";
-                        startTimers();
-                        // Final Mesajı en son belirsizce gelsin
-                        setTimeout(() => { document.getElementById('final-msg').style.opacity = "1"; }, 3000);
-                    }, 1500);
-                }, 3000);
-            }, 3000);
-        }
-
-        // SAYAÇ MANTIĞI
-        function startTimers() {
-            const birthDate = new Date("2009-04-04T00:00:00");
-            const loveDate = new Date("2023-01-01T00:00:00");
-
-            setInterval(() => {
-                const now = new Date();
-                
-                // Yaşam Sayacı
-                const lifeDiff = now - birthDate;
-                document.getElementById('life-timer').innerHTML = formatTime(lifeDiff);
-
-                // Aşk Sayacı
-                const loveDiff = now - loveDate;
-                document.getElementById('love-timer').innerHTML = formatTime(loveDiff);
-            }, 1000);
-        }
+        // SAYAÇLAR
+        const birthDate = new Date("2009-04-04T00:00:00");
+        const loveDate = new Date("2023-01-01T00:00:00");
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('life-timer').innerHTML = formatTime(now - birthDate);
+            document.getElementById('love-timer').innerHTML = formatTime(now - loveDate);
+        }, 1000);
 
         function formatTime(ms) {
-            const totalSecs = Math.floor(ms / 1000);
-            const years = Math.floor(totalSecs / (365 * 24 * 3600));
-            const days = Math.floor((totalSecs % (365 * 24 * 3600)) / (24 * 3600));
-            const hours = Math.floor((totalSecs % (24 * 3600)) / 3600);
-            const mins = Math.floor((totalSecs % 3600) / 60);
-            const secs = totalSecs % 60;
-            return `${years} Yıl ${days} Gün<br>${hours} Saat ${mins} Dakika ${secs} Saniye`;
+            const s = Math.floor(ms/1000);
+            return `${Math.floor(s/31536000)}Y ${Math.floor((s%31536000)/86400)}G<br>${Math.floor((s%86400)/3600)}S ${Math.floor((s%3600)/60)}D ${s%60}Sn`;
         }
     </script>
 </body>
