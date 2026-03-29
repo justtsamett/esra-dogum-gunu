@@ -3,101 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra'nın Zaman Yolculuğu</title>
+    <title>Esra & Samet | Zaman Yolculuğu</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon: #bc13fe; --gold: #ffd700; --paper: #f4f1ea; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { height: 100%; width: 100%; background: #000; color: white; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
-
-        /* GİRİŞ EKRANI */
-        #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); z-index: 8000; opacity: 0; transition: 1.5s; pointer-events: none; }
-        .photo-item { width: 100%; height: 130px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
-
-        /* ANA EVREN */
-        #main-universe { position: relative; width: 100%; display: none; }
-        
-        /* 1. SAAT BÖLÜMÜ */
-        #clock-section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
-        .intro-clock { width: 300px; height: 300px; border: 2px solid var(--gold); border-radius: 50%; position: relative; backdrop-filter: blur(5px); }
-        .brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: #fff; }
-        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: white; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hour { width: 6px; height: 70px; background: var(--gold); }
-        .minute { width: 4px; height: 100px; }
-
-        /* 2. NOSTALJİK HABERLER (Zikzak) */
-        .news-section { padding: 100px 5%; max-width: 1200px; margin: auto; }
-        .news-row { display: flex; width: 100%; margin-bottom: 150px; align-items: center; }
-        .news-row.left { justify-content: flex-start; }
-        .news-row.right { justify-content: flex-end; }
-
-        .news-card { width: 550px; background: var(--paper); color: #222; padding: 30px; border-radius: 2px; box-shadow: 10px 10px 0px var(--neon); opacity: 0; transition: 0.8s; }
-        .news-row.left .news-card { transform: translateX(-50px); }
-        .news-row.right .news-card { transform: translateX(50px); }
-        .news-card.visible { transform: translateX(0); opacity: 1; }
-
-        .news-card h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #222; margin-bottom: 15px; font-size: 1.6rem; text-transform: uppercase; }
-        .news-img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ccc; filter: sepia(0.3); }
-
-        /* 3. FİNAL BÖLÜMÜ */
-        .final-section { min-height: 140vh; display: flex; flex-direction: column; align-items: center; padding-top: 100px; }
-        
-        #en-onemli { font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--gold); opacity: 0; transform: translateY(-10mm); transition: 0.5s; }
-        #bugun-itibariyle { font-family: 'Montserrat'; font-size: 1.5rem; letter-spacing: 5px; margin-top: 20px; opacity: 0; transition: 1s; }
-
-        .dual-clock-container { display: flex; justify-content: space-around; width: 95%; margin-top: 80px; opacity: 0; transition: 2s; }
-        .clock-group { display: flex; align-items: center; gap: 20px; width: 45%; }
-        
-        .small-clock { width: 150px; height: 150px; border: 2px solid rgba(255,215,0,0.4); border-radius: 50%; position: relative; flex-shrink: 0; }
-        .timer-display { text-align: left; }
-        .timer-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); line-height: 1.5; }
-        .timer-label { font-family: 'Dancing Script'; font-size: 2.5rem; margin-top: 10px; }
-
-        #final-balim { font-family: 'Dancing Script'; font-size: 3rem; color: #fff; margin-top: 100px; opacity: 0; text-shadow: 0 0 20px var(--neon); transition: 2s; }
-
-    </style>
 </head>
 <body>
 
     <div id="gate">
-        <input type="password" id="pass" class="gate-input" placeholder="Anahtar Kelime">
-        <button onclick="start()" style="margin-left:10px; padding:10px 20px; background:var(--neon); color:white; border:none; border-radius:20px; cursor:pointer;">Aç</button>
+        <div class="gate-box">
+            <input type="password" id="pass" placeholder="Şifreleme Anahtarı">
+            <button onclick="startExperience()">Sistemi Başlat</button>
+        </div>
     </div>
 
     <div id="photo-wall"></div>
 
-    <div id="main-universe">
-        <section id="clock-section">
-            <div class="intro-clock">
-                <div class="brand">Esram</div>
-                <div id="h1" class="hand hour"></div>
-                <div id="m1" class="hand minute"></div>
+    <main id="main-universe">
+        <div class="nebula"></div>
+
+        <section id="clock-intro-section">
+            <div id="intro-clock-wrapper">
+                <div class="clock-main">
+                    <div class="brand">Esram</div>
+                    <div id="h1" class="hand hour"></div>
+                    <div id="m1" class="hand minute"></div>
+                </div>
             </div>
         </section>
 
-        <section class="news-section">
+        <section class="news-container">
             <div class="news-row left">
                 <div class="news-card">
-                    <img src="https://i.hizliresim.com/gazete_manset_test.jpg" class="news-img" alt="4 Nisan 2009 Manşet">
+                    <img src="img/milli_gazete.jpg" class="news-img" onerror="this.src='https://picsum.photos/600/400?random=1'">
                     <h2>4 Nisan 2009: Milli Gazete</h2>
-                    <p>O günün manşetlerinde baharın gelişi ve Türkiye'nin yoğun gündemi vardı. Ama tarihin en zarif haberi henüz baskıya girmemişti...</p>
+                    <p>O günün manşetlerinde baharın heyecanı vardı. Ama dünyanın en güzel haberi henüz kimse tarafından bilinmiyordu...</p>
                 </div>
             </div>
 
             <div class="news-row right">
                 <div class="news-card">
-                    <img src="https://images-assets.nasa.gov/image/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o~thumb.jpg" class="news-img">
-                    <h2>NASA Kaydı: Hydra Takımyıldızı</h2>
-                    <p>4 Nisan 2009'da Hubble, NGC 4993 galaksisini izliyordu. Işık hızıyla gelen bu görüntüler, o gün dünyaya inen bir meleğin ışıltısını temsil ediyordu.</p>
+                    <img src="img/nasa_hubble.jpg" class="news-img" onerror="this.src='https://images-assets.nasa.gov/image/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o~thumb.jpg'">
+                    <h2>NASA Arşivi: Hydra Takımı</h2>
+                    <p>Hubble o gece NGC 4993 galaksisine odaklanmıştı. Milyonlarca ışık yılı uzaktan gelen ışıklar, yeryüzüne inen bir meleği selamlıyordu.</p>
                 </div>
             </div>
 
             <div class="news-row left">
                 <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800" class="news-img">
-                    <h2>Dünya Baharı Selamlıyor</h2>
-                    <p>Takvimler 04.04.2009'u gösterdiğinde, doğa kendini yeniliyordu. O gün açan her çiçek, Esra'nın ilk nefesini kutlamak için uyanmıştı.</p>
+                    <img src="img/doga.jpg" class="news-img" onerror="this.src='https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800'">
+                    <h2>Doğanın Uyanışı</h2>
+                    <p>Nisan'ın dördüncü sabahında doğa sessizce yenileniyordu. Her çiçek, Esra'nın ilk nefesiyle birlikte canlanmaya söz vermişti.</p>
                 </div>
             </div>
         </section>
@@ -106,126 +61,35 @@
             <h1 id="en-onemli">En önemlisine gelince;</h1>
             <p id="bugun-itibariyle">BUGÜN İTİBARİYLE</p>
 
-            <div class="dual-clock-container" id="dual-clocks">
-                <div class="clock-group">
-                    <div class="small-clock">
-                        <div id="h2" class="hand hour" style="height:35px;"></div>
-                        <div id="m2" class="hand minute" style="height:55px;"></div>
+            <div class="dual-clocks" id="clocks-trigger">
+                <div class="clock-unit">
+                    <div class="analog-small">
+                        <div id="h2" class="hand hour-s"></div>
+                        <div id="m2" class="hand minute-s"></div>
                     </div>
-                    <div class="timer-display">
-                        <div id="life-timer" class="timer-val"></div>
-                        <div class="timer-label">Dünyayı,</div>
+                    <div class="timer-text">
+                        <div id="life-timer" class="t-val"></div>
+                        <span class="t-label">Dünyayı,</span>
                     </div>
                 </div>
 
-                <div class="clock-group">
-                    <div class="small-clock">
-                        <div id="h3" class="hand hour" style="height:35px;"></div>
-                        <div id="m3" class="hand minute" style="height:55px;"></div>
+                <div class="clock-unit">
+                    <div class="analog-small">
+                        <div id="h3" class="hand hour-s"></div>
+                        <div id="m3" class="hand minute-s"></div>
                     </div>
-                    <div class="timer-display">
-                        <div id="love-timer" class="timer-val"></div>
-                        <div class="timer-label">Dünyamı,</div>
+                    <div class="timer-text">
+                        <div id="love-timer" class="t-val"></div>
+                        <span class="t-label">Dünyamı,</span>
                     </div>
                 </div>
             </div>
 
-            <h2 id="final-balim">Aydınlatmaya başladın balımm :))</h2>
+            <h2 id="final-text">Aydınlatmaya başladın balımm :))</h2>
         </section>
-    </div>
+    </main>
 
-    <audio id="music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
-
-    <script>
-        function start() {
-            if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
-                document.getElementById('gate').style.display = "none";
-                document.getElementById('music').play();
-                startWall();
-            }
-        }
-
-        function startWall() {
-            const wall = document.getElementById('photo-wall');
-            for(let i=1; i<=150; i++) {
-                const img = document.createElement('img');
-                img.src = `img/${i}.jpg`;
-                img.onerror = function(){ this.src=`https://picsum.photos/200/300?random=${i}`; };
-                img.className = 'photo-item';
-                wall.appendChild(img);
-            }
-            wall.style.opacity = "1";
-            document.querySelectorAll('.photo-item').forEach((it, idx) => {
-                setTimeout(() => { it.style.opacity="1"; it.style.transform="scale(1)"; }, idx * 20);
-            });
-            setTimeout(() => {
-                wall.style.opacity = "0";
-                setTimeout(initUniverse, 1500);
-            }, 7000);
-        }
-
-        function initUniverse() {
-            document.getElementById('main-universe').style.display = "block";
-            const h1 = document.getElementById('h1');
-            const m1 = document.getElementById('m1');
-            setTimeout(() => {
-                h1.style.transform = "translate(-50%, 0) rotate(300deg)";
-                m1.style.transform = "translate(-50%, 0) rotate(60deg)";
-                setTimeout(() => {
-                    h1.style.transform = "translate(-50%, 0) rotate(360deg)";
-                    m1.style.transform = "translate(-50%, 0) rotate(360deg)";
-                }, 2500);
-            }, 100);
-        }
-
-        // SCROLL OBSERVER (Haberler ve Final)
-        window.addEventListener('scroll', () => {
-            // Haber kartları
-            document.querySelectorAll('.news-card').forEach(card => {
-                if(card.getBoundingClientRect().top < window.innerHeight * 0.8) card.classList.add('visible');
-            });
-
-            // Final Bölümü Tetikleyici
-            const finalTop = document.querySelector('.final-section').getBoundingClientRect().top;
-            if(finalTop < window.innerHeight * 0.6) {
-                const enOnemli = document.getElementById('en-onemli');
-                enOnemli.style.opacity = "1";
-                enOnemli.style.transform = "translateY(0)";
-                
-                setTimeout(() => { document.getElementById('bugun-itibariyle').style.opacity = "1"; }, 600)
-                setTimeout(() => { document.getElementById('dual-clocks').style.opacity = "1"; startFinalTimers(); }, 1600);
-                setTimeout(() => { document.getElementById('final-balim').style.opacity = "1"; }, 3500);
-            }
-        });
-
-        // SAYAÇLAR VE KÜÇÜK SAATLER
-        function startFinalTimers() {
-            const birth = new Date("2009-04-04T00:00:00");
-            const love = new Date("2023-01-01T00:00:00");
-            
-            setInterval(() => {
-                const now = new Date();
-                document.getElementById('life-timer').innerHTML = getTurkishTime(now - birth);
-                document.getElementById('love-timer').innerHTML = getTurkishTime(now - love);
-                
-                // Küçük saat ellerini hareket ettir
-                const s = now.getSeconds() * 6;
-                document.getElementById('m2').style.transform = `translate(-50%, 0) rotate(${now.getMinutes()*6}deg)`;
-                document.getElementById('h2').style.transform = `translate(-50%, 0) rotate(${now.getHours()*30}deg)`;
-                document.getElementById('m3').style.transform = `translate(-50%, 0) rotate(${now.getMinutes()*6}deg)`;
-                document.getElementById('h3').style.transform = `translate(-50%, 0) rotate(${now.getHours()*30}deg)`;
-            }, 1000);
-        }
-
-        function getTurkishTime(ms) {
-            const s = Math.floor(ms/1000);
-            const y = Math.floor(s/31536000);
-            const g = Math.floor((s%31536000)/86400);
-            const sa = Math.floor((s%86400)/3600);
-            const dk = Math.floor((s%3600)/60);
-            const sn = s%60;
-            return `${y} Yıl ${g} Gün<br>${sa} Saat ${dk} Dakika ${sn} Saniye`;
-        }
-    </script>
+    <audio id="bg-music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
+    <script src="script.js"></script>
 </body>
 </html>
