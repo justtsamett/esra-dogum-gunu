@@ -3,304 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra & Samet | Sonsuzluk İstasyonu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Esra & Samet | Zaman Yolculuğu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #0d0216;
-            --main-purple: #4a148c;
-            --accent-red: #b71c1c;
-            --text-color: #e1bee7;
-            --gold: #ffd700;
+            --deep-purple: #0d0221;
+            --nebula: #240046;
+            --steam-white: rgba(255, 255, 255, 0.2);
+            --gold: #ff9e00;
         }
 
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Montserrat', sans-serif;
+        body {
+            margin: 0; background-color: var(--deep-purple);
+            color: white; font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* 1. GİRİŞ EKRANI */
-        #login-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a0633 0%, #0d0216 100%);
+        /* KATMANLI ARKA PLAN (PARALLAX) */
+        #universe {
+            position: fixed; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, var(--nebula) 0%, var(--deep-purple) 100%);
+            z-index: -1;
+        }
+
+        .star-layer {
+            position: absolute; width: 200%; height: 200%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat; opacity: 0.3;
+        }
+
+        /* GİRİŞ EKRANI */
+        #gate {
+            position: fixed; inset: 0; background: black; z-index: 1000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1000; transition: opacity 1.5s ease;
         }
 
-        .lock-icon { font-size: 60px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--main-purple)); }
-        
-        #password {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--main-purple);
-            padding: 12px 25px; color: white; border-radius: 30px;
-            text-align: center; font-size: 16px; outline: none; transition: 0.3s;
-            width: 250px;
+        .gate-input {
+            background: transparent; border: 1px solid #5a189a; color: white;
+            padding: 15px; border-radius: 50px; text-align: center; font-size: 1.2rem;
+            width: 300px; outline: none; transition: 0.5s;
         }
 
-        #password:focus { box-shadow: 0 0 15px var(--main-purple); border-color: #9c27b0; }
+        .gate-input:focus { box-shadow: 0 0 20px #7b2cbf; }
 
-        .login-btn {
-            margin-top: 20px; padding: 10px 40px; border-radius: 25px;
-            border: none; background: linear-gradient(45deg, var(--main-purple), var(--accent-red));
-            color: white; cursor: pointer; font-weight: bold; transition: 0.3s;
+        /* TREN VE RAY SİSTEMİ */
+        .world-container {
+            width: 500vw; height: 100vh; display: flex; align-items: center;
+            padding-left: 10vw; position: relative;
         }
 
-        /* 2. MANİFESTO (AÇILIŞ MESAJI) */
-        #manifesto {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: black; z-index: 900; justify-content: center; align-items: center;
-            padding: 40px; text-align: center; transition: opacity 1.5s;
+        .rail-road {
+            position: absolute; bottom: 15vh; left: 0; width: 100%; height: 10px;
+            background: linear-gradient(90deg, #333 0%, #111 100%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        .typing-text { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 28px; 
-            line-height: 1.6;
-            color: white;
-            max-width: 800px;
-        }
-
-        /* 3. ANA İÇERİK */
-        #main-content { display: none; opacity: 0; transition: opacity 2s; padding-bottom: 150px; }
-
-        .header { text-align: center; padding: 60px 20px; }
-        #timer { font-size: 2rem; font-weight: 700; color: #fff; text-shadow: 0 0 20px var(--main-purple); margin-top: 10px; }
-
-        /* TREN SİSTEMİ */
-        .train-viewport {
-            width: 100%; overflow-x: auto; padding: 100px 0;
-            scrollbar-width: none; /* Firefox */
-        }
-        .train-viewport::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-
-        .train-track {
-            display: flex; padding-left: 50px; width: max-content;
-            align-items: flex-end; position: relative;
-        }
-
-        .rail {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
-            background: #333; border-radius: 2px;
-        }
-
+        /* VAGON TASARIMI */
         .vagon {
-            width: 280px; height: 160px; background: #1a0633; margin-right: 80px;
-            border: 2px solid var(--main-purple); position: relative; cursor: pointer;
-            border-radius: 8px; transition: transform 0.5s;
+            width: 350px; height: 200px; background: #1a1a1a;
+            margin-right: 40vw; position: relative; border-radius: 10px;
+            border: 2px solid #3c096c; transition: 0.5s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
         .vagon-lid {
-            position: absolute; top: -2px; left: -2px; width: calc(100% + 4px); height: calc(100% + 4px);
-            background: linear-gradient(135deg, var(--main-purple), #2a0a4d); 
-            border-radius: 8px; z-index: 10;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; font-weight: bold; text-align: center; padding: 10px;
+            position: absolute; inset: -2px; background: linear-gradient(135deg, #5a189a, #240046);
+            z-index: 2; border-radius: 10px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; cursor: pointer;
+            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .vagon.open .vagon-lid { 
-            transform: translateY(-110%) rotateX(90deg); 
+        .vagon.open .vagon-lid { transform: perspective(1000px) rotateY(-110deg); transform-origin: left; opacity: 0; }
+
+        /* BUHAR EFEKTİ */
+        .steam {
+            position: absolute; bottom: -20px; width: 100%; display: flex; justify-content: space-around;
             opacity: 0; pointer-events: none;
         }
+        .vagon.active .steam { animation: steamFade 2s forwards; }
 
-        .silhouette { font-size: 55px; opacity: 0; transform: translateY(20px); transition: 0.8s 0.3s; }
-        .vagon.open .silhouette { opacity: 1; transform: translateY(0); }
-
-        .vagon-text { 
-            font-size: 13px; margin-top: 15px; text-align: center; 
-            padding: 0 15px; opacity: 0; transition: 0.8s 0.5s;
-            color: var(--text-color);
+        @keyframes steamFade {
+            0% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 0.5; transform: translateY(-20px) scale(1.5); }
+            100% { opacity: 0; transform: translateY(-40px) scale(2); }
         }
-        .vagon.open .vagon-text { opacity: 1; }
 
-        /* GELECEK VAGONU ÖZEL */
-        .vagon.future { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
-        .vagon.future .vagon-lid { background: linear-gradient(135deg, #b8860b, var(--gold)); color: #000; }
+        .cloud { width: 40px; height: 40px; background: var(--steam-white); border-radius: 50%; filter: blur(10px); }
+
+        /* İÇERİK */
+        .content-box { opacity: 0; text-align: center; padding: 20px; transition: 1s; }
+        .vagon.open .content-box { opacity: 1; }
+
+        .date-badge { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--gold); }
 
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="MUZIK_DOSYASI_LINKI.mp3" type="audio/mpeg">
-    </audio>
+    <div id="universe"><div class="star-layer" id="stars"></div></div>
 
-    <div id="login-screen">
-        <div class="lock-icon">🔒</div>
-        <p style="font-size: 14px; color: #888;">"Senin için biraz kısa ve küçük olabilir..."</p>
-        <input type="text" id="password" placeholder="Şifre (Küçük harflerle)">
-        <button class="login-btn" onclick="checkPassword()">Sistemi Aç</button>
+    <div id="gate">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem;">Giriş İstasyonu</h2>
+        <p style="opacity: 0.6;">"Senin için biraz kısa ve küçük olabilir..."</p>
+        <input type="text" id="pass" class="gate-input" placeholder="Şifre">
+        <button onclick="unlock()" style="margin-top:20px; background: #5a189a; color:white; border:none; padding:10px 30px; border-radius:20px; cursor:pointer;">Kapıyı Aç</button>
     </div>
 
-    <div id="manifesto">
-        <div id="manifesto-content" class="typing-text"></div>
-    </div>
+    <audio id="audio" loop><source src="MUZIK_DOSYASI.mp3" type="audio/mpeg"></audio>
 
-    <div id="main-content">
-        <div class="header">
-            <h1 style="font-family: 'Dancing Script', cursive; font-size: 3rem;">İyi ki Doğdun Güzelim</h1>
-            <div id="timer">Yükleniyor...</div>
-            <p style="font-size: 14px; opacity: 0.7;">1 Ocak 2023 00:00'dan beri her saniye seni dileyerek...</p>
+    <div class="world-container" id="world">
+        <div class="rail-road"></div>
+
+        <div class="vagon" id="v1">
+            <div class="vagon-lid" onclick="openBox(this)">
+                <span class="date-badge">4 Nisan 2009</span>
+                <p>Dokun ve Aç</p>
+            </div>
+            <div class="content-box">
+                <h1 style="font-size: 50px;">👶</h1>
+                <p>Güzelimin dünyaya geldiği gün.</p>
+            </div>
+            <div class="steam"><div class="cloud"></div><div class="cloud"></div></div>
         </div>
 
-        <div class="train-viewport">
-            <div class="train-track">
-                <div class="rail"></div>
-
-                <div class="vagon" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">4 Nisan 2009</div>
-                    <div class="silhouette">👶</div>
-                    <div class="vagon-text">Güzelimin dünyaya geldiği gün.</div>
-                </div>
-
-                <div class="vagon" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">23 Ağustos 2009</div>
-                    <div class="silhouette">🍼</div>
-                    <div class="vagon-text">Onun olmak için doğduğum tarih.</div>
-                </div>
-
-                <div class="vagon" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">14 Kasım 2022</div>
-                    <div class="silhouette">💬</div>
-                    <div class="vagon-text">Gizem'sbn sunucusunda ilk merhaba.</div>
-                </div>
-
-                <div class="vagon" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">1 Ocak 2023</div>
-                    <div class="silhouette">🎆</div>
-                    <div class="vagon-text">"Seni diledim..." <br>Sevgili olduğumuz o gece.</div>
-                </div>
-
-                <div class="vagon" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">24 Ağustos 2025</div>
-                    <div class="silhouette">👩‍❤️‍💋‍👨</div>
-                    <div class="vagon-text">İlk öpüşme, ilk buluşma. <br>Gerçekliğe attığımız ilk adım.</div>
-                </div>
-
-                <div class="vagon future" onclick="toggleVagon(this)">
-                    <div class="vagon-lid">Sonsuz Gelecek</div>
-                    <div class="silhouette">👨‍👩‍👧‍👦</div>
-                    <div class="vagon-text">Özgür ve Maya'nın da bizimle olacağı gün için ayrıldı.</div>
-                </div>
-
+        <div class="vagon" id="v2">
+            <div class="vagon-lid" onclick="openBox(this)">
+                <span class="date-badge">14 Kasım 2022</span>
+                <p>Bir "Merhaba" ile başladı...</p>
             </div>
+            <div class="content-box">
+                <h1 style="font-size: 50px;">💬</h1>
+                <p>Gizem'sbn sunucusunda ders çalışırken tanışan o iki çocuk.</p>
+            </div>
+            <div class="steam"><div class="cloud"></div><div class="cloud"></div></div>
+        </div>
+
+        <div class="vagon" id="v3" style="border-color: var(--gold);">
+            <div class="vagon-lid" style="background: linear-gradient(135deg, #ff9e00, #ff4800);" onclick="openBox(this)">
+                <span class="date-badge" style="color: black;">Sonsuz Gelecek</span>
+            </div>
+            <div class="content-box">
+                <h1 style="font-size: 50px;">👨‍👩‍👧‍👦</h1>
+                <p>Özgür ve Maya ile kuracağımız o sıcak yuva için ayrıldı.</p>
+            </div>
+            <div class="steam"><div class="cloud"></div><div class="cloud"></div></div>
         </div>
     </div>
 
     <script>
-        const music = document.getElementById('bg-music');
-        
-        // 1. Şifre Kontrolü
-        function checkPassword() {
-            const pass = document.getElementById('password').value.trim().toLowerCase();
-            if(pass === "kısa ve küçük") {
-                document.getElementById('login-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-screen').style.display = 'none';
-                    startManifesto();
-                }, 1500);
+        gsap.registerPlugin(ScrollTrigger);
+
+        function unlock() {
+            const p = document.getElementById('pass').value.toLowerCase();
+            if(p === "kısa ve küçük") {
+                gsap.to("#gate", { duration: 1.5, y: "-100%", ease: "power4.inOut" });
+                document.getElementById('audio').play();
             } else {
-                alert("O şaka böyle değildi sanki? :) Tekrar dene Samet.");
+                alert("Şifreyi hatırla Samet :)");
             }
         }
 
-        // 2. Manifesto Yazısı
-        function startManifesto() {
-            const lines = [
-                "29 Mart...",
-                "Takvimler için sıradan bir gün,",
-                "Benim için ise güzelimin dünyaya geldiği gün.",
-                "Yanında olamasam da her saniyeni benimle hissetmen için sana küçük bir dünya kurdum.",
-                "İyi ki doğdun Esra, iyi ki benim yeni yıl dileğim oldun."
-            ];
-            
-            const div = document.getElementById('manifesto');
-            const content = document.getElementById('manifesto-content');
-            div.style.display = 'flex';
-            
-            // Müziği başlat
-            music.play().catch(e => console.log("Müzik için etkileşim gerekiyor"));
-
-            let lineIndex = 0;
-            function showLine() {
-                if (lineIndex < lines.length) {
-                    content.style.opacity = '0';
-                    setTimeout(() => {
-                        content.innerHTML = lines[lineIndex];
-                        content.style.opacity = '1';
-                        lineIndex++;
-                        setTimeout(showLine, 3500); // Satır arası bekleme
-                    }, 1000);
-                } else {
-                    setTimeout(() => {
-                        div.style.opacity = '0';
-                        setTimeout(() => {
-                            div.style.display = 'none';
-                            showMainContent();
-                        }, 1500);
-                    }, 2000);
+        // Yatay Kaydırma (Horizonal Scroll)
+        gsap.to("#world", {
+            xPercent: -80,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "500% top",
+                scrub: 1,
+                pin: true,
+                onUpdate: self => {
+                    // Buhar efekti tetikleme (vagonların yanından geçerken)
+                    checkActiveVagons();
                 }
             }
-            showLine();
-        }
+        });
 
-        // 3. Ana İçerik Gösterimi
-        function showMainContent() {
-            const main = document.getElementById('main-content');
-            main.style.display = 'block';
-            setTimeout(() => {
-                main.style.opacity = '1';
-                updateTimer();
-                setInterval(updateTimer, 1000);
-            }, 100);
-        }
+        // Yıldız Parallax
+        gsap.to("#stars", {
+            x: -200, y: -100,
+            scrollTrigger: { scrub: true }
+        });
 
-        // 4. Sayaç Fonksiyonu
-        function updateTimer() {
-            const start = new Date("2023-01-01T00:00:00");
-            const now = new Date();
-            const diff = now - start;
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const m = Math.floor((diff / (1000 * 60)) % 60);
-            const s = Math.floor((diff / 1000) % 60);
-
-            document.getElementById('timer').innerHTML = `${d}g ${h}s ${m}d ${s}sn`;
-        }
-
-        // 5. Vagon ve Ses Kontrolü
-        function toggleVagon(el) {
-            const isOpen = el.classList.contains('open');
-            
-            // Tüm vagonları kapat (opsiyonel - istersen açık kalsınlar)
-            // document.querySelectorAll('.vagon').forEach(v => v.classList.remove('open'));
-
-            if(!isOpen) {
-                el.classList.add('open');
-                fadeVolume(0.2); // Sesi kıs
+        function openBox(lid) {
+            const vagon = lid.parentElement;
+            vagon.classList.toggle('open');
+            const audio = document.getElementById('audio');
+            if(vagon.classList.contains('open')) {
+                gsap.to(audio, { volume: 0.2, duration: 1 });
             } else {
-                el.classList.remove('open');
-                fadeVolume(1.0); // Sesi yükselt
+                gsap.to(audio, { volume: 1, duration: 1 });
             }
         }
 
-        // Pürüzsüz Ses Geçişi (Ducking)
-        function fadeVolume(target) {
-            let currentVol = music.volume;
-            const interval = setInterval(() => {
-                if (Math.abs(currentVol - target) < 0.1) {
-                    music.volume = target;
-                    clearInterval(interval);
-                } else {
-                    currentVol += (target > currentVol ? 0.05 : -0.05);
-                    music.volume = currentVol;
+        function checkActiveVagons() {
+            const vagons = document.querySelectorAll('.vagon');
+            vagons.forEach(v => {
+                const rect = v.getBoundingClientRect();
+                if(rect.left < window.innerWidth && rect.right > 0) {
+                    v.classList.add('active');
                 }
-            }, 50);
+            });
         }
     </script>
 </body>
