@@ -2,220 +2,54 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Esra & Samet | Zaman Yolculuğu</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --deep-purple: #0d0221;
-            --nebula: #240046;
-            --gold: #ff9e00;
-            --steam: rgba(255, 255, 255, 0.15);
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            margin: 0; background-color: var(--deep-purple);
-            color: white; font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden; height: 600vh; /* Kaydırma derinliği için */
-        }
-
-        /* ARKA PLAN */
-        #universe {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at center, var(--nebula) 0%, var(--deep-purple) 100%);
-            z-index: -1;
-        }
-
-        .star-layer {
-            position: absolute; width: 400%; height: 100%;
-            background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
-                              radial-gradient(1.5px 1.5px at 100px 150px, #eee, rgba(0,0,0,0));
-            background-repeat: repeat; opacity: 0.4;
-        }
-
-        /* GİRİŞ EKRANI (SABİTLENDİ) */
-        #gate {
-            position: fixed; inset: 0; background: black; z-index: 2000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-
-        .gate-content { text-align: center; width: 100%; max-width: 400px; }
-
-        .gate-input {
-            width: 100%; background: #1a1a1a; border: 2px solid #5a189a; color: white;
-            padding: 15px; border-radius: 15px; text-align: center; font-size: 1.1rem;
-            outline: none; margin-top: 20px;
-        }
-
-        .gate-btn {
-            width: 100%; margin-top: 15px; padding: 15px; border-radius: 15px;
-            background: linear-gradient(45deg, #5a189a, #9d4edd);
-            border: none; color: white; font-weight: bold; cursor: pointer;
-        }
-
-        /* TREN YOLU */
-        .scroller-wrapper {
-            position: fixed; top: 0; left: 0; height: 100vh;
-            display: flex; align-items: center; padding-left: 20vw;
-            will-change: transform;
-        }
-
-        .rail-road {
-            position: absolute; bottom: 20%; left: 0; width: 1000vw; height: 6px;
-            background: #222; box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-        }
-
-        /* VAGONLAR */
-        .vagon {
-            flex-shrink: 0; width: 320px; height: 220px; background: #111;
-            margin-right: 50vw; border-radius: 12px; position: relative;
-            border: 1px solid #3c096c; box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        .vagon-lid {
-            position: absolute; inset: -1px; background: linear-gradient(135deg, #3c096c, #1a0633);
-            border-radius: 12px; z-index: 10; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center; padding: 20px;
-        }
-
-        .vagon.open .vagon-lid { transform: translateY(-100%) scale(0.8); opacity: 0; pointer-events: none; }
-
-        /* BUHAR EFEKTİ */
-        .steam-engine {
-            position: absolute; bottom: -30px; left: 0; width: 100%;
-            display: flex; justify-content: space-around; pointer-events: none;
-        }
-
-        .smoke {
-            width: 30px; height: 30px; background: var(--steam);
-            border-radius: 50%; filter: blur(8px);
-            animation: smokeRise 2s infinite ease-out; opacity: 0;
-        }
-
-        @keyframes smokeRise {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-80px) scale(3); opacity: 0; }
-        }
-
-        .vagon-content { 
-            height: 100%; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; padding: 20px;
-            text-align: center;
-        }
-
-        .date-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--gold); }
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esra & Samet | Multiverse</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="universe"><div class="star-layer" id="stars"></div></div>
-
     <div id="gate">
-        <div class="gate-content">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; margin-bottom: 5px;">Sonsuzluk İstasyonu</h2>
-            <p style="opacity: 0.5; font-size: 0.9rem;">"Senin için biraz kısa ve küçük olabilir..."</p>
-            <input type="text" id="pass" class="gate-input" placeholder="Şifreyi buraya yaz">
-            <button class="gate-btn" onclick="unlock()">İstasyon Kapısını Aç</button>
+        <div class="hologram-box">
+            <h1 class="orbitron">ACCESS DENIED</h1>
+            <p>Biyometrik doğrulama: "Kısa ve Küçük"</p>
+            <input type="text" id="pass" placeholder="Şifreleme Anahtarı">
+            <button class="glow-btn" onclick="initUniverse()">SİSTEMİ BAŞLAT</button>
         </div>
     </div>
 
-    <audio id="audio" loop><source src="MUZIK_LİNKİ_BURAYA" type="audio/mpeg"></audio>
-
-    <div class="scroller-wrapper" id="master-train">
-        <div class="rail-road"></div>
-
-        <div class="vagon">
-            <div class="vagon-lid" onclick="openVagon(this)">
-                <span class="date-title">4 Nisan 2009</span>
-                <p style="font-size: 0.8rem; margin-top: 10px;">Dokun ve Hikayeyi Başlat</p>
-            </div>
-            <div class="vagon-content">
-                <span style="font-size: 3rem;">👶</span>
-                <p>Güzelimin dünyaya geldiği gün.</p>
-            </div>
-            <div class="steam-engine"><div class="smoke"></div><div class="smoke" style="animation-delay: 0.5s;"></div></div>
-        </div>
-
-        <div class="vagon">
-            <div class="vagon-lid" onclick="openVagon(this)">
-                <span class="date-title">14 Kasım 2022</span>
-                <p style="font-size: 0.8rem; margin-top: 10px;">Gizem'sbn Sunucusu</p>
-            </div>
-            <div class="vagon-content">
-                <span style="font-size: 3rem;">💬</span>
-                <p>Ders çalışırken hayatımın geri kalanını bulduğum o ilk merhaba.</p>
-            </div>
-            <div class="steam-engine"><div class="smoke"></div><div class="smoke" style="animation-delay: 0.7s;"></div></div>
-        </div>
-
-        <div class="vagon" style="border-color: var(--gold);">
-            <div class="vagon-lid" style="background: linear-gradient(135deg, #ff9e00, #ff4800); color: black;" onclick="openVagon(this)">
-                <span class="date-title" style="color: #000;">Sonsuz Gelecek</span>
-            </div>
-            <div class="vagon-content">
-                <span style="font-size: 3rem;">👩‍👩‍👧‍👦</span>
-                <p>Özgür ve Maya'nın kahkahalarıyla dolacak yuvamız.</p>
-            </div>
-            <div class="steam-engine"><div class="smoke"></div><div class="smoke"></div></div>
-        </div>
+    <div id="universe">
+        <div class="layer star-1"></div>
+        <div class="layer star-2"></div>
+        <div class="layer nebula"></div>
     </div>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+    <main id="app">
+        <header id="hud">
+            <div class="hud-item">
+                <span>HEDEF:</span> <strong class="gold">ESRA</strong>
+            </div>
+            <div id="timer" class="orbitron">00:00:00:00</div>
+            <div class="hud-item">
+                <span>KONUM:</span> <strong id="location-name">Zaman Boşluğu</strong>
+            </div>
+        </header>
 
-        function unlock() {
-            const p = document.getElementById('pass').value.toLowerCase().trim();
-            if(p === "kısa ve küçük") {
-                gsap.to("#gate", { duration: 1.2, y: "-100%", ease: "expo.inOut" });
-                const audio = document.getElementById('audio');
-                audio.play().catch(() => console.log("Müzik için etkileşim gerekiyor"));
-            } else {
-                alert("Şaka böyle değildi sanki? :)");
-            }
-        }
+        <div id="train-viewport">
+            <div id="train-track">
+                </div>
+        </div>
 
-        // TREN HAREKET MEKANİZMASI (SABİTLENDİ)
-        const train = document.getElementById('master-train');
-        
-        gsap.to(train, {
-            x: () => -(train.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                invalidateOnRefresh: true
-            }
-        });
+        <div class="artifact scarf" onclick="openPortal('aot')">🧣</div>
+        <div class="artifact discord-logo" onclick="openPortal('terminal')">👾</div>
+    </main>
 
-        // Yıldız Tozu Parallax
-        gsap.to("#stars", {
-            x: -500,
-            scrollTrigger: { scrub: true }
-        });
+    <div id="portal-overlay" class="hidden">
+        <button onclick="closePortal()" class="close-btn">X</button>
+        <div id="portal-content"></div>
+    </div>
 
-        function openVagon(lid) {
-            const v = lid.parentElement;
-            v.classList.toggle('open');
-            const audio = document.getElementById('audio');
-            
-            if(v.classList.contains('open')) {
-                gsap.to(audio, { volume: 0.2, duration: 1 });
-            } else {
-                gsap.to(audio, { volume: 1.0, duration: 1 });
-            }
-        }
-    </script>
+    <audio id="bg-music" loop><source src="muzik.mp3" type="audio/mpeg"></audio>
+    <script src="script.js"></script>
 </body>
 </html>
