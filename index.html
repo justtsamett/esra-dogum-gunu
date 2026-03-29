@@ -3,100 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra & Samet | Sonsuzluk</title>
+    <title>Sonsuzluk İstasyonu | Esra</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --purple-glow: #6a1b9a; --neon: #bc13fe; --gold: #ffd700; --deep: #05010a; }
+        :root { --purple: #2a0a4d; --neon: #bc13fe; --gold: #ffd700; --deep: #05010a; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html { height: 100%; width: 100%; background: #000; overflow: hidden; font-family: 'Montserrat', sans-serif; }
 
-        /* 1. GİRİŞ EKRANI */
+        /* 1. GİRİŞ EKRANI (Holografik) */
         #gate {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .gate-input {
-            background: transparent; border: 1px solid var(--neon); padding: 15px; color: white;
-            border-radius: 30px; text-align: center; width: 280px; font-size: 1rem; outline: none;
-        }
+        .gate-content { text-align: center; border: 1px solid var(--neon); padding: 40px; border-radius: 15px; background: rgba(0,0,0,0.8); box-shadow: 0 0 20px rgba(188, 19, 254, 0.2); }
+        .gate-input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 30px; text-align: center; width: 260px; font-size: 1rem; outline: none; transition: 0.3s; }
+        .gate-input:focus { box-shadow: 0 0 15px var(--neon); }
+        .gate-btn { margin-top: 20px; background: var(--neon); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; letter-spacing: 2px; transition: 0.3s; }
+        .gate-btn:hover { transform: scale(1.05); }
 
-        /* 2. FOTOĞRAF DUVARI VE NEON YAZI */
+        /* 2. GÖRSEL ŞÖLEN (FOTO DUVARI) */
         #photo-wall {
             position: fixed; inset: 0; display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            z-index: 8000; pointer-events: none; opacity: 0; transition: 1s;
+            z-index: 8000; pointer-events: none; opacity: 0; transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .photo-item { width: 100%; height: 130px; object-fit: cover; opacity: 0; transform: scale(0.8); transition: 0.5s; }
-        
+        .photo-item {
+            width: 100%; height: 130px; object-fit: cover; opacity: 0;
+            transform: scale(0.5); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        /* Başlangıç Yazısı (Premium Giriş/Çıkış) */
         #neon-text {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-family: 'Dancing Script', cursive; font-size: 6rem; color: #fff;
+            font-family: 'Dancing Script', cursive; font-size: 5rem; color: #fff;
             text-shadow: 0 0 10px #fff, 0 0 30px var(--neon), 0 0 60px var(--neon);
-            z-index: 8500; opacity: 0; transition: 2s; pointer-events: none;
+            z-index: 8500; opacity: 0; transition: 2.5s cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: none; text-align: center;
         }
 
         /* 3. ATMOSFERİK UZAY (ANA EVREN) */
         #main-universe {
             position: fixed; inset: 0; opacity: 0; display: none;
-            background: radial-gradient(circle at center, #1a0633 0%, #080210 50%, #020105 100%);
+            background: radial-gradient(circle at center, #1a0633 0%, #05010a 100%);
             z-index: 1000; overflow: hidden;
         }
-
-        /* Nebula Bulutları */
+        /* Nebula Efekti */
         .nebula {
             position: absolute; width: 150%; height: 150%; top: -25%; left: -25%;
             background: radial-gradient(circle at 30% 30%, rgba(106, 27, 154, 0.15), transparent 40%),
                         radial-gradient(circle at 70% 70%, rgba(188, 19, 254, 0.1), transparent 40%);
             filter: blur(60px); animation: nebulaRoam 20s infinite alternate;
         }
-
         @keyframes nebulaRoam { from { transform: translate(0,0); } to { transform: translate(5%, 5%); } }
-
         /* Parıldayan Yıldızlar */
-        .star {
-            position: absolute; background: white; border-radius: 50%;
-            animation: twinkle var(--t) infinite ease-in-out;
-        }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; opacity: 0.3; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-
         /* Kayan Yıldızlar */
-        .shooting-star {
-            position: absolute; width: 2px; height: 2px; background: #fff;
-            box-shadow: 0 0 10px #fff, 0 0 20px #fff;
-            animation: shoot var(--s) infinite linear; opacity: 0;
-        }
-        @keyframes shoot {
-            0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            30% { transform: translateX(-500px) translateY(500px) rotate(-45deg) scale(1); opacity: 0; }
-            100% { opacity: 0; }
-        }
+        .shooting-star { position: absolute; width: 2px; height: 2px; background: #fff; box-shadow: 0 0 10px #fff; animation: shoot var(--s) infinite linear; opacity: 0; }
+        @keyframes shoot { 0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; } 10% { opacity: 1; } 30% { transform: translateX(-500px) translateY(500px) rotate(-45deg) scale(1); opacity: 0; } }
 
-        /* 4. ANALOG SAAT */
+        /* 4. ANALOG SAAT (TOZDAN VAR OLMA & ESRAM MARKASI) */
         #clock-container {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 320px; height: 320px; z-index: 2000; opacity: 0;
             filter: blur(15px); transition: 4s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .analog-clock {
-            width: 100%; height: 100%; border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 50%; position: relative; background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px); box-shadow: 0 0 40px rgba(106, 27, 154, 0.3);
+            width: 100%; height: 100%; border: 3px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%; position: relative; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px); box-shadow: 0 0 30px rgba(106, 27, 154, 0.3);
         }
+        /* ESRAM MARKASI (YENİ!) */
         .brand {
             position: absolute; top: 28%; width: 100%; text-align: center;
-            font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--gold); letter-spacing: 5px;
-            text-shadow: 0 0 10px var(--gold);
+            font-family: 'Dancing Script', cursive; font-size: 2rem; color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 30px var(--neon); letter-spacing: 2px;
         }
         .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 10px; transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1); }
         .hour { width: 6px; height: 80px; background: var(--gold); z-index: 3; }
         .minute { width: 4px; height: 110px; background: #fff; z-index: 2; opacity: 0.8; }
         .center-dot { position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; transform: translate(-50%, -50%); z-index: 4; }
-        
         #clock-date {
             position: absolute; bottom: -80px; width: 100%; text-align: center;
-            font-family: 'Dancing Script'; font-size: 2.5rem; color: #fff; opacity: 0; transition: 2s;
-            text-shadow: 0 0 15px var(--neon);
+            font-family: 'Montserrat'; font-size: 1.8rem; color: #fff; opacity: 0; transition: 2s;
+            text-shadow: 0 0 15px var(--gold); letter-spacing: 3px;
         }
 
     </style>
@@ -104,34 +94,39 @@
 <body>
 
     <div id="gate">
-        <input type="password" id="pass" class="gate-input" placeholder="Şifreleme Anahtarı">
-        <button onclick="unlock()" style="margin-top:20px; background:var(--neon); color:white; border:none; padding:12px 40px; border-radius:30px; cursor:pointer; font-weight:bold;">BAŞLAT</button>
+        <div class="gate-content">
+            <input type="password" id="pass" class="gate-input" placeholder="Şifreleme Anahtarı">
+            <button class="gate-btn" onclick="start()">BAŞLAT</button>
+        </div>
     </div>
 
     <div id="photo-wall"></div>
-    <div id="neon-text">Esram</div>
+    <div id="neon-text">İyi ki doğdun güzel sevgilim</div>
 
     <div id="main-universe">
         <div class="nebula"></div>
-        <div id="star-field"></div> <div id="clock-container">
+        <div id="star-field"></div>
+        
+        <div id="clock-container">
             <div class="analog-clock">
-                <div class="brand">MAYA</div>
-                <div id="hour-hand" class="hand hour"></div>
+                <div class="brand">Esram</div> <div id="hour-hand" class="hand hour"></div>
                 <div id="min-hand" class="hand minute"></div>
                 <div class="center-dot"></div>
             </div>
-            <div id="clock-date">4 Nisan 2009</div>
+            <div id="clock-date">4 NİSAN 2009</div>
         </div>
     </div>
 
     <audio id="music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
 
     <script>
+        const totalPhotos = 150;
         const photoWall = document.getElementById('photo-wall');
         const starField = document.getElementById('star-field');
 
-        // 1. Yıldızları ve Kayan Yıldızları Oluştur
-        function createStars() {
+        // 1. Atmosferik Uzayı Oluştur (Hemen Başla)
+        function createAtmos() {
+            // Yıldızlar
             for(let i=0; i<150; i++) {
                 const s = document.createElement('div');
                 s.className = 'star';
@@ -153,11 +148,11 @@
                 starField.appendChild(ss);
             }
         }
-        createStars();
+        createAtmos();
 
-        // 2. Fotoğrafları Diziye Al (Test için rastgele, gerçekte img/1.jpg...)
+        // 2. Fotoğrafları Diziye Al (Optimizasyon: Sonradan img/jpg yapabilirsin)
         function createPhotos() {
-            for(let i=1; i <= 150; i++) {
+            for(let i=1; i <= totalPhotos; i++) {
                 const img = document.createElement('img');
                 img.src = `https://picsum.photos/200/300?random=${i}`; // Test bittiğinde `img/${i}.jpg` yap
                 img.className = 'photo-item';
@@ -166,41 +161,52 @@
         }
         createPhotos();
 
-        function unlock() {
-            const pass = document.getElementById('pass').value.toLowerCase().trim();
-            if(pass === "kısa ve küçük") {
+        function start() {
+            if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
                 document.getElementById('gate').style.display = "none";
                 document.getElementById('music').play();
                 startFlow();
-            } else { alert("Şifre hatalı Samet."); }
+            } else { alert("Şaka böyle değildi sanki? :)"); }
         }
 
+        // 3. Görsel Şölen ve Premium Giriş/Çıkış
         function startFlow() {
-            photoWall.style.opacity = "1";
+            const wall = document.getElementById('photo-wall');
+            const text = document.getElementById('neon-text');
+            wall.style.opacity = "1";
+            
             const items = document.querySelectorAll('.photo-item');
             items.forEach((item, index) => {
                 setTimeout(() => {
                     item.style.opacity = "1";
                     item.style.transform = "scale(1)";
-                }, index * 30);
+                }, index * 30); // Fotoğrafların tek tek açılma hızı
             });
 
+            // Yazının Girişi (bounce-in efekti için transition)
             setTimeout(() => {
-                document.getElementById('neon-text').style.opacity = "1";
-                setTimeout(() => {
-                    photoWall.style.opacity = "0";
-                    document.getElementById('neon-text').style.opacity = "0";
-                    setTimeout(initUniverse, 2000);
-                }, 4000);
-            }, items.length * 30 + 500);
+                text.style.opacity = "1";
+                text.style.transition = "opacity 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)"; 
+            }, items.length * 30 + 1000);
+
+            // Her şeyin Sönmesi (Zoom-out ve Fade-out)
+            setTimeout(() => {
+                wall.style.opacity = "0";
+                text.style.opacity = "0";
+                wall.style.transform = "scale(1.5)"; // Kaybolurken zoom-out
+                setTimeout(initUniverse, 2500); // Mistik geçiş
+            }, items.length * 30 + 5000);
         }
 
+        // 4. Mor Evren ve Tozdan Var Olma
         function initUniverse() {
             const universe = document.getElementById('main-universe');
             const clock = document.getElementById('clock-container');
             universe.style.display = "block";
+            
             setTimeout(() => {
                 universe.style.opacity = "1";
+                // Tozdan netleşme (blur(15px) -> blur(0))
                 clock.style.opacity = "1";
                 clock.style.filter = "blur(0px)";
                 animateClock();
@@ -211,19 +217,23 @@
             const hHand = document.getElementById('hour-hand');
             const mHand = document.getElementById('min-hand');
             
-            // 22:10 (Başlangıç)
+            // Başlangıç: 22:10
             hHand.style.transform = `translate(-50%, 0) rotate(300deg)`;
             mHand.style.transform = `translate(-50%, 0) rotate(60deg)`;
 
+            // 3 saniye sonra 00:00'a geçiş
             setTimeout(() => {
-                // 00:00 (Final)
                 hHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
                 mHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
                 
+                // Küçülme ve yukarı yerleşme
                 setTimeout(() => {
                     const container = document.getElementById('clock-container');
+                    container.style.transition = "2.5s cubic-bezier(0.19, 1, 0.22, 1)";
                     container.style.top = "25%";
                     container.style.transform = "translate(-50%, -50%) scale(0.7)";
+                    
+                    // Tarihin belirmesi (Orbitron stili)
                     setTimeout(() => {
                         document.getElementById('clock-date').style.opacity = "1";
                     }, 1500);
