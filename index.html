@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonsuzluk İstasyonu | Esra & Samet</title>
+    <title>Esra & Samet | Kozmik Arşiv</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Orbitron:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Great+Vibes&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -20,8 +20,9 @@
 
     <main id="main-universe">
         <div class="nebula"></div>
-        <div id="star-field"></div> <section id="clock-intro-section">
-            <div id="intro-clock-wrapper">
+        <div id="star-field"></div>
+        <div class="moon"></div> <section id="clock-intro-section">
+            <div id="intro-clock-wrapper" class="center-focus">
                 <div class="clock-main">
                     <div class="brand">Esram</div>
                     <div id="h1" class="hand hour"></div>
@@ -30,6 +31,7 @@
                 <div id="intro-texts">
                     <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
                     <h2 id="bugun-ne-oldu">Bugün Neler Mi Oldu?</h2>
+                    <p id="scroll-prompt">Öğrenmek için aşağı kaydır...</p>
                 </div>
             </div>
         </section>
@@ -42,52 +44,21 @@
                     <p>O günün manşetlerinde baharın heyecanı vardı. Ama dünyanın en güzel haberi henüz basılmamıştı...</p>
                 </div>
             </div>
-
-            <div class="news-row right">
-                <div class="news-card">
-                    <img src="img/nasa_hubble.jpg" class="news-img" onerror="this.src='https://images-assets.nasa.gov/image/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o~thumb.jpg'">
-                    <h2>NASA Arşivi: Hydra Takımı</h2>
-                    <p>Hubble o gece NGC 4993 galaksisine odaklanmıştı. Milyonlarca ışık yılı uzaktan gelen ışıklar, yeryüzüne inen bir meleği selamlıyordu.</p>
-                </div>
-            </div>
-
-            <div class="news-row left">
-                <div class="news-card">
-                    <img src="img/doga.jpg" class="news-img" onerror="this.src='https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800'">
-                    <h2>Doğanın Uyanışı</h2>
-                    <p>Nisan'ın dördüncü sabahında doğa sessizce yenileniyordu. Her çiçek, Esra'nın ilk nefesiyle birlikte canlanmaya söz vermişti.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
         <section class="final-section">
             <h1 id="en-onemli">En önemlisine gelince;</h1>
             <p id="bugun-itibariyle">BUGÜN İTİBARİYLE</p>
-
             <div class="dual-clocks" id="clocks-trigger">
                 <div class="clock-unit">
-                    <div class="analog-small">
-                        <div id="h2" class="hand hour-s"></div>
-                        <div id="m2" class="hand minute-s"></div>
-                    </div>
-                    <div class="timer-text">
-                        <div id="life-timer" class="t-val"></div>
-                        <span class="t-label">Dünyayı,</span>
-                    </div>
+                    <div class="analog-small"><div id="h2" class="hand hour-s"></div><div id="m2" class="hand minute-s"></div></div>
+                    <div class="timer-text"><div id="life-timer" class="t-val"></div><span class="t-label">Dünyayı,</span></div>
                 </div>
-
                 <div class="clock-unit">
-                    <div class="analog-small">
-                        <div id="h3" class="hand hour-s"></div>
-                        <div id="m3" class="hand minute-s"></div>
-                    </div>
-                    <div class="timer-text">
-                        <div id="love-timer" class="t-val"></div>
-                        <span class="t-label">Dünyamı,</span>
-                    </div>
+                    <div class="analog-small"><div id="h3" class="hand hour-s"></div><div id="m3" class="hand minute-s"></div></div>
+                    <div class="timer-text"><div id="love-timer" class="t-val"></div><span class="t-label">Dünyamı,</span></div>
                 </div>
             </div>
-
             <h2 id="final-text">Aydınlatmaya başladın balımm :))</h2>
         </section>
     </main>
