@@ -1,112 +1,71 @@
-:root { --neon-purple: #bc13fe; --soft-purple: #6a1b9a; --gold: #ffd700; --deep-space: #05010a; --paper: #f4f1ea; }
+:root { --neon-purple: #bc13fe; --gold: #ffd700; --deep-space: #05010a; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-/* GATE */
+/* GATE & PHOTO WALL (V8 ile aynı, kısa kestim) */
 #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 1s; }
-.gate-box { text-align: center; border: 1px solid var(--neon-purple); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.8); box-shadow: 0 0 20px rgba(188, 19, 254, 0.2); }
-input { background: transparent; border: 1px solid var(--neon-purple); color: #fff; padding: 12px; border-radius: 10px; text-align: center; outline: none; font-size: 1rem; }
-button { background: var(--neon-purple); color: #fff; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; margin-top: 15px; font-weight: bold; }
-
-/* PHOTO WALL */
-#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; transition: 1.5s; pointer-events: none; }
+.gate-box { text-align: center; border: 1px solid var(--neon-purple); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.8); }
+#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
 .photo-item { width: 100%; height: 140px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
 
-/* MAIN UNIVERSE */
-#main-universe { display: none; position: relative; width: 100%; }
+/* 🌌 CANLI UZAY VE AY */
+#main-universe { display: none; position: relative; width: 100%; min-height: 100vh; }
+.nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(106, 27, 154, 0.15), transparent 70%); z-index: -2; }
 
-/* 🌌 CANLI UZAY ARKA PLANI */
-.nebula {
-    position: fixed; inset: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(106, 27, 154, 0.2), transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(188, 19, 254, 0.15), transparent 50%);
-    filter: blur(50px); z-index: -2; animation: nebulaFloat 20s infinite alternate;
+.moon {
+    position: fixed; top: 50px; right: 80px; width: 100px; height: 100px;
+    border-radius: 50%; box-shadow: 15px 15px 0 0 white;
+    transform: rotate(-15deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.4)); z-index: -1;
 }
-@keyframes nebulaFloat { from { transform: translate(0,0); } to { transform: translate(5%, 5%); } }
 
-/* Parıldayan Yıldızlar */
-.star {
-    position: absolute; background: white; border-radius: 50%;
-    animation: twinkle var(--t) infinite ease-in-out;
-}
-@keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+.star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite ease-in-out; }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-/* Kayan Yıldızlar */
 .shooting-star {
-    position: absolute; width: 2px; height: 2px; background: #fff;
-    box-shadow: 0 0 10px #fff, 0 0 20px #fff;
-    animation: shoot var(--s) infinite linear; opacity: 0;
+    position: absolute; width: 4px; height: 4px; background: #fff;
+    box-shadow: 0 0 15px #fff, -5px 0 25px var(--neon-purple);
+    border-radius: 50%; animation: shoot var(--s) infinite linear; opacity: 0;
 }
 @keyframes shoot {
-    0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; }
-    10% { opacity: 1; }
-    30% { transform: translateX(-500px) translateY(500px) rotate(-45deg) scale(1); opacity: 0; }
+    0% { transform: translate(0,0) rotate(-45deg) scale(0); opacity: 0; }
+    5% { opacity: 1; }
+    20% { transform: translate(-800px, 800px) rotate(-45deg) scale(1.5); opacity: 0; }
     100% { opacity: 0; }
 }
 
-/* INTRO CLOCK (Büyük Başlar) */
-#clock-intro-section { height: 100vh; display: flex; align-items: center; justify-content: center; width: 100%; }
+/* 🕒 SAAT VE GEÇİŞ TERMİNALİ */
+#clock-intro-section { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
 
-/* Saat ilk başta ortada ve büyüktür (scale(1.2)) */
+/* Başlangıç: Ortada Devasa */
 #intro-clock-wrapper {
     display: flex; align-items: center; justify-content: center; width: 100%;
-    transform: scale(1.2); transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* Sola Kayma Sınıfı */
-.clock-shift-left {
-    justify-content: flex-start !important;
-    padding-left: 10%;
-    transform: scale(0.6) !important; /* Küçülür */
+#intro-clock-wrapper.center-focus { transform: scale(1.8); }
+
+/* Sola Kayma ve Küçülme */
+#intro-clock-wrapper.docked {
+    transform: scale(0.65); justify-content: flex-start; padding-left: 8%;
 }
 
 .clock-main {
-    width: 280px; height: 280px; border: 4px solid var(--gold); border-radius: 50%;
-    position: relative; transition: 2s ease-in-out; flex-shrink: 0;
-    box-shadow: 0 0 40px rgba(106, 27, 154, 0.3); backdrop-filter: blur(5px);
+    width: 300px; height: 300px; border: 5px solid var(--gold); border-radius: 50%;
+    position: relative; box-shadow: 0 0 50px rgba(188, 19, 254, 0.4);
+    background: rgba(0,0,0,0.3); backdrop-filter: blur(8px); flex-shrink: 0;
 }
-.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #fff; text-shadow: 0 0 10px #fff; }
-.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; border-radius: 5px; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
-.hour { width: 6px; height: 75px; background: var(--gold); }
-.minute { width: 4px; height: 105px; }
 
-/* Metin Alanı */
-#intro-texts { display: flex; flex-direction: column; align-items: flex-start; margin-left: 40px; }
+/* YAZILAR */
+#intro-texts { margin-left: 60px; display: none; flex-direction: column; opacity: 0; transition: 1.5s; }
+#intro-texts.visible { display: flex; opacity: 1; }
 
-/* Şatafatlı ve Işıltılı Tarih */
-#birth-date-title {
-    font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #fff;
-    opacity: 0; transform: translateX(30px); transition: 1.5s ease;
-    white-space: nowrap;
-    text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-purple), 0 0 30px var(--neon-purple);
-    animation: textGlow 3s infinite alternate;
-}
-@keyframes textGlow { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-purple); } to { text-shadow: 0 0 15px #fff, 0 0 25px var(--neon-purple), 0 0 35px var(--gold); } }
-#birth-date-title.show { opacity: 1; transform: translateX(0); }
+#birth-date-title { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #fff; text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--gold); }
+#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--gold); margin-top: 10px; }
+#scroll-prompt { font-family: 'Montserrat'; font-size: 0.9rem; letter-spacing: 3px; color: rgba(255,255,255,0.6); margin-top: 25px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* Bugün Neler Mi Oldu? */
-#bugun-ne-oldu {
-    font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--gold);
-    margin-top: 15px; opacity: 0; transition: 1.5s ease 0.5s; /* Gecikmeli gelsin */
-}
-#bugun-ne-oldu.show { opacity: 1; }
-
-/* HABERLER VE FİNAL (Değişmedi - style.css v7.0'dan kopyala) */
-.news-container { padding: 100px 5%; max-width: 1100px; margin: auto; }
-.news-row { display: flex; width: 100%; margin-bottom: 120px; opacity: 0; transform: translateY(50px); transition: 1s; }
-.news-row.visible { opacity: 1; transform: translateY(0); }
-.news-row.right { justify-content: flex-end; }
-.news-card { width: 500px; background: var(--paper); color: #222; padding: 25px; box-shadow: 10px 10px 0 var(--neon-purple); border-radius: 2px; }
-.news-img { width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px; border: 1px solid #ccc; filter: sepia(0.2); }
-h2 { font-family: 'Playfair Display'; margin-bottom: 12px; text-transform: uppercase; }
-.final-section { min-height: 120vh; text-align: center; padding-top: 50px; }
-#en-onemli { font-family: 'Great Vibes'; font-size: 4rem; color: var(--gold); opacity: 0; transform: translateY(-10mm); transition: 0.5s; text-shadow: 0 0 10px #fff; }
-#bugun-itibariyle { font-size: 1.3rem; letter-spacing: 5px; opacity: 0; transition: 1s; margin-top: 15px; }
-.dual-clocks { display: flex; justify-content: space-around; width: 100%; margin-top: 70px; opacity: 0; transition: 2s; }
-.clock-unit { display: flex; align-items: center; gap: 25px; width: 45%; justify-content: center; }
-.analog-small { width: 130px; height: 130px; border: 2px solid rgba(255,215,0,0.4); border-radius: 50%; position: relative; flex-shrink: 0; }
-.hour-s { width: 4px; height: 35px; background: var(--gold); }
-.minute-s { width: 2px; height: 50px; }
-.t-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); text-align: left; line-height: 1.5; }
-.t-label { font-family: 'Great Vibes'; font-size: 3rem; display: block; text-align: left; color: #fff; }
-#final-text { font-family: 'Great Vibes'; font-size: 3.5rem; margin-top: 100px; opacity: 0; transition: 2s; text-shadow: 0 0 15px var(--neon-purple); }
+/* DİĞER BÖLÜMLER (V8 ile aynı) */
+.news-container { padding: 150px 10%; }
+.news-card { width: 550px; background: #f4f1ea; color: #222; padding: 30px; box-shadow: 12px 12px 0 var(--neon-purple); }
+.final-section { padding: 100px 0; text-align: center; }
+#final-text { font-family: 'Great Vibes'; font-size: 4rem; margin-top: 50px; opacity: 0; transition: 2s; }
