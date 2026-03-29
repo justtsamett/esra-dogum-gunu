@@ -3,166 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonsuzluk İstasyonu | Esra & Samet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <title>Esra'nın Zaman Yolculuğu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #bc13fe; --gold: #ffd700; --deep: #05010a; --paper: #f4f1ea; --accent: #ff4081; }
+        :root { --neon: #bc13fe; --gold: #ffd700; --paper: #f4f1ea; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html { height: 100%; width: 100%; background: #000; color: white; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* GİRİŞ EKRANI (V5.0'DAN AYNI) */
+        /* GİRİŞ EKRANI */
         #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .gate-input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 30px; text-align: center; outline: none; }
         #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); z-index: 8000; opacity: 0; transition: 1.5s; pointer-events: none; }
         .photo-item { width: 100%; height: 130px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
 
         /* ANA EVREN */
-        #main-universe { position: relative; width: 100%; display: none; background: radial-gradient(circle at center, #1a0633 0%, #05010a 100%); }
-        .nebula { position: fixed; inset: 0; background: radial-gradient(circle at 30% 30%, rgba(106, 27, 154, 0.1), transparent 40%); z-index: -1; }
+        #main-universe { position: relative; width: 100%; display: none; }
         
-        /* SAAT BÖLÜMÜ (Zikzak Yerleşim) */
-        #clock-section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 5%; }
-        #clock-left { width: 30%; text-align: left; opacity: 0; transition: 2s 1s; }
-        #clock-center { width: 40%; display: flex; align-items: center; justify-content: center; transform: scale(0.8); transition: 2s; }
-        #clock-right { width: 30%; text-align: right; opacity: 0; transition: 2s 1.5s; position: relative; }
+        /* 1. SAAT BÖLÜMÜ */
+        #clock-section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
+        .intro-clock { width: 300px; height: 300px; border: 2px solid var(--gold); border-radius: 50%; position: relative; backdrop-filter: blur(5px); }
+        .brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: #fff; }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: white; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hour { width: 6px; height: 70px; background: var(--gold); }
+        .minute { width: 4px; height: 100px; }
 
-        .analog-clock { width: 260px; height: 260px; border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 50%; position: relative; backdrop-filter: blur(5px); box-shadow: 0 0 40px rgba(106, 27, 154, 0.3); }
-        .brand { position: absolute; top: 28%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
-        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: white; border-radius: 10px; transition: 3s; }
-        .hour { width: 5px; height: 60px; background: var(--gold); }
-        .minute { width: 3px; height: 85px; }
-
-        /* SAĞ RESİM (KOZMİK KRİSTAL - ŞİMDİLİK) */
-        .special-img {
-            width: 100%; height: 200px; object-fit: contain; border-radius: 10px;
-            filter: drop-shadow(0 0 20px var(--neon)); animation: floatImg 5s infinite alternate;
-        }
-        @keyframes floatImg { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-
-        /* HABERLER BÖLÜMÜ (Zikzak) */
+        /* 2. NOSTALJİK HABERLER (Zikzak) */
         .news-section { padding: 100px 5%; max-width: 1200px; margin: auto; }
-        .news-row { display: flex; width: 100%; margin-bottom: 120px; align-items: center; }
+        .news-row { display: flex; width: 100%; margin-bottom: 150px; align-items: center; }
         .news-row.left { justify-content: flex-start; }
         .news-row.right { justify-content: flex-end; }
 
-        .news-card { width: 600px; background: var(--paper); color: #222; padding: 30px; border-radius: 5px; transition: 1s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 8px 8px 0px var(--neon); opacity: 0; }
+        .news-card { width: 550px; background: var(--paper); color: #222; padding: 30px; border-radius: 2px; box-shadow: 10px 10px 0px var(--neon); opacity: 0; transition: 0.8s; }
+        .news-row.left .news-card { transform: translateX(-50px); }
+        .news-row.right .news-card { transform: translateX(50px); }
+        .news-card.visible { transform: translateX(0); opacity: 1; }
+
+        .news-card h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #222; margin-bottom: 15px; font-size: 1.6rem; text-transform: uppercase; }
+        .news-img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ccc; filter: sepia(0.3); }
+
+        /* 3. FİNAL BÖLÜMÜ */
+        .final-section { min-height: 140vh; display: flex; flex-direction: column; align-items: center; padding-top: 100px; }
         
-        .news-row.left .news-card { transform: translateX(-100px) rotate(-5deg); }
-        .news-row.right .news-card { transform: translateX(100px) rotate(5deg); }
-        .news-card.visible { transform: translateX(0) rotate(0); opacity: 1; }
+        #en-onemli { font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--gold); opacity: 0; transform: translateY(-10mm); transition: 0.5s; }
+        #bugun-itibariyle { font-family: 'Montserrat'; font-size: 1.5rem; letter-spacing: 5px; margin-top: 20px; opacity: 0; transition: 1s; }
 
-        .news-card h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #222; margin-bottom: 15; font-size: 1.8rem; }
-        .news-card p { line-height: 1.6; font-size: 1.1rem; }
-        .news-img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 3px; }
+        .dual-clock-container { display: flex; justify-content: space-around; width: 95%; margin-top: 80px; opacity: 0; transition: 2s; }
+        .clock-group { display: flex; align-items: center; gap: 20px; width: 45%; }
+        
+        .small-clock { width: 150px; height: 150px; border: 2px solid rgba(255,215,0,0.4); border-radius: 50%; position: relative; flex-shrink: 0; }
+        .timer-display { text-align: left; }
+        .timer-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); line-height: 1.5; }
+        .timer-label { font-family: 'Dancing Script'; font-size: 2.5rem; margin-top: 10px; }
 
-        /* SAYAÇLAR VE MEKTUP (V5.0'DAN AYNI) */
-        .final-section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 50px 0; }
-        .timer-container { display: flex; justify-content: space-around; width: 100%; margin: 50px 0; }
-        .timer-val { font-family: 'Orbitron'; color: var(--gold); font-size: 1.2rem; }
-        .timer-label { font-family: 'Dancing Script'; font-size: 2.5rem; }
-        .envelope-wrapper { position: relative; cursor: pointer; perspective: 1000px; margin-top: 50px; }
-        .envelope { width: 300px; height: 200px; background: #4a148c; position: relative; transition: 0.5s; border-radius: 0 0 10px 10px; }
-        .envelope::before { content: ''; position: absolute; top: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #6a1b9a; transform-origin: top; transition: 0.5s; z-index: 5; }
-        .envelope.open::before { transform: rotateX(180deg); z-index: 0; }
-        .letter { position: absolute; bottom: 0; left: 10px; width: 280px; height: 180px; background: #e1bee7; padding: 20px; color: #4a148c; font-family: 'Dancing Script'; transition: 0.8s; z-index: 2; overflow: hidden; font-size: 1.1rem; }
-        .envelope.open .letter { transform: translateY(-150px); height: 400px; z-index: 10; overflow-y: auto; }
+        #final-balim { font-family: 'Dancing Script'; font-size: 3rem; color: #fff; margin-top: 100px; opacity: 0; text-shadow: 0 0 20px var(--neon); transition: 2s; }
 
     </style>
 </head>
 <body>
 
     <div id="gate">
-        <input type="password" id="pass" class="gate-input" placeholder="Şifreleme Anahtarı">
-        <button onclick="start()" style="margin-top:15px; background:var(--neon); color:white; border:none; padding:10px 25px; cursor:pointer; border-radius:20px;">Giriş</button>
+        <input type="password" id="pass" class="gate-input" placeholder="Anahtar Kelime">
+        <button onclick="start()" style="margin-left:10px; padding:10px 20px; background:var(--neon); color:white; border:none; border-radius:20px; cursor:pointer;">Aç</button>
     </div>
 
     <div id="photo-wall"></div>
 
     <div id="main-universe">
-        <div class="nebula"></div>
-        
         <section id="clock-section">
-            <div id="clock-left">
-                <h1 style="font-family:'Dancing Script'; font-size:3rem; text-shadow:0 0 10px var(--gold);">4 Nisan 2009</h1>
-                <p style="font-size:1.5rem; color:var(--paper)">O MUCİZEVİ GÜN</p>
-                <p style="font-size:1rem; color:var(--paper); margin-top:10px;">Aşağı Kaydır ve Zaman Yolculuğunu Başlat</p>
-            </div>
-            
-            <div id="clock-center">
-                <div class="analog-clock">
-                    <div class="brand">Esram</div>
-                    <div id="hour-hand" class="hand hour"></div>
-                    <div id="min-hand" class="hand minute"></div>
-                </div>
-            </div>
-
-            <div id="clock-right">
-                <p style="font-family:'Dancing Script'; color:var(--gold); margin-bottom:10px; text-shadow:0 0 10px #fff;">Kozmik Kristal</p>
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHlxNnZ3ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9iYmxvY2tlZCZpZmluaXNoZWQmYmxvY2tlZD04NzA5Njc0MC5qcGc%3D/m7Xv4x5u5f008801700688320/giphy.gif" class="special-img">
+            <div class="intro-clock">
+                <div class="brand">Esram</div>
+                <div id="h1" class="hand hour"></div>
+                <div id="m1" class="hand minute"></div>
             </div>
         </section>
 
         <section class="news-section">
             <div class="news-row left">
                 <div class="news-card">
-                    <img src="https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/pia12348_orig.jpg?itok=fUuT6_bQ" class="news-img">
-                    <h2>NASA Kayıtları: Evrensel Bir Karşılama</h2>
-                    <p>O gün Hubble Teleskobu, NGC 4522 galaksisini görüntülüyordu. Evrenin derinliklerindeki bu galaksi, dünyada en parlak yıldızın doğduğunu selamlamak için parlıyordu.</p>
+                    <img src="https://i.hizliresim.com/gazete_manset_test.jpg" class="news-img" alt="4 Nisan 2009 Manşet">
+                    <h2>4 Nisan 2009: Milli Gazete</h2>
+                    <p>O günün manşetlerinde baharın gelişi ve Türkiye'nin yoğun gündemi vardı. Ama tarihin en zarif haberi henüz baskıya girmemişti...</p>
                 </div>
             </div>
 
             <div class="news-row right">
                 <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=800&q=80" class="news-img">
-                    <h2>Dijital Çağın Müjdecisi</h2>
-                    <p>4 Nisan 2009'da internet dünyası baharın gelişiyle hareketliydi. Sosyal medya platformları henüz başlangıç aşamasındayken, hayatımıza en güzel "update" Esra ismiyle geldi.</p>
+                    <img src="https://images-assets.nasa.gov/image/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o/hubble-sees-a-spiral-galaxy-in-hydra_17351651364_o~thumb.jpg" class="news-img">
+                    <h2>NASA Kaydı: Hydra Takımyıldızı</h2>
+                    <p>4 Nisan 2009'da Hubble, NGC 4993 galaksisini izliyordu. Işık hızıyla gelen bu görüntüler, o gün dünyaya inen bir meleğin ışıltısını temsil ediyordu.</p>
                 </div>
             </div>
 
             <div class="news-row left">
                 <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1528183429188-946d9760a556?auto=format&fit=crop&w=800&q=80" class="news-img">
-                    <h2>Baharın En Güzel Doğa Olayı</h2>
-                    <p>Takvimler nisanı gösterirken bahar rüzgarları esiyordu. O gün açan hiçbir çiçek, 4 Nisan sabahı dünyaya gelen bu melek kadar büyüleyici olamazdı.</p>
+                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800" class="news-img">
+                    <h2>Dünya Baharı Selamlıyor</h2>
+                    <p>Takvimler 04.04.2009'u gösterdiğinde, doğa kendini yeniliyordu. O gün açan her çiçek, Esra'nın ilk nefesini kutlamak için uyanmıştı.</p>
                 </div>
             </div>
-
-            <div class="news-row right">
-                <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1543332164-6e82f355bab1?auto=format&fit=crop&w=800&q=80" class="news-img">
-                    <h2>Zaman Tünelinde En Güzel Sayfa</h2>
-                    <p>Nisan ayının dördüncü günü, o güne kadar kaydedilen en mutlu ve en umutlu gün ilan edildi. Evren, Esra'nın gelişiyle tamamlandığını hissetti.</p>
-                </div>
-            </div>
-
-            <h2 style="text-align:center; margin:120px 0; font-family:'Dancing Script'; font-size:3.5rem; color:var(--gold); text-shadow:0 0 15px var(--gold);">En önemlisine gelince...</h2>
         </section>
 
         <section class="final-section">
-            <div class="timer-container">
-                <div class="timer-box">
-                    <div id="life-timer" class="timer-val"></div>
-                    <div class="timer-label">Dünyayı,</div>
-                </div>
-                <div class="timer-box">
-                    <div id="love-timer" class="timer-val"></div>
-                    <div class="timer-label">Dünyamı,</div>
-                </div>
-            </div>
-            <h1 style="font-family:'Dancing Script'; margin-bottom:30px;">Aydınlatıyorsun balımm <33</h1>
+            <h1 id="en-onemli">En önemlisine gelince;</h1>
+            <p id="bugun-itibariyle">BUGÜN İTİBARİYLE</p>
 
-            <div class="envelope-wrapper" onclick="document.querySelector('.envelope').classList.toggle('open')">
-                <p style="text-align:center; margin-bottom:10px; color:var(--gold)">Açmak için dokun...</p>
-                <div class="envelope">
-                    <div class="letter">
-                        <h3>Canım Sevgilime,</h3>
-                        <p style="margin-top:15px;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br><br>
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
+            <div class="dual-clock-container" id="dual-clocks">
+                <div class="clock-group">
+                    <div class="small-clock">
+                        <div id="h2" class="hand hour" style="height:35px;"></div>
+                        <div id="m2" class="hand minute" style="height:55px;"></div>
+                    </div>
+                    <div class="timer-display">
+                        <div id="life-timer" class="timer-val"></div>
+                        <div class="timer-label">Dünyayı,</div>
+                    </div>
+                </div>
+
+                <div class="clock-group">
+                    <div class="small-clock">
+                        <div id="h3" class="hand hour" style="height:35px;"></div>
+                        <div id="m3" class="hand minute" style="height:55px;"></div>
+                    </div>
+                    <div class="timer-display">
+                        <div id="love-timer" class="timer-val"></div>
+                        <div class="timer-label">Dünyamı,</div>
                     </div>
                 </div>
             </div>
+
+            <h2 id="final-balim">Aydınlatmaya başladın balımm :))</h2>
         </section>
     </div>
 
@@ -172,14 +140,14 @@
         function start() {
             if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
                 document.getElementById('gate').style.display = "none";
-                document.getElementById('music').play().catch(() => console.log("Müzik için etkileşim gerekiyor"));
-                startPhotoWall();
-            } else { alert("Şaka böyle değildi sanki? :)"); }
+                document.getElementById('music').play();
+                startWall();
+            }
         }
 
-        function startPhotoWall() {
+        function startWall() {
             const wall = document.getElementById('photo-wall');
-            for(let i=1; i<=150; i++){
+            for(let i=1; i<=150; i++) {
                 const img = document.createElement('img');
                 img.src = `img/${i}.jpg`;
                 img.onerror = function(){ this.src=`https://picsum.photos/200/300?random=${i}`; };
@@ -191,58 +159,72 @@
                 setTimeout(() => { it.style.opacity="1"; it.style.transform="scale(1)"; }, idx * 20);
             });
             setTimeout(() => {
-                wall.style.opacity="0";
+                wall.style.opacity = "0";
                 setTimeout(initUniverse, 1500);
-            }, 7500);
+            }, 7000);
         }
 
         function initUniverse() {
             document.getElementById('main-universe').style.display = "block";
-            const hHand = document.getElementById('hour-hand');
-            const mHand = document.getElementById('min-hand');
-            
+            const h1 = document.getElementById('h1');
+            const m1 = document.getElementById('m1');
             setTimeout(() => {
-                hHand.style.transform = `translate(-50%, 0) rotate(300deg)`;
-                mHand.style.transform = `translate(-50%, 0) rotate(60deg)`;
+                h1.style.transform = "translate(-50%, 0) rotate(300deg)";
+                m1.style.transform = "translate(-50%, 0) rotate(60deg)";
                 setTimeout(() => {
-                    hHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
-                    mHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
-                    setTimeout(() => {
-                        document.getElementById('clock-left').style.opacity = "1";
-                        document.getElementById('clock-right').style.opacity = "1";
-                        startCheckVisibility();
-                    }, 1000);
-                }, 3000);
+                    h1.style.transform = "translate(-50%, 0) rotate(360deg)";
+                    m1.style.transform = "translate(-50%, 0) rotate(360deg)";
+                }, 2500);
             }, 100);
         }
 
-        // SCROLL İZLEME (Haberleri Göster)
-        function checkVisibility() {
-            const cards = document.querySelectorAll('.news-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                if(rect.top < window.innerHeight * 0.8) {
-                    card.classList.add('visible');
-                }
+        // SCROLL OBSERVER (Haberler ve Final)
+        window.addEventListener('scroll', () => {
+            // Haber kartları
+            document.querySelectorAll('.news-card').forEach(card => {
+                if(card.getBoundingClientRect().top < window.innerHeight * 0.8) card.classList.add('visible');
             });
-        }
-        function startCheckVisibility() {
-            checkVisibility();
-            window.addEventListener('scroll', checkVisibility);
+
+            // Final Bölümü Tetikleyici
+            const finalTop = document.querySelector('.final-section').getBoundingClientRect().top;
+            if(finalTop < window.innerHeight * 0.6) {
+                const enOnemli = document.getElementById('en-onemli');
+                enOnemli.style.opacity = "1";
+                enOnemli.style.transform = "translateY(0)";
+                
+                setTimeout(() => { document.getElementById('bugun-itibariyle').style.opacity = "1"; }, 600)
+                setTimeout(() => { document.getElementById('dual-clocks').style.opacity = "1"; startFinalTimers(); }, 1600);
+                setTimeout(() => { document.getElementById('final-balim').style.opacity = "1"; }, 3500);
+            }
+        });
+
+        // SAYAÇLAR VE KÜÇÜK SAATLER
+        function startFinalTimers() {
+            const birth = new Date("2009-04-04T00:00:00");
+            const love = new Date("2023-01-01T00:00:00");
+            
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById('life-timer').innerHTML = getTurkishTime(now - birth);
+                document.getElementById('love-timer').innerHTML = getTurkishTime(now - love);
+                
+                // Küçük saat ellerini hareket ettir
+                const s = now.getSeconds() * 6;
+                document.getElementById('m2').style.transform = `translate(-50%, 0) rotate(${now.getMinutes()*6}deg)`;
+                document.getElementById('h2').style.transform = `translate(-50%, 0) rotate(${now.getHours()*30}deg)`;
+                document.getElementById('m3').style.transform = `translate(-50%, 0) rotate(${now.getMinutes()*6}deg)`;
+                document.getElementById('h3').style.transform = `translate(-50%, 0) rotate(${now.getHours()*30}deg)`;
+            }, 1000);
         }
 
-        // SAYAÇLAR
-        const birthDate = new Date("2009-04-04T00:00:00");
-        const loveDate = new Date("2023-01-01T00:00:00");
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('life-timer').innerHTML = formatTime(now - birthDate);
-            document.getElementById('love-timer').innerHTML = formatTime(now - loveDate);
-        }, 1000);
-
-        function formatTime(ms) {
+        function getTurkishTime(ms) {
             const s = Math.floor(ms/1000);
-            return `${Math.floor(s/31536000)}Y ${Math.floor((s%31536000)/86400)}G<br>${Math.floor((s%86400)/3600)}S ${Math.floor((s%3600)/60)}D ${s%60}Sn`;
+            const y = Math.floor(s/31536000);
+            const g = Math.floor((s%31536000)/86400);
+            const sa = Math.floor((s%86400)/3600);
+            const dk = Math.floor((s%3600)/60);
+            const sn = s%60;
+            return `${y} Yıl ${g} Gün<br>${sa} Saat ${dk} Dakika ${sn} Saniye`;
         }
     </script>
 </body>
