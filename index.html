@@ -3,53 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra & Samet | Multiverse</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <title>Esra & Samet | Zamanın Ötesinde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #bc13fe; --gold: #ffcc00; --dark: #05010a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--dark); color: white; font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh; }
+
+        /* 1. GİRİŞ EKRANI */
+        #gate {
+            position: fixed; inset: 0; background: radial-gradient(circle, #1a0633, #05010a);
+            z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 1.5s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .gate-box { text-align: center; border: 1px solid var(--neon); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.8); box-shadow: 0 0 30px var(--neon); }
+        input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 10px; width: 250px; text-align: center; font-size: 1.1rem; margin-bottom: 20px; outline: none; }
+        .glow-btn { background: var(--neon); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; letter-spacing: 2px; }
+
+        /* 2. ANA EVREN (PARALLAX) */
+        #universe { position: fixed; inset: 0; z-index: -1; }
+        .stars { position: absolute; width: 300%; height: 100%; background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat; opacity: 0.5; }
+
+        /* HUD (NAVİGASYON) */
+        #hud { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; z-index: 100; border-bottom: 1px solid rgba(188, 19, 254, 0.2); background: rgba(5, 1, 10, 0.8); }
+        .timer { font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.5rem; }
+
+        /* TREN VE VAGONLAR */
+        #viewport { width: 100vw; height: 100vh; display: flex; align-items: center; }
+        #train { display: flex; gap: 400px; padding-left: 50vw; transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .vagon { width: 380px; height: 260px; background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border: 1px solid var(--neon); border-radius: 20px; position: relative; cursor: pointer; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .vagon-lid { position: absolute; inset: -1px; background: linear-gradient(135deg, var(--neon), #4a148c); border-radius: 20px; z-index: 10; display: flex; align-items: center; justify-content: center; text-align: center; transition: 0.6s; font-family: 'Dancing Script'; font-size: 1.8rem; }
+        .vagon.open .vagon-lid { transform: perspective(1000px) rotateY(-110deg); opacity: 0; pointer-events: none; }
+        .vagon-content { padding: 20px; text-align: center; }
+        
+        /* ÖZEL ODALAR (PORTALLAR) */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; display: none; padding: 50px; overflow-y: auto; }
+        .terminal { font-family: 'Courier New', monospace; color: #0f0; }
+        .mektup { font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #e1bee7; line-height: 1.6; max-width: 800px; margin: auto; }
+        .close-portal { position: fixed; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
+
+        /* YÜZEN OBJELER */
+        .artifact { position: fixed; font-size: 50px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon)); animation: float 4s infinite ease-in-out; z-index: 50; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+
+        /* KONTROLLER */
+        .scroll-hint { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); opacity: 0.5; font-size: 12px; }
+    </style>
 </head>
 <body>
 
     <div id="gate">
-        <div class="hologram-box">
-            <h1 class="orbitron">ACCESS DENIED</h1>
-            <p>Biyometrik doğrulama: "Kısa ve Küçük"</p>
-            <input type="text" id="pass" placeholder="Şifreleme Anahtarı">
-            <button class="glow-btn" onclick="initUniverse()">SİSTEMİ BAŞLAT</button>
+        <div class="gate-box">
+            <h1 style="font-family:'Orbitron'; margin-bottom: 10px; color: var(--neon);">SYSTEM LOCKED</h1>
+            <p style="margin-bottom: 20px; opacity: 0.7;">Biyometrik doğrulama: "Kısa ve Küçük"</p>
+            <input type="text" id="pass" placeholder="Şifreleme Anahtarı"> <br>
+            <button class="glow-btn" onclick="start()">ERİŞİMİ ONAYLA</button>
         </div>
     </div>
 
-    <div id="universe">
-        <div class="layer star-1"></div>
-        <div class="layer star-2"></div>
-        <div class="layer nebula"></div>
-    </div>
+    <div id="universe"><div class="stars"></div></div>
 
-    <main id="app">
-        <header id="hud">
-            <div class="hud-item">
-                <span>HEDEF:</span> <strong class="gold">ESRA</strong>
-            </div>
-            <div id="timer" class="orbitron">00:00:00:00</div>
-            <div class="hud-item">
-                <span>KONUM:</span> <strong id="location-name">Zaman Boşluğu</strong>
-            </div>
-        </header>
+    <header id="hud">
+        <div>HEDEF: <span style="color:var(--neon)">ESRA</span></div>
+        <div class="timer" id="timer">00:00:00:00</div>
+        <div>KONUM: <span id="loc">İstasyon</span></div>
+    </header>
 
-        <div id="train-viewport">
-            <div id="train-track">
+    <div class="artifact" style="top:20%; left:10%;" onclick="openPortal('discord')">👾</div>
+    <div class="artifact" style="bottom:20%; right:10%;" onclick="openPortal('aot')">🧣</div>
+
+    <div id="viewport">
+        <div id="train">
+            <div class="vagon" onclick="this.classList.toggle('open')">
+                <div class="vagon-lid">4 Nisan 2009 <br> (Dokun)</div>
+                <div class="vagon-content">
+                    <h1>👶</h1>
+                    <p>Güzelimin dünyaya gelip bu evreni aydınlattığı gün.</p>
                 </div>
+            </div>
+            <div class="vagon" onclick="this.classList.toggle('open')">
+                <div class="vagon-lid">14 Kasım 2022</div>
+                <div class="vagon-content">
+                    <h1>💬</h1>
+                    <p>Gizem'sbn terminalinde kesişen iki hayat.</p>
+                </div>
+            </div>
+            <div class="vagon" onclick="openPortal('mektup')">
+                <div class="vagon-lid" style="background:var(--gold); color:black">Hazine Kasası</div>
+                <div class="vagon-content">
+                    <h1>💌</h1>
+                    <p>Sadece senin için yazılmış binlerce kelime.</p>
+                </div>
+            </div>
         </div>
-
-        <div class="artifact scarf" onclick="openPortal('aot')">🧣</div>
-        <div class="artifact discord-logo" onclick="openPortal('terminal')">👾</div>
-    </main>
-
-    <div id="portal-overlay" class="hidden">
-        <button onclick="closePortal()" class="close-btn">X</button>
-        <div id="portal-content"></div>
     </div>
 
-    <audio id="bg-music" loop><source src="muzik.mp3" type="audio/mpeg"></audio>
-    <script src="script.js"></script>
+    <div id="p-discord" class="overlay">
+        <span class="close-portal" onclick="closePortals()">×</span>
+        <div class="terminal">
+            <p>> Bağlanıyor: discord.gg/gizemsbn...</p>
+            <p>> [LOG] 14.11.2022 21:44: Samet kanala katıldı.</p>
+            <p>> [LOG] Esra: "Selam çocuklar!"</p>
+            <p style="color:var(--gold)">> O an başladı her şey, bu terminal hiç kapanmayacak.</p>
+        </div>
+    </div>
+
+    <div id="p-aot" class="overlay">
+        <span class="close-portal" onclick="closePortals()">×</span>
+        <div style="text-align:center">
+            <h1 style="font-family:'Orbitron'; color:#f00">EREN'İN ÖZGÜRLÜĞÜ</h1>
+            <p style="margin-top:20px">Mikasa'nın atkısı gibi, mesafeler ne kadar uzun olursa olsun seni hep saracağım.</p>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHlxNnZ3ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8xZjY1/tliWvBKpAq_tK/giphy.gif" width="300" style="margin-top:20px; border-radius:10px">
+        </div>
+    </div>
+
+    <div id="p-mektup" class="overlay">
+        <span class="close-portal" onclick="closePortals()">×</span>
+        <div class="mektup">
+            <p>Sevgilim Esra,</p>
+            <p>Bugün senin günün. Bu site, senin keşfetmen için kurduğum ufacık bir evren. Her vagon, her portal bizim bir parçamız. Özgür ve Maya'lı o sabahları hayal ederken, bu kodların arasında bile senin kokunu duyabiliyorum...</p>
+            <p>(Buraya istediğin o uzun mektubu ekleyeceğiz...)</p>
+        </div>
+    </div>
+
+    <p class="scroll-hint">MOUSE TEKERLEĞİNİ KULLAN VEYA SÜRÜKLE</p>
+    <audio id="music" loop><source src="muzik.mp3" type="audio/mpeg"></audio>
+
+    <script>
+        function start() {
+            if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
+                document.getElementById('gate').style.transform = "translateY(-100%)";
+                document.getElementById('music').play().catch(() => {});
+                setInterval(updateTimer, 1000);
+            } else { alert("ERİŞİM REDDEDİLDİ."); }
+        }
+
+        let scrollPos = 0;
+        window.addEventListener('wheel', (e) => {
+            scrollPos += e.deltaY;
+            if(scrollPos < 0) scrollPos = 0;
+            if(scrollPos > 3000) scrollPos = 3000;
+            document.getElementById('train').style.transform = `translateX(-${scrollPos}px)`;
+            document.querySelector('.stars').style.transform = `translateX(-${scrollPos * 0.2}px)`;
+        });
+
+        function updateTimer() {
+            const diff = new Date() - new Date("2023-01-01T00:00:00");
+            const d = Math.floor(diff/86400000);
+            const h = Math.floor((diff/3600000)%24);
+            const m = Math.floor((diff/60000)%60);
+            const s = Math.floor((diff/1000)%60);
+            document.getElementById('timer').innerText = `${d}D : ${h}H : ${m}M : ${s}S`;
+        }
+
+        function openPortal(id) { document.getElementById('p-'+id).style.display = 'block'; }
+        function closePortals() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
+    </script>
 </body>
 </html>
