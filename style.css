@@ -2,64 +2,63 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-/* GİRİŞ VE DUVAR */
+/* GATE */
 #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 1s; }
 .gate-box { text-align: center; border: 1px solid var(--neon-purple); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.9); }
+input { background: transparent; border: 1px solid var(--neon-purple); color: #fff; padding: 12px; border-radius: 10px; text-align: center; outline: none; }
+
+/* PHOTO WALL */
 #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
 .photo-item { width: 100%; height: 140px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
 
-/* UZAY VE AY */
-.nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(106, 27, 154, 0.2), transparent 70%); z-index: -2; }
-.moon { position: fixed; top: 40px; right: 60px; width: 100px; height: 100px; border-radius: 50%; box-shadow: 18px 18px 0 0 white; transform: rotate(-20deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.4)); z-index: -1; }
+/* 🌌 SONSUZ UZAY */
+#main-universe { display: none; position: relative; width: 100%; min-height: 100vh; }
+.nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(106, 27, 154, 0.2), transparent 70%); z-index: -2; pointer-events: none; }
+#star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; }
+.moon { position: fixed; top: 40px; right: 60px; width: 80px; height: 80px; border-radius: 50%; box-shadow: 15px 15px 0 0 white; transform: rotate(-20deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.4)); z-index: -1; }
 .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite ease-in-out; }
 @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-.shooting-star { position: absolute; width: 6px; height: 6px; background: #fff; box-shadow: 0 0 20px #fff, -10px 0 30px var(--neon-purple); border-radius: 50%; animation: shoot var(--s) infinite linear; opacity: 0; }
-@keyframes shoot { 0% { transform: translate(0,0) rotate(-45deg) scale(0); opacity: 0; } 10% { opacity: 1; } 30% { transform: translate(-1000px, 1000px) rotate(-45deg) scale(2); opacity: 0; } 100% { opacity: 0; } }
-
-/* SAAT TASARIMI (KADRANLI) */
-#clock-intro-section { height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; }
-#intro-clock-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1); }
-#intro-clock-wrapper.center-focus { transform: scale(2); } /* Devasa Başlangıç */
-#intro-clock-wrapper.docked { transform: scale(0.6); justify-content: flex-start; padding-left: 8%; }
-
-.clock-main { 
-    width: 300px; height: 300px; border: 6px solid var(--gold); border-radius: 50%; 
-    position: relative; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); flex-shrink: 0;
+/* SAAT: BAŞLANGIÇTA GİZLİ */
+#intro-clock-wrapper { 
+    display: flex; align-items: center; justify-content: center; width: 100%; 
+    opacity: 0; transform: scale(0); 
+    transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.5s ease; 
 }
-.dot { position: absolute; background: var(--gold); border-radius: 50%; }
-.d12 { top: 10px; left: 50%; width: 12px; height: 12px; transform: translateX(-50%); }
-.d3 { right: 10px; top: 50%; width: 12px; height: 12px; transform: translateY(-50%); }
-.d6 { bottom: 10px; left: 50%; width: 12px; height: 12px; transform: translateX(-50%); }
-.d9 { left: 10px; top: 50%; width: 12px; height: 12px; transform: translateY(-50%); }
-.center-nut { position: absolute; inset: 0; margin: auto; width: 150px; height: 15px; background: var(--gold); border-radius: 50%; width: 15px; height: 15px; z-index: 10; }
+#intro-clock-wrapper.center-focus { opacity: 1 !important; transform: scale(2) !important; }
+#intro-clock-wrapper.docked { transform: scale(0.6) !important; justify-content: flex-start !important; padding-left: 8%; opacity: 1; }
 
-.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; border-radius: 5px; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
-.hour { width: 8px; height: 80px; background: var(--gold); z-index: 2; }
-.minute { width: 5px; height: 110px; z-index: 1; }
-.brand { position: absolute; top: 20%; width: 100%; text-align: center; font-family: 'Great Vibes'; font-size: 2.8rem; color: #fff; text-shadow: 0 0 10px #fff; }
+.clock-main { width: 300px; height: 300px; border: 6px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); }
+.dot { position: absolute; background: var(--gold); border-radius: 50%; width: 12px; height: 12px; }
+.d12 { top: 10px; left: 50%; transform: translateX(-50%); }
+.d3 { right: 10px; top: 50%; transform: translateY(-50%); }
+.d6 { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.d9 { left: 10px; top: 50%; transform: translateY(-50%); }
+.center-nut { position: absolute; inset: 0; margin: auto; width: 15px; height: 15px; background: var(--gold); border-radius: 50%; z-index: 10; }
+.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
+.hour { width: 8px; height: 80px; background: var(--gold); }
+.minute { width: 5px; height: 110px; }
+.brand { position: absolute; top: 20%; width: 100%; text-align: center; font-family: 'Great Vibes'; font-size: 2.8rem; }
 
 /* YAZILAR */
 #intro-texts { margin-left: 60px; display: none; flex-direction: column; opacity: 0; transition: 1.5s; }
 #intro-texts.visible { display: flex; opacity: 1; }
-#birth-date-title { font-family: 'Great Vibes'; font-size: 3.8rem; color: #fff; text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--gold); }
-#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.4rem; color: var(--gold); margin-top: 10px; }
-#scroll-prompt { font-size: 1rem; color: rgba(255,255,255,0.5); margin-top: 30px; letter-spacing: 4px; animation: bounce 2s infinite; }
+#birth-date-title { font-family: 'Great Vibes'; font-size: 3.8rem; text-shadow: 0 0 20px var(--neon-purple); }
+#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.4rem; color: var(--gold); }
+#scroll-prompt { font-size: 1rem; color: rgba(255,255,255,0.5); margin-top: 30px; animation: bounce 2s infinite; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* HABERLER VE FİNAL */
+/* SCROLL ANİMASYONU */
+.reveal { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
+
 .news-container { padding: 200px 10%; }
-.news-row { display: flex; width: 100%; margin-bottom: 150px; opacity: 0; transform: translateY(50px); transition: 1.2s; }
-.news-row.visible { opacity: 1; transform: translateY(0); }
+.news-row { display: flex; width: 100%; margin-bottom: 150px; }
 .news-row.right { justify-content: flex-end; }
 .news-card { width: 550px; background: var(--paper); color: #222; padding: 30px; box-shadow: 15px 15px 0 var(--neon-purple); }
-.news-img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ddd; filter: sepia(0.2); }
-h2 { font-family: 'Playfair Display'; font-size: 1.8rem; margin-bottom: 15px; }
+.news-img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 20px; }
 
 .final-section { text-align: center; padding-bottom: 200px; }
-#en-onemli { font-family: 'Great Vibes'; font-size: 4.5rem; color: var(--gold); opacity: 0; transform: translateY(-10mm); transition: 0.8s; }
-#bugun-itibariyle { font-size: 1.4rem; letter-spacing: 6px; opacity: 0; margin: 20px 0; transition: 1s; }
-.dual-clocks { display: flex; justify-content: space-around; opacity: 0; transition: 2s; margin-top: 80px; }
-.t-label { font-family: 'Great Vibes'; font-size: 3.2rem; color: #fff; }
+.dual-clocks { display: flex; justify-content: space-around; margin-top: 80px; }
+.t-label { font-family: 'Great Vibes'; font-size: 3.2rem; }
 .t-val { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); }
-#final-text { font-family: 'Great Vibes'; font-size: 4rem; margin-top: 100px; opacity: 0; transition: 2s; text-shadow: 0 0 20px var(--neon-purple); }
