@@ -3,161 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra & Samet | Zamanın Ötesinde</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <title>Sonsuzluk İstasyonu | Esra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #bc13fe; --gold: #ffcc00; --dark: #05010a; }
+        :root { --purple: #2a0a4d; --neon: #bc13fe; --gold: #ffd700; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--dark); color: white; font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh; }
+        body, html { height: 100%; width: 100%; background: #000; overflow: hidden; font-family: 'Montserrat', sans-serif; }
 
         /* 1. GİRİŞ EKRANI */
         #gate {
-            position: fixed; inset: 0; background: radial-gradient(circle, #1a0633, #05010a);
-            z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 1.5s cubic-bezier(0.8, 0, 0.2, 1);
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .gate-box { text-align: center; border: 1px solid var(--neon); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.8); box-shadow: 0 0 30px var(--neon); }
-        input { background: transparent; border: 1px solid var(--neon); padding: 15px; color: white; border-radius: 10px; width: 250px; text-align: center; font-size: 1.1rem; margin-bottom: 20px; outline: none; }
-        .glow-btn { background: var(--neon); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; letter-spacing: 2px; }
+        .gate-input {
+            background: transparent; border: 1px solid var(--neon); padding: 15px; color: white;
+            border-radius: 30px; text-align: center; width: 280px; font-size: 1rem; outline: none;
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+        }
 
-        /* 2. ANA EVREN (PARALLAX) */
-        #universe { position: fixed; inset: 0; z-index: -1; }
-        .stars { position: absolute; width: 300%; height: 100%; background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat; opacity: 0.5; }
+        /* 2. FOTOĞRAF MATRİSİ (GRID) */
+        #photo-wall {
+            position: fixed; inset: 0; display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            z-index: 8000; pointer-events: none; opacity: 0; transition: 1s;
+        }
+        .photo-item {
+            width: 100%; height: 120px; object-fit: cover; opacity: 0;
+            transform: scale(0.5); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #neon-text {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'Dancing Script', cursive; font-size: 5rem; color: #fff;
+            text-shadow: 0 0 20px var(--neon), 0 0 40px var(--neon);
+            z-index: 8500; opacity: 0; text-align: center; pointer-events: none;
+        }
 
-        /* HUD (NAVİGASYON) */
-        #hud { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; z-index: 100; border-bottom: 1px solid rgba(188, 19, 254, 0.2); background: rgba(5, 1, 10, 0.8); }
-        .timer { font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.5rem; }
+        /* 3. ANA EVREN (MOR & YILDIZLAR) */
+        #main-universe {
+            position: fixed; inset: 0; opacity: 0; display: none;
+            background: radial-gradient(circle at center, #1a0633 0%, #05010a 100%);
+            z-index: 1000;
+        }
+        .stars {
+            position: absolute; width: 100%; height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.3;
+        }
+        .moons { position: absolute; top: 10%; right: 10%; font-size: 3rem; opacity: 0.2; }
 
-        /* TREN VE VAGONLAR */
-        #viewport { width: 100vw; height: 100vh; display: flex; align-items: center; }
-        #train { display: flex; gap: 400px; padding-left: 50vw; transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .vagon { width: 380px; height: 260px; background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border: 1px solid var(--neon); border-radius: 20px; position: relative; cursor: pointer; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .vagon-lid { position: absolute; inset: -1px; background: linear-gradient(135deg, var(--neon), #4a148c); border-radius: 20px; z-index: 10; display: flex; align-items: center; justify-content: center; text-align: center; transition: 0.6s; font-family: 'Dancing Script'; font-size: 1.8rem; }
-        .vagon.open .vagon-lid { transform: perspective(1000px) rotateY(-110deg); opacity: 0; pointer-events: none; }
-        .vagon-content { padding: 20px; text-align: center; }
-        
-        /* ÖZEL ODALAR (PORTALLAR) */
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; display: none; padding: 50px; overflow-y: auto; }
-        .terminal { font-family: 'Courier New', monospace; color: #0f0; }
-        .mektup { font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #e1bee7; line-height: 1.6; max-width: 800px; margin: auto; }
-        .close-portal { position: fixed; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
+        /* 4. ANALOG SAAT (TOZDAN VAR OLMA) */
+        #clock-container {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 300px; height: 300px; z-index: 2000; opacity: 0;
+            filter: blur(10px); transition: 3s ease-out;
+        }
+        .analog-clock {
+            width: 100%; height: 100%; border: 4px solid var(--gold);
+            border-radius: 50%; position: relative; background: rgba(0,0,0,0.4);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        .brand {
+            position: absolute; top: 30%; width: 100%; text-align: center;
+            font-family: 'Orbitron', sans-serif; font-size: 14px; color: var(--gold); letter-spacing: 3px;
+        }
+        .hand {
+            position: absolute; bottom: 50%; left: 50%; transform-origin: bottom;
+            background: white; border-radius: 10px; transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hour { width: 6px; height: 70px; background: var(--gold); z-index: 3; }
+        .minute { width: 4px; height: 100px; background: #fff; z-index: 2; }
+        .center-dot {
+            position: absolute; top: 50%; left: 50%; width: 12px; height: 12px;
+            background: var(--gold); border-radius: 50%; transform: translate(-50%, -50%); z-index: 4;
+        }
+        #clock-date {
+            position: absolute; bottom: -60px; width: 100%; text-align: center;
+            font-family: 'Orbitron'; font-size: 1.5rem; color: #fff; opacity: 0; transition: 1s;
+        }
 
-        /* YÜZEN OBJELER */
-        .artifact { position: fixed; font-size: 50px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon)); animation: float 4s infinite ease-in-out; z-index: 50; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
-
-        /* KONTROLLER */
-        .scroll-hint { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); opacity: 0.5; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div id="gate">
-        <div class="gate-box">
-            <h1 style="font-family:'Orbitron'; margin-bottom: 10px; color: var(--neon);">SYSTEM LOCKED</h1>
-            <p style="margin-bottom: 20px; opacity: 0.7;">Biyometrik doğrulama: "Kısa ve Küçük"</p>
-            <input type="text" id="pass" placeholder="Şifreleme Anahtarı"> <br>
-            <button class="glow-btn" onclick="start()">ERİŞİMİ ONAYLA</button>
-        </div>
+        <p style="color: #888; font-size: 12px; margin-bottom: 10px;">"Senin için biraz kısa ve küçük olabilir..."</p>
+        <input type="password" id="pass" class="gate-input" placeholder="Şifre">
+        <button onclick="unlock()" style="margin-top:20px; background:var(--neon); color:white; border:none; padding:10px 30px; border-radius:20px; cursor:pointer;">Başlat</button>
     </div>
 
-    <div id="universe"><div class="stars"></div></div>
+    <div id="photo-wall"></div>
+    <div id="neon-text">İyi ki doğdun güzel sevgilimm</div>
 
-    <header id="hud">
-        <div>HEDEF: <span style="color:var(--neon)">ESRA</span></div>
-        <div class="timer" id="timer">00:00:00:00</div>
-        <div>KONUM: <span id="loc">İstasyon</span></div>
-    </header>
-
-    <div class="artifact" style="top:20%; left:10%;" onclick="openPortal('discord')">👾</div>
-    <div class="artifact" style="bottom:20%; right:10%;" onclick="openPortal('aot')">🧣</div>
-
-    <div id="viewport">
-        <div id="train">
-            <div class="vagon" onclick="this.classList.toggle('open')">
-                <div class="vagon-lid">4 Nisan 2009 <br> (Dokun)</div>
-                <div class="vagon-content">
-                    <h1>👶</h1>
-                    <p>Güzelimin dünyaya gelip bu evreni aydınlattığı gün.</p>
-                </div>
+    <div id="main-universe">
+        <div class="stars"></div>
+        <div class="moons">🌙</div>
+        
+        <div id="clock-container">
+            <div class="analog-clock">
+                <div class="brand">MAYA</div>
+                <div id="hour-hand" class="hand hour"></div>
+                <div id="min-hand" class="hand minute"></div>
+                <div class="center-dot"></div>
             </div>
-            <div class="vagon" onclick="this.classList.toggle('open')">
-                <div class="vagon-lid">14 Kasım 2022</div>
-                <div class="vagon-content">
-                    <h1>💬</h1>
-                    <p>Gizem'sbn terminalinde kesişen iki hayat.</p>
-                </div>
-            </div>
-            <div class="vagon" onclick="openPortal('mektup')">
-                <div class="vagon-lid" style="background:var(--gold); color:black">Hazine Kasası</div>
-                <div class="vagon-content">
-                    <h1>💌</h1>
-                    <p>Sadece senin için yazılmış binlerce kelime.</p>
-                </div>
-            </div>
+            <div id="clock-date">4 Nisan 2009</div>
         </div>
     </div>
 
-    <div id="p-discord" class="overlay">
-        <span class="close-portal" onclick="closePortals()">×</span>
-        <div class="terminal">
-            <p>> Bağlanıyor: discord.gg/gizemsbn...</p>
-            <p>> [LOG] 14.11.2022 21:44: Samet kanala katıldı.</p>
-            <p>> [LOG] Esra: "Selam çocuklar!"</p>
-            <p style="color:var(--gold)">> O an başladı her şey, bu terminal hiç kapanmayacak.</p>
-        </div>
-    </div>
-
-    <div id="p-aot" class="overlay">
-        <span class="close-portal" onclick="closePortals()">×</span>
-        <div style="text-align:center">
-            <h1 style="font-family:'Orbitron'; color:#f00">EREN'İN ÖZGÜRLÜĞÜ</h1>
-            <p style="margin-top:20px">Mikasa'nın atkısı gibi, mesafeler ne kadar uzun olursa olsun seni hep saracağım.</p>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHlxNnZ3ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4ZzR4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZAmS8xZjY1/tliWvBKpAq_tK/giphy.gif" width="300" style="margin-top:20px; border-radius:10px">
-        </div>
-    </div>
-
-    <div id="p-mektup" class="overlay">
-        <span class="close-portal" onclick="closePortals()">×</span>
-        <div class="mektup">
-            <p>Sevgilim Esra,</p>
-            <p>Bugün senin günün. Bu site, senin keşfetmen için kurduğum ufacık bir evren. Her vagon, her portal bizim bir parçamız. Özgür ve Maya'lı o sabahları hayal ederken, bu kodların arasında bile senin kokunu duyabiliyorum...</p>
-            <p>(Buraya istediğin o uzun mektubu ekleyeceğiz...)</p>
-        </div>
-    </div>
-
-    <p class="scroll-hint">MOUSE TEKERLEĞİNİ KULLAN VEYA SÜRÜKLE</p>
-    <audio id="music" loop><source src="muzik.mp3" type="audio/mpeg"></audio>
+    <audio id="music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
 
     <script>
-        function start() {
-            if(document.getElementById('pass').value.toLowerCase().trim() === "kısa ve küçük") {
-                document.getElementById('gate').style.transform = "translateY(-100%)";
-                document.getElementById('music').play().catch(() => {});
-                setInterval(updateTimer, 1000);
-            } else { alert("ERİŞİM REDDEDİLDİ."); }
+        const photoWall = document.getElementById('photo-wall');
+        const totalPhotos = 150; // İstediğin miktar
+
+        // Fotoğrafları hazırlama (İsimleri senin klasörüne göre olmalı, örn: 1.jpg, 2.jpg)
+        function createPhotos() {
+            for(let i=1; i <= totalPhotos; i++) {
+                const img = document.createElement('img');
+                img.src = `img/${i}.jpg`; // Fotoğrafların "img" klasöründe 1.jpg, 2.jpg... diye gitmeli
+                img.className = 'photo-item';
+                photoWall.appendChild(img);
+            }
+        }
+        createPhotos();
+
+        function unlock() {
+            const pass = document.getElementById('pass').value.toLowerCase().trim();
+            if(pass === "kısa ve küçük") {
+                document.getElementById('gate').style.display = "none";
+                document.getElementById('music').play();
+                startPhotoFlow();
+            } else { alert("Şaka böyle değildi sanki? :)"); }
         }
 
-        let scrollPos = 0;
-        window.addEventListener('wheel', (e) => {
-            scrollPos += e.deltaY;
-            if(scrollPos < 0) scrollPos = 0;
-            if(scrollPos > 3000) scrollPos = 3000;
-            document.getElementById('train').style.transform = `translateX(-${scrollPos}px)`;
-            document.querySelector('.stars').style.transform = `translateX(-${scrollPos * 0.2}px)`;
-        });
+        // 1. FOTOĞRAF AKIŞI
+        function startPhotoFlow() {
+            photoWall.style.opacity = "1";
+            const items = document.querySelectorAll('.photo-item');
+            
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = "1";
+                    item.style.transform = "scale(1)";
+                }, index * 40); // Fotoğrafların tek tek açılma hızı
+            });
 
-        function updateTimer() {
-            const diff = new Date() - new Date("2023-01-01T00:00:00");
-            const d = Math.floor(diff/86400000);
-            const h = Math.floor((diff/3600000)%24);
-            const m = Math.floor((diff/60000)%60);
-            const s = Math.floor((diff/1000)%60);
-            document.getElementById('timer').innerText = `${d}D : ${h}H : ${m}M : ${s}S`;
+            // Fotoğraflar bittikten sonra neon yazı
+            setTimeout(() => {
+                document.getElementById('neon-text').style.opacity = "1";
+                
+                // Her şeyin sönmesi
+                setTimeout(() => {
+                    document.getElementById('photo-wall').style.opacity = "0";
+                    document.getElementById('neon-text').style.opacity = "0";
+                    setTimeout(initUniverse, 1500);
+                }, 4000);
+            }, items.length * 40 + 1000);
         }
 
-        function openPortal(id) { document.getElementById('p-'+id).style.display = 'block'; }
-        function closePortals() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
+        // 2. MOR EVREN VE ANALOG SAAT
+        function initUniverse() {
+            const universe = document.getElementById('main-universe');
+            const clock = document.getElementById('clock-container');
+            universe.style.display = "block";
+            
+            setTimeout(() => {
+                universe.style.opacity = "1";
+                // Tozdan var olma efekti
+                clock.style.opacity = "1";
+                clock.style.filter = "blur(0px)";
+                startClockAnimation();
+            }, 500);
+        }
+
+        function startClockAnimation() {
+            const hHand = document.getElementById('hour-hand');
+            const mHand = document.getElementById('min-hand');
+            
+            // Başlangıç: 22:10
+            // Saat 22 = 300 derece (12'den itibaren 22*30)
+            // Dakika 10 = 60 derece (10*6)
+            hHand.style.transform = `translate(-50%, 0) rotate(300deg)`;
+            mHand.style.transform = `translate(-50%, 0) rotate(60deg)`;
+
+            // 3 saniye sonra 00:00'a geçiş
+            setTimeout(() => {
+                hHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
+                mHand.style.transform = `translate(-50%, 0) rotate(360deg)`;
+                
+                // Küçülme ve yukarı yerleşme
+                setTimeout(() => {
+                    const container = document.getElementById('clock-container');
+                    container.style.transition = "2s ease-in-out";
+                    container.style.top = "20%";
+                    container.style.transform = "translate(-50%, -50%) scale(0.6)";
+                    
+                    // Tarihin belirmesi
+                    setTimeout(() => {
+                        document.getElementById('clock-date').style.opacity = "1";
+                    }, 1500);
+                }, 2500);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
