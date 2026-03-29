@@ -1,0 +1,57 @@
+:root {
+    --neon-purple: #bc13fe;
+    --deep-space: #02010a;
+    --gold: #ffcc00;
+}
+
+body, html {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    background: var(--deep-space); color: white;
+    overflow: hidden; font-family: 'Montserrat', sans-serif;
+}
+
+/* Parallax Katmanları */
+.layer { position: fixed; inset: 0; pointer-events: none; }
+.star-1 { background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.5; z-index: 1; }
+.star-2 { background: url('https://www.transparenttextures.com/patterns/black-thread.png'); opacity: 0.2; z-index: 2; transform: scale(1.5); }
+
+/* HUD (Gelecek Teması) */
+#hud {
+    position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between;
+    padding: 20px 50px; background: linear-gradient(to bottom, rgba(188, 19, 254, 0.2), transparent);
+    z-index: 100; border-bottom: 1px solid rgba(188, 19, 254, 0.3);
+}
+
+.orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+
+/* Tren Tasarımı */
+#train-viewport {
+    height: 100vh; width: 100vw; display: flex; align-items: center;
+    perspective: 1000px;
+}
+
+#train-track {
+    display: flex; gap: 300px; padding-left: 50vw;
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vagon {
+    width: 400px; height: 250px; background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px); border: 1px solid var(--neon-purple);
+    border-radius: 20px; position: relative; transform-style: preserve-3d;
+}
+
+/* Yüzen Objeler */
+.artifact {
+    position: fixed; font-size: 40px; cursor: pointer;
+    animation: float 4s infinite ease-in-out; filter: drop-shadow(0 0 10px var(--neon-purple));
+}
+.scarf { top: 20%; right: 10%; }
+.discord-logo { bottom: 20%; left: 10%; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+}
+
+/* Diğer detaylar (Buhar, vagon kapağı vb. buraya eklenecek) */
