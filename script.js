@@ -4,31 +4,56 @@ function startExperience() {
         document.getElementById('gate').style.opacity = "0";
         setTimeout(() => document.getElementById('gate').style.display = "none", 1000);
         document.getElementById('bg-music').play();
-        runPhotoWall();
+        runPhotoFlow(); // Fotoğraf akışını başlat
     }
 }
 
-function runPhotoWall() {
+// 1. AŞAMA: FOTOĞRAFLARIN SIRA SIRA GELİŞİ
+function runPhotoFlow() {
     const wall = document.getElementById('photo-wall');
-    for(let i=1; i<=150; i++) {
+    const totalPhotos = 120; // Sayıyı arttırdım
+    
+    for(let i=1; i<=totalPhotos; i++) {
         const img = document.createElement('img');
         img.src = `img/${i}.jpg`;
         img.onerror = function() { this.src = `https://picsum.photos/200/200?random=${i}`; };
         img.className = 'photo-item';
         wall.appendChild(img);
     }
+    
     wall.style.opacity = "1";
-    document.querySelectorAll('.photo-item').forEach((img, i) => {
-        setTimeout(() => { img.style.opacity = "1"; img.style.transform = "scale(1)"; }, i * 15);
+    const items = document.querySelectorAll('.photo-item');
+    
+    // Sol üstten başlayarak sıra sıra yavaşça gelme
+    items.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = "1";
+            item.style.transform = "scale(1)";
+        }, index * 40); // Gelme hızını yavaşlattım
     });
+
+    // 2. AŞAMA: HEPSİ SÖNER VE NEON YAZI GELİR
     setTimeout(() => {
-        wall.style.opacity = "0";
-        setTimeout(showUniverse, 1500);
-    }, 6000);
+        wall.style.opacity = "0"; // Hepsi beraber söner
+        setTimeout(() => {
+            const neon = document.getElementById('neon-intro-text');
+            neon.style.display = "block";
+            setTimeout(() => {
+                neon.style.opacity = "1";
+                // 3. AŞAMA: NEON SÖNER VE ANA EKRAN GELİR
+                setTimeout(() => {
+                    neon.style.opacity = "0";
+                    setTimeout(initUniverse, 2000);
+                }, 4000);
+            }, 100);
+        }, 1500);
+    }, (totalPhotos * 40) + 2000);
 }
 
-function showUniverse() {
-    document.getElementById('main-universe').style.display = "block";
+// 3. AŞAMA: ANA EVREN VE SAAT ANİMASYONU
+function initUniverse() {
+    const universe = document.getElementById('main-universe');
+    universe.style.display = "block";
     createCosmos(); 
     
     const wrapper = document.getElementById('intro-clock-wrapper');
@@ -36,26 +61,25 @@ function showUniverse() {
     const m1 = document.getElementById('m1');
     const texts = document.getElementById('intro-texts');
 
-    // 1. SAAT BELİRİR (Ortada pürüzsüzce büyür)
     setTimeout(() => {
+        universe.style.opacity = "1";
+        // Tozdan var olma (Blur ve Opacity geçişi)
         wrapper.classList.add('active');
         
-        // 2. KOLLAR YERİNE OTURUR (4 Nisan 2009 00:00 konumu)
+        // Kolların süzülerek yerine oturması (Verdiğin koddaki gibi)
         setTimeout(() => {
-            h1.style.transform = "translate(-50%, 0) rotate(0deg)";
-            m1.style.transform = "translate(-50%, 0) rotate(0deg)";
+            h1.style.transform = "translate(-50%, 0) rotate(360deg)";
+            m1.style.transform = "translate(-50%, 0) rotate(360deg)";
             
-            // 3. SOLA KAYAR VE KÜÇÜLÜR
+            // Küçülüp sola kayma
             setTimeout(() => {
                 wrapper.classList.add('docked');
-                
-                // 4. YAZILAR GELİR
                 setTimeout(() => {
                     texts.style.display = "flex";
                     setTimeout(() => texts.classList.add('visible'), 100);
                 }, 1500);
-            }, 2500);
-        }, 1500);
+            }, 3000);
+        }, 2000);
     }, 500);
 }
 
@@ -68,7 +92,7 @@ function createCosmos() {
         s.style.width = (Math.random() * 3 + 1) + 'px';
         s.style.height = s.style.width;
         s.style.left = Math.random() * 100 + '%';
-        s.style.top = Math.random() * pageHeight + 'px'; // Tüm sayfa boyu
+        s.style.top = Math.random() * pageHeight + 'px';
         s.style.setProperty('--t', (2 + Math.random() * 5) + 's');
         field.appendChild(s);
     }
