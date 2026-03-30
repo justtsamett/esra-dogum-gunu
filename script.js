@@ -1,21 +1,17 @@
-// Şifre Girişi (Değişmedi)
 function startExperience() {
     const pass = document.getElementById('pass').value.toLowerCase().trim();
     if(pass === "kısa ve küçük") {
         document.getElementById('gate').style.opacity = "0";
         setTimeout(() => document.getElementById('gate').style.display = "none", 1000);
-        document.getElementById('bg-music').play().catch(e => console.log("Müzik etkileşim bekliyor."));
-        runPhotoFlow(); // 1. Aşama: Fotoğrafları başlat
+        document.getElementById('bg-music').play();
+        runPhotoFlow();
     }
 }
 
-// 1. AŞAMA: FOTOĞRAFLARIN SIRA SIRA GELİŞİ (Pürüzsüz)
+// 1. FOTOĞRAFLARIN GELİŞİ
 function runPhotoFlow() {
     const wall = document.getElementById('photo-wall');
-    const totalPhotos = 120; // Sayı arttı
-    
-    // Fotoğrafları oluştur (picsum test, img clasörü gerçek)
-    for(let i=1; i<=totalPhotos; i++){
+    for(let i=1; i<=140; i++) {
         const img = document.createElement('img');
         img.src = `img/${i}.jpg`;
         img.onerror = function(){ this.src=`https://picsum.photos/200/200?random=${i}`; };
@@ -23,194 +19,149 @@ function runPhotoFlow() {
         wall.appendChild(img);
     }
     
-    wall.style.opacity = "1";
-    const items = document.querySelectorAll('.photo-item');
-    
-    // Sol üstten başlayarak tane tane süzülerek gelme (Yavaşladı)
-    items.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.opacity = "1";
-            item.style.transform = "scale(1)";
-        }, index * 45); // Yavaş ve premium geliş
-    });
-
-    // 2. AŞAMA: HEPSİ SÖNER, NEON YAZILAR GELİR (Zincirleme reaksiyon)
     setTimeout(() => {
-        wall.style.opacity = "0"; // Hepsi beraber söner
+        wall.style.opacity = "1";
+        document.querySelectorAll('.photo-item').forEach((item, i) => {
+            setTimeout(() => { item.style.opacity = "1"; item.style.transform = "scale(1)"; }, i * 40);
+        });
         
-        // Ara Neon Yazı 1: "Biricik sevgilim..."
+        // 2. HER ŞEY SÖNER VE NEONLAR BAŞLAR
         setTimeout(() => {
-            const neon1 = document.getElementById('neon-intro-text');
-            neon1.style.display = "block";
-            setTimeout(() => {
-                neon1.style.opacity = "1";
-                // Sönme ve 2 saniyelik İntro'ya geçiş
-                setTimeout(() => {
-                    neon1.style.opacity = "0";
-                    setTimeout(runLoveIntro, 1500); // ✨ Yeni: Esra & Samet İntro
-                }, 4000);
-            }, 100);
-        }, 1500);
-    }, (totalPhotos * 45) + 1000);
-}
-
-// ✨ YENİ: Esra & Samet İntro (2 Saniye)
-function runLoveIntro() {
-    const intro = document.getElementById('love-intro');
-    intro.style.display = "block";
-    setTimeout(() => {
-        intro.style.opacity = "1";
-        // 2 saniye sonra sönüp ana evrene geçiş
-        setTimeout(() => {
-            intro.style.opacity = "0";
-            setTimeout(initUniverse, 1500); // 3. Aşama: Ana Evren
-        }, 2500); // Görüntülenme süresi
+            wall.style.opacity = "0";
+            setTimeout(runNeonSequence, 2000);
+        }, (140 * 40) + 2000);
     }, 100);
 }
 
-// 3. AŞAMA: ANA EVREN, TOZDAN VAR OLAN SAAT VE DİĞERLERİ
-function initUniverse() {
-    document.getElementById('main-universe').style.display = "block";
-    createCosmos(); // Sonsuz Uzayı Yarat!
-    
-    const wrapper = document.getElementById('intro-clock-wrapper');
-    const h1 = document.getElementById('h1');
-    const m1 = document.getElementById('m1');
-    const texts = document.getElementById('intro-texts');
+// 2. NEON SEKANS
+function runNeonSequence() {
+    const n1 = document.getElementById('neon-intro-text');
+    const n2 = document.getElementById('love-intro');
 
+    n1.style.display = "block";
     setTimeout(() => {
-        document.getElementById('main-universe').style.opacity = "1";
-        
-        // Tozdan netleşerek var olma (Pürüzsüz geçiş)
-        wrapper.classList.add('active');
-        
-        // Kolların süzülerek yerine oturması (V11 ile aynı)
+        n1.style.opacity = "1";
         setTimeout(() => {
-            h1.style.transform = "translate(-50%, 0) rotate(360deg)";
-            m1.style.transform = "translate(-50%, 0) rotate(360deg)";
-            
-            // Küçülüp sola kayma
+            n1.style.opacity = "0";
             setTimeout(() => {
-                wrapper.classList.add('docked');
+                n2.style.display = "block";
                 setTimeout(() => {
-                    texts.style.display = "flex";
-                    setTimeout(() => texts.classList.add('visible'), 100);
-                }, 1500);
-            }, 3000);
-        }, 2000);
-    }, 500);
+                    n2.style.opacity = "1";
+                    setTimeout(() => {
+                        n2.style.opacity = "0";
+                        setTimeout(initUniverse, 1500);
+                    }, 2500); // Esra & Samet 2.5 saniye kalır
+                }, 100);
+            }, 1000);
+        }, 3000);
+    }, 100);
 }
 
-// 🌌 SONSUZ KOZMOS (Tüm Sayfaya Yayılmış Yıldızlar)
-function createCosmos() {
-    const field = document.getElementById('star-field');
-    const pageHeight = document.documentElement.scrollHeight; // Sayfanın tam boyu
+// 3. ANA EVREN VE SAAT
+function initUniverse() {
+    const universe = document.getElementById('main-universe');
+    const clock = document.getElementById('clock-container');
+    const texts = document.getElementById('hero-texts');
     
-    for(let i=0; i<800; i++) { // Sayı arttı
+    universe.style.display = "block";
+    createStars();
+
+    setTimeout(() => {
+        universe.style.opacity = "1";
+        clock.classList.add('active'); // Tozdan var olma (Blur -> Sharp)
+        
+        // Kolların 00:00'a gelmesi
+        setTimeout(() => {
+            document.getElementById('h1').style.transform = "translate(-50%, 0) rotate(360deg)";
+            document.getElementById('m1').style.transform = "translate(-50%, 0) rotate(360deg)";
+            
+            // Köşeye çekilme ve metinlerin belirmesi
+            setTimeout(() => {
+                clock.classList.add('docked');
+                setTimeout(() => { texts.classList.add('visible'); }, 1000);
+            }, 3000);
+        }, 2000);
+    }, 100);
+}
+
+function createStars() {
+    const field = document.getElementById('star-field');
+    const h = document.documentElement.scrollHeight;
+    for(let i=0; i<700; i++) {
         const s = document.createElement('div');
         s.className = 'star';
-        const size = (Math.random() * 3 + 1) + 'px';
-        s.style.width = size; s.style.height = size;
+        s.style.width = (Math.random() * 3) + 'px';
+        s.style.height = s.style.width;
         s.style.left = Math.random() * 100 + '%';
-        s.style.top = Math.random() * pageHeight + 'px'; // Tüm sayfa boyuna yay
-        s.style.setProperty('--t', (2 + Math.random() * 5) + 's');
+        s.style.top = Math.random() * h + 'px';
+        s.style.backgroundColor = i % 10 === 0 ? '#ff80ab' : '#fff'; // Bazı yıldızlar pembe
+        s.style.setProperty('--t', (2 + Math.random() * 4) + 's');
         field.appendChild(s);
     }
 }
 
-// SCROLL TAKİPÇİSİ (Haberler, Sayaçlar, Zaman Çizelgesi, Slot)
+// SCROLL REVEAL & SAYAÇLAR
 window.addEventListener('scroll', () => {
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(el => {
-        const top = el.getBoundingClientRect().top;
-        if(top < window.innerHeight * 0.85) {
+    document.querySelectorAll('.reveal').forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight * 0.85) {
             el.classList.add('active');
-            
-            // Sayaç Tetikleyici
-            if(el.id === 'clocks-trigger' && !window.timerStarted) {
-                window.timerStarted = true;
+            if(el.id === 'clocks-trigger' && !window.tStarted) {
+                window.tStarted = true;
                 startTimers();
-            }
-            
-            // Final Yazısı Tetikleyici (Slot bitince de gelebilir)
-            if(el.id === 'final-text' && window.slotWon) {
-                 el.style.opacity = "1";
             }
         }
     });
 });
 
-// Sayaç Mantığı (V11 ile aynı)
 function startTimers() {
-    const birth = new Date("2009-04-04T00:00:00");
-    const love = new Date("2023-01-01T00:00:00");
+    const b = new Date("2009-04-04T00:00:00"), l = new Date("2023-01-01T00:00:00");
     setInterval(() => {
-        const now = new Date();
-        document.getElementById('life-timer').innerHTML = formatTime(now - birth);
-        document.getElementById('love-timer').innerHTML = formatTime(now - love);
-        const mRot = now.getMinutes() * 6;
-        const hRot = (now.getHours() % 12) * 30 + (now.getMinutes() / 2);
-        document.getElementById('m2').style.transform = `translate(-50%, 0) rotate(${mRot}deg)`;
-        document.getElementById('h2').style.transform = `translate(-50%, 0) rotate(${hRot}deg)`;
-        document.getElementById('m3').style.transform = `translate(-50%, 0) rotate(${mRot}deg)`;
-        document.getElementById('h3').style.transform = `translate(-50%, 0) rotate(${hRot}deg)`;
+        const n = new Date();
+        document.getElementById('life-timer').innerHTML = formatT(n - b);
+        document.getElementById('love-timer').innerHTML = formatT(n - l);
+        
+        const m = n.getMinutes() * 6, h = (n.getHours() % 12) * 30 + (n.getMinutes() / 2);
+        document.getElementById('m2').style.transform = `translate(-50%, 0) rotate(${m}deg)`;
+        document.getElementById('h2').style.transform = `translate(-50%, 0) rotate(${h}deg)`;
+        document.getElementById('m3').style.transform = `translate(-50%, 0) rotate(${m}deg)`;
+        document.getElementById('h3').style.transform = `translate(-50%, 0) rotate(${h}deg)`;
     }, 1000);
 }
 
-function formatTime(ms) {
+function formatT(ms) {
     const s = Math.floor(ms/1000);
-    const y = Math.floor(s/31536000);
-    const d = Math.floor((s%31536000)/86400);
-    const h = Math.floor((s%86400)/3600);
-    const m = Math.floor((s%3600)/60);
-    const sn = s%60;
-    return `${y} Yıl ${d} Gün<br>${h} Saat ${m} Dakika ${sn} Saniye`;
+    const y = Math.floor(s/31536000), d = Math.floor((s%31536000)/86400);
+    const h = Math.floor((s%86400)/3600), m = Math.floor((s%3600)/60), sn = s%60;
+    return `${y} YIL ${d} GÜN ${h} SAAT ${m} DK ${sn} SN`;
 }
 
-// ✨ YENİ: SLOT MAKİNESİ MANTIĞI
-const icons = ['❤️', '💖', '💍', '🌸', '😘', '🔒'];
-const slots = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
-let isSpinning = false;
-
+// SLOT MAKİNESİ
+let spinning = false;
 function spinSlot() {
-    if (isSpinning) return;
-    isSpinning = true;
-    window.slotWon = false; // Reset win state
-    document.getElementById('final-text').style.opacity = "0"; // Kazanınca yazıyı gizle
-
-    // Görsel ve Ses Efekti
-    const handle = document.querySelector('.slot-handle');
-    handle.classList.add('pulled');
-    const machine = document.querySelector('.slot-machine');
-    machine.classList.remove('winner'); // Remove win animation
-    document.getElementById('slot-prompt').innerText = "Dönüyor...";
-
-    // Sesi çal (varsa)
-    // document.getElementById('slot-sound').play(); 
-
-    // Dönme Efekti (Rastgele ikonlar)
-    const spinInterval = setInterval(() => {
-        slots.forEach(slot => {
-            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-            slot.innerText = randomIcon;
-        });
+    if(spinning) return;
+    spinning = true;
+    const rod = document.getElementById('handle');
+    rod.classList.add('pulled');
+    
+    const icons = ['❤️', '💖', '🎁', '🎀', '🌸'];
+    const reels = [document.getElementById('r1'), document.getElementById('r2'), document.getElementById('r3')];
+    
+    const interval = setInterval(() => {
+        reels.forEach(r => r.innerText = icons[Math.floor(Math.random()*icons.length)]);
     }, 100);
 
-    // Dönmeyi durdurma ve 3 Kalp kazandırma (2.5 saniye sonra)
     setTimeout(() => {
-        clearInterval(spinInterval);
-        handle.classList.remove('pulled');
-        isSpinning = false;
-
-        // 🏆 ZORUNLU KAZANMA: 3 Kalp
-        slots.forEach(slot => { slot.innerText = '❤️'; });
-
-        // Kazanma Animasyonu
-        machine.classList.add('winner');
-        document.getElementById('slot-prompt').innerText = "KAZANDIK! Sonsuz Aşk ❤️";
-
-        // Final Yazısını Göster
-        window.slotWon = true; 
-        document.getElementById('final-text').style.opacity = "1";
-    }, 2500);
+        clearInterval(interval);
+        reels.forEach(r => r.innerText = '❤️');
+        rod.classList.remove('pulled');
+        spinning = false;
+        document.querySelector('.slot-frame').style.boxShadow = "0 0 80px #ff80ab";
+        document.getElementById('slot-hint').innerText = "SONSUZ AŞK KAZANILDI!";
+    }, 3000);
 }
+
+// Slot kolu için event listener
+document.addEventListener('DOMContentLoaded', () => {
+    const handle = document.getElementById('handle');
+    if(handle) handle.addEventListener('click', spinSlot);
+});
