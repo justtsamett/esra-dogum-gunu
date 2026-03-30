@@ -2,12 +2,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-/* GATE */
+/* GATE & PHOTO WALL */
 #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 1s; }
 .gate-box { text-align: center; border: 1px solid var(--neon-purple); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.9); }
-input { background: transparent; border: 1px solid var(--neon-purple); color: #fff; padding: 12px; border-radius: 10px; text-align: center; outline: none; }
-
-/* PHOTO WALL */
 #photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
 .photo-item { width: 100%; height: 140px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
 
@@ -19,46 +16,40 @@ input { background: transparent; border: 1px solid var(--neon-purple); color: #f
 .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite ease-in-out; }
 @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-/* SAAT: BAŞLANGIÇTA GİZLİ */
+/* 🕒 MİNİMALİST SAAT ANİMASYONU */
 #intro-clock-wrapper { 
     display: flex; align-items: center; justify-content: center; width: 100%; 
-    opacity: 0; transform: scale(0); 
-    transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.5s ease; 
+    opacity: 0; transform: scale(0.8);
+    transition: transform 2s ease-in-out, opacity 1.5s ease-in-out; 
 }
-#intro-clock-wrapper.center-focus { opacity: 1 !important; transform: scale(2) !important; }
-#intro-clock-wrapper.docked { transform: scale(0.6) !important; justify-content: flex-start !important; padding-left: 8%; opacity: 1; }
+#intro-clock-wrapper.active { opacity: 1; transform: scale(1.5); }
+#intro-clock-wrapper.docked { transform: scale(0.65) !important; justify-content: flex-start !important; padding-left: 8%; }
 
-.clock-main { width: 300px; height: 300px; border: 6px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); }
-.dot { position: absolute; background: var(--gold); border-radius: 50%; width: 12px; height: 12px; }
-.d12 { top: 10px; left: 50%; transform: translateX(-50%); }
-.d3 { right: 10px; top: 50%; transform: translateY(-50%); }
-.d6 { bottom: 10px; left: 50%; transform: translateX(-50%); }
-.d9 { left: 10px; top: 50%; transform: translateY(-50%); }
-.center-nut { position: absolute; inset: 0; margin: auto; width: 15px; height: 15px; background: var(--gold); border-radius: 50%; z-index: 10; }
-.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: 3s cubic-bezier(0.4, 0, 0.2, 1); }
-.hour { width: 8px; height: 80px; background: var(--gold); }
-.minute { width: 5px; height: 110px; }
-.brand { position: absolute; top: 20%; width: 100%; text-align: center; font-family: 'Great Vibes'; font-size: 2.8rem; }
+.clock-main { width: 280px; height: 280px; border: 4px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
+.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: transform 2s ease-in-out; }
+.hour { width: 6px; height: 70px; background: var(--gold); }
+.minute { width: 4px; height: 100px; }
+.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Great Vibes'; font-size: 2.5rem; }
 
 /* YAZILAR */
-#intro-texts { margin-left: 60px; display: none; flex-direction: column; opacity: 0; transition: 1.5s; }
+#intro-texts { margin-left: 50px; display: none; flex-direction: column; opacity: 0; transition: 1.5s; }
 #intro-texts.visible { display: flex; opacity: 1; }
-#birth-date-title { font-family: 'Great Vibes'; font-size: 3.8rem; text-shadow: 0 0 20px var(--neon-purple); }
-#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.4rem; color: var(--gold); }
-#scroll-prompt { font-size: 1rem; color: rgba(255,255,255,0.5); margin-top: 30px; animation: bounce 2s infinite; }
+#birth-date-title { font-family: 'Great Vibes'; font-size: 3.5rem; text-shadow: 0 0 20px var(--neon-purple); }
+#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--gold); }
+#scroll-prompt { font-size: 0.9rem; color: rgba(255,255,255,0.4); margin-top: 20px; animation: bounce 2s infinite; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* SCROLL ANİMASYONU */
-.reveal { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+/* SCROLL REVEAL (Kaydırdıkça gelenler) */
+.reveal { opacity: 0; transform: translateY(50px); transition: 1.2s ease-out; }
 .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
 
 .news-container { padding: 200px 10%; }
-.news-row { display: flex; width: 100%; margin-bottom: 150px; }
+.news-row { display: flex; width: 100%; margin-bottom: 120px; }
 .news-row.right { justify-content: flex-end; }
-.news-card { width: 550px; background: var(--paper); color: #222; padding: 30px; box-shadow: 15px 15px 0 var(--neon-purple); }
-.news-img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 20px; }
+.news-card { width: 500px; background: var(--paper); color: #222; padding: 25px; box-shadow: 10px 10px 0 var(--neon-purple); }
+.news-img { width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px; }
 
-.final-section { text-align: center; padding-bottom: 200px; }
-.dual-clocks { display: flex; justify-content: space-around; margin-top: 80px; }
-.t-label { font-family: 'Great Vibes'; font-size: 3.2rem; }
-.t-val { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); }
+.final-section { text-align: center; padding-bottom: 150px; }
+.dual-clocks { display: flex; justify-content: space-around; margin-top: 50px; }
+.t-label { font-family: 'Great Vibes'; font-size: 3rem; }
+.t-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); }
