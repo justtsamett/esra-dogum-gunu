@@ -1,137 +1,135 @@
 :root { 
     --neon-purple: #bc13fe; 
-    --soft-pink: #ff80ab; /* ✨ Yeni Pembe */
-    --hologram-purple: #9c27b0; /* ✨ Yeni Açık Mor */
+    --soft-pink: #ff80ab; 
+    --hologram: #9c27b0;
     --gold: #ffd700; 
-    --paper: #f4f1ea; 
+    --deep: #05010a;
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+body { 
+    background: #000; color: #fff; 
+    font-family: 'Montserrat', sans-serif; 
+    overflow-x: hidden; scroll-behavior: smooth;
+}
 
-/* GATE, FOTO DUVARI, NEON INTRO (V11 ile aynı, renkler optimize) */
+/* --- GİRİŞ VE INTROLAR --- */
 #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 1s; }
-.gate-box { text-align: center; border: 1px solid var(--soft-pink); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.9); box-shadow: 0 0 30px rgba(255, 128, 171, 0.3); }
-input { background: transparent; border: 1px solid var(--soft-pink); color: #fff; padding: 12px; border-radius: 10px; text-align: center; outline: none; }
-button { background: var(--soft-pink); color: #000; font-weight: bold; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; margin-top: 15px; }
+.gate-box { text-align: center; border: 1px solid var(--soft-pink); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(255,128,171,0.3); }
 
-#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
-.photo-item { width: 100%; height: 140px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
+.photo-item { width: 100%; height: 150px; object-fit: cover; opacity: 0; transform: scale(0.4); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-#neon-intro-text {
+.intro-layer {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-family: 'Great Vibes', cursive; font-size: 4.5rem; color: #fff;
-    text-shadow: 0 0 10px #fff, 0 0 30px var(--soft-pink), 0 0 60px var(--hologram-purple);
-    z-index: 8500; opacity: 0; transition: 2s; text-align: center; display: none;
-}
-
-/* ✨ YENİ: Esra & Samet İntro */
-#love-intro {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-family: 'Great Vibes', cursive; font-size: 6rem; color: #fff;
+    font-family: 'Great Vibes', cursive; font-size: 5rem; color: #fff;
     text-shadow: 0 0 15px #fff, 0 0 40px var(--soft-pink);
-    z-index: 8600; opacity: 0; display: none; transition: 1.5s ease-in-out;
+    z-index: 8500; opacity: 0; display: none; text-align: center; width: 80%;
 }
-#love-intro .heart-pulse { display: inline-block; animation: pulse 1s infinite; color: var(--soft-pink); }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+#love-intro { font-size: 6rem; letter-spacing: 5px; }
 
-/* 🌌 SONSUZ UZAY (Yeni Renkler) */
-#main-universe { display: none; position: relative; width: 100%; min-height: 100vh; opacity: 0; transition: 3s; }
-.nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(156, 39, 176, 0.15), rgba(255, 128, 171, 0.1) 60%, transparent 80%); z-index: -2; pointer-events: none; }
-#star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; }
-.moon { position: fixed; top: 40px; right: 60px; width: 80px; height: 80px; border-radius: 50%; box-shadow: 15px 15px 0 0 white; transform: rotate(-20deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.4)); z-index: -1; }
-.star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite ease-in-out; }
+/* --- ANA EVREN --- */
+#main-universe { display: none; opacity: 0; position: relative; width: 100%; transition: 3s; }
+.nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(156, 39, 176, 0.15), rgba(255, 128, 171, 0.1) 60%, transparent 80%); z-index: -2; }
+#star-field { position: absolute; inset: 0; z-index: -3; }
+.moon { position: fixed; top: 40px; right: 60px; width: 60px; height: 60px; border-radius: 50%; box-shadow: 12px 12px 0 0 white; transform: rotate(-15deg); filter: blur(1px) drop-shadow(0 0 15px #fff); z-index: -1; }
 
-/* SAAT: TOZDAN VAR OLMA (V11 ile aynı, optimize) */
-#intro-clock-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; opacity: 0; filter: blur(15px); transform: scale(1); transition: transform 2.5s, opacity 3s, filter 3s; }
-#intro-clock-wrapper.active { opacity: 1; filter: blur(0px); transform: scale(1.6); }
-#intro-clock-wrapper.docked { transform: scale(0.65) !important; justify-content: flex-start !important; padding-left: 8%; }
-.clock-main { width: 300px; height: 300px; border: 4px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); box-shadow: 0 0 30px rgba(255, 128, 171, 0.2); }
-.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1); }
-.hour { width: 6px; height: 75px; background: var(--gold); }
-.minute { width: 4px; height: 110px; opacity: 0.8; }
+/* --- SAAT VE HERO (SABİTLENDİ) --- */
+#hero-section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 5%; }
+
+#clock-container {
+    width: 320px; height: 320px; position: relative; opacity: 0; filter: blur(15px);
+    transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 3s, filter 3s;
+}
+#clock-container.active { opacity: 1; filter: blur(0); transform: scale(1.3); }
+#clock-container.docked { transform: scale(0.6) translate(-70%, -50%); }
+
+.clock-main { 
+    width: 100%; height: 100%; border: 4px solid var(--gold); border-radius: 50%; 
+    background: rgba(15, 5, 25, 0.5); backdrop-filter: blur(10px); position: relative; 
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(188, 19, 254, 0.2);
+}
+.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; border-radius: 10px; }
+.hour { width: 6px; height: 75px; background: var(--gold); z-index: 3; }
+.minute { width: 4px; height: 115px; background: #fff; z-index: 2; }
 .brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: #fff; text-shadow: 0 0 10px #fff; }
 
-/* HABERLER VE FİNAL (Sayaçlar V11 ile aynı) */
-.news-container { padding: 200px 10%; }
-.news-card { width: 500px; background: var(--paper); color: #222; padding: 25px; box-shadow: 10px 10px 0 var(--hologram-purple); }
-.final-section { text-align: center; padding-top: 100px; padding-bottom: 100px;}
-.dual-clocks { display: flex; justify-content: space-around; margin-top: 50px; }
-.t-label { font-family: 'Great Vibes'; font-size: 3rem; text-shadow: 0 0 10px var(--soft-pink); }
-.t-val { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--gold); }
+#hero-texts { margin-left: 50px; opacity: 0; transform: translateX(50px); transition: 1.5s; }
+#hero-texts.visible { opacity: 1; transform: translateX(0); }
+#birth-date-title { font-family: 'Playfair Display'; font-size: 3.5rem; margin-bottom: 10px; }
+#bugun-ne-oldu { font-family: 'Montserrat'; font-weight: 300; font-size: 1.2rem; color: var(--soft-pink); }
 
-/* ✨ YENİ: İNTERAKTİF ZAMAN ÇİZELGESİ (Timeline) */
-.timeline-section { padding: 100px 5%; position: relative; }
-.timeline-title { font-family: 'Great Vibes'; font-size: 4rem; text-align: center; color: #fff; text-shadow: 0 0 15px var(--soft-pink); margin-bottom: 80px; }
+/* --- HABERLER (PREMIUM KARTLAR) --- */
+.news-container { padding: 100px 10%; background: linear-gradient(to bottom, transparent, rgba(20, 5, 30, 0.8)); }
+.section-title { font-family: 'Great Vibes'; font-size: 4rem; text-align: center; margin-bottom: 80px; text-shadow: 0 0 20px var(--soft-pink); }
 
-.timeline-container { position: relative; max-width: 1200px; margin: 0 auto; }
-.timeline-line { position: absolute; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: linear-gradient(180deg, var(--soft-pink), var(--hologram-purple)); box-shadow: 0 0 15px var(--soft-pink); border-radius: 2px; }
-
-.timeline-item { width: 50%; padding: 20px 40px; position: relative; opacity: 0; transform: translateY(50px); transition: 1.2s; }
-.timeline-item.reveal.active { opacity: 1; transform: translateY(0); }
-.timeline-item.left { left: 0; text-align: right; }
-.timeline-item.right { left: 50%; text-align: left; }
-
-/* Noktalar */
-.timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background: var(--gold); border: 4px solid var(--deep-space); top: 30px; border-radius: 50%; z-index: 1; box-shadow: 0 0 10px var(--gold); }
-.timeline-item.right::after { left: -10px; }
-
-.timeline-content { background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 10px; border: 1px solid rgba(255, 128, 171, 0.2); backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s; }
-.timeline-content:hover { transform: scale(1.03); border-color: var(--soft-pink); box-shadow: 0 0 20px rgba(255, 128, 171, 0.3); }
-
-.timeline-content .date { font-family: 'Orbitron'; color: var(--gold); font-weight: bold; font-size: 0.9rem; letter-spacing: 2px; }
-.timeline-content h3 { font-family: 'Playfair Display'; font-size: 1.5rem; margin: 10px 0; color: #fff; }
-.timeline-content p { font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.8); font-weight: 300; }
-
-/* ✨ YENİ: SLOT MAKİNESİ (Sonsuz Kalp) */
-.slot-section { padding: 150px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-.slot-machine-wrapper { position: relative; opacity: 0; transform: translateY(50px); transition: 1.2s; }
-.slot-machine-wrapper.reveal.active { opacity: 1; transform: translateY(0); }
-
-.slot-machine {
-    width: 320px; background: linear-gradient(135deg, #1a0633, #000); 
-    border: 8px solid #333; border-radius: 15px; padding: 20px; 
-    box-shadow: 0 0 50px rgba(156, 39, 176, 0.4), inset 0 0 20px rgba(0,0,0,0.8);
-    position: relative; z-index: 2;
+.news-row { display: flex; width: 100%; margin-bottom: 150px; }
+.news-row.right { justify-content: flex-end; }
+.news-card { 
+    width: 650px; background: #fff; color: #111; padding: 40px; 
+    border-radius: 2px; position: relative; 
+    box-shadow: 20px 20px 0 var(--hologram);
 }
-.slot-header { font-family: 'Orbitron'; color: var(--gold); text-align: center; font-size: 1.4rem; letter-spacing: 3px; margin-bottom: 15px; text-shadow: 0 0 10px var(--gold); }
-
-.slot-reel-container {
-    display: flex; justify-content: space-around; background: #000; 
-    border: 4px solid var(--gold); border-radius: 5px; padding: 10px; 
-    height: 120px; overflow: hidden; position: relative;
+.news-badge { 
+    position: absolute; top: -15px; left: 20px; background: var(--neon-purple); 
+    color: white; padding: 5px 15px; font-family: 'Orbitron'; font-size: 0.8rem; 
 }
-.slot-reel-container::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%); }
+.news-img { width: 100%; height: 350px; object-fit: cover; margin-bottom: 25px; filter: sepia(0.2); }
+.news-content h3 { font-family: 'Playfair Display'; font-size: 2rem; margin-bottom: 15px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+.news-content p { font-size: 1.1rem; line-height: 1.8; font-family: 'Playfair Display', serif; font-style: italic; }
 
-.reel {
-    font-size: 5rem; width: 30%; text-align: center; color: var(--soft-pink);
-    line-height: 120px; transition: transform 0.1s linear; transform: translateY(0);
+/* --- SAYAÇLAR VE AYDINLATMA --- */
+.stats-section { padding: 100px 0; text-align: center; }
+.counters-wrapper { display: flex; justify-content: center; gap: 100px; margin-bottom: 100px; }
+.stat-box { width: 300px; }
+.stat-label { font-family: 'Great Vibes'; font-size: 3.5rem; color: var(--soft-pink); margin-top: 20px; }
+.stat-value { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); margin-top: 10px; }
+.analog-mini { width: 80px; height: 80px; border: 2px solid var(--gold); border-radius: 50%; margin: 0 auto; position: relative; }
+.mini-h { width: 3px; height: 20px; background: var(--gold); }
+.mini-m { width: 2px; height: 30px; }
+
+#highlight-text { font-family: 'Great Vibes'; font-size: 5rem; text-shadow: 0 0 30px var(--soft-pink); margin: 50px 0; }
+
+/* --- ZAMAN TÜNELİ (HİKAYE ODAKLI) --- */
+.timeline-section { padding: 100px 10%; position: relative; }
+.timeline-main-title { font-family: 'Great Vibes'; font-size: 5rem; text-align: center; margin-bottom: 100px; }
+.timeline-path { position: relative; max-width: 1000px; margin: 0 auto; border-left: 2px dashed rgba(255,255,255,0.2); padding-left: 50px; }
+
+.timeline-block { display: flex; gap: 40px; margin-bottom: 150px; align-items: center; }
+.timeline-img-box { flex-shrink: 0; width: 350px; height: 350px; border: 10px solid #fff; transform: rotate(-3deg); transition: 0.5s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.timeline-block:nth-child(even) .timeline-img-box { transform: rotate(3deg); order: 2; }
+.timeline-img-box img { width: 100%; height: 100%; object-fit: cover; }
+.timeline-img-box:hover { transform: rotate(0) scale(1.05); border-color: var(--soft-pink); }
+
+.timeline-info { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; backdrop-filter: blur(5px); border: 1px solid rgba(255,128,171,0.2); }
+.t-date { font-family: 'Orbitron'; color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; }
+.timeline-info h3 { font-family: 'Playfair Display'; font-size: 2.2rem; margin: 15px 0; color: #fff; }
+.timeline-info p { font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.8); font-weight: 300; }
+
+/* --- SLOT MAKİNESİ (SABİT TASARIM) --- */
+.slot-section { padding: 150px 0; display: flex; flex-direction: column; align-items: center; }
+.slot-frame { 
+    width: 400px; background: linear-gradient(135deg, #2a0a4d, #05010a); 
+    border: 10px solid #333; border-radius: 30px; padding: 30px; 
+    box-shadow: 0 0 50px rgba(188, 19, 254, 0.4); position: relative;
 }
-
-/* Slot Kol Konteyneri */
-.slot-handle-container { margin-top: 20px; text-align: center; }
-#slot-prompt { font-size: 0.9rem; color: rgba(255,255,255,0.6); letter-spacing: 2px; margin-bottom: 10px; }
-
-/* Slot Kolu (İnteraktif) */
-.slot-handle {
-    width: 60px; height: 60px; background: radial-gradient(circle at center, #ff4081, #c2185b);
-    border-radius: 50%; margin: 0 auto; cursor: pointer; border: 4px solid #fff;
-    box-shadow: 0 0 20px rgba(255, 64, 129, 0.5); transition: 0.2s; position: relative;
+.slot-title { font-family: 'Orbitron'; text-align: center; color: var(--gold); font-size: 1.5rem; margin-bottom: 20px; text-shadow: 0 0 10px var(--gold); }
+.slot-screen { 
+    height: 150px; background: #000; border: 5px solid var(--gold); 
+    display: flex; justify-content: space-around; align-items: center; 
+    overflow: hidden; border-radius: 10px;
 }
-.slot-handle:hover { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 64, 129, 0.8); }
-.slot-handle:active { transform: scale(0.9); }
-/* Kol çekilme animasyonu (CSS ile topuzun hareketini simüle ediyoruz) */
-.slot-handle.pulled { animation: handlePull 0.5s ease; }
-@keyframes handlePull { 0% { transform: translateY(0); } 50% { transform: translateY(20px); } 100% { transform: translateY(0); } }
+.reel { font-size: 6rem; width: 33%; text-align: center; transition: 0.1s; color: var(--soft-pink); }
 
-.slot-base { width: 360px; height: 20px; background: #222; border-radius: 5px; margin-top: -10px; z-index: 1; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+.slot-controls { margin-top: 30px; text-align: center; }
+#slot-hint { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px; }
 
-/* Slot Kazanınca Yanıp Sönme */
-.slot-machine.winner { animation: winGlow 0.5s infinite alternate; }
-@keyframes winGlow { from { border-color: #333; box-shadow: 0 0 30px rgba(156, 39, 176, 0.4); } to { border-color: var(--soft-pink); box-shadow: 0 0 60px var(--soft-pink); } }
+/* Kol Mekanizması */
+.handle-base { width: 15px; height: 100px; background: #222; margin: 0 auto; position: relative; border-radius: 5px; }
+.handle-rod { width: 10px; height: 80px; background: #555; position: absolute; top: 0; left: 2.5px; border-radius: 5px; transition: 0.3s; transform-origin: bottom; cursor: pointer; }
+.handle-knob { width: 40px; height: 40px; background: radial-gradient(circle, #ff4081, #880e4f); border-radius: 50%; position: absolute; top: -20px; left: -15px; box-shadow: 0 0 15px var(--soft-pink); }
+.handle-rod.pulled { transform: rotateX(60deg) scaleY(0.5); }
 
-/* FINAL YAZISI (Aydınlatmaya başladın) */
-#final-text { font-family: 'Great Vibes'; font-size: 3.5rem; margin-top: 50px; opacity: 0; transition: 2s; text-shadow: 0 0 15px var(--soft-pink); }
-
-/* SCROLL REVEAL (Genel Sınıf) */
-.reveal { opacity: 0; transform: translateY(50px); transition: 1.2s ease-out; }
-.reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
+/* --- GENEL REVEAL --- */
+.reveal { opacity: 0; transform: translateY(50px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
