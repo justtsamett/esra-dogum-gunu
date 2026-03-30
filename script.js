@@ -36,21 +36,25 @@ function showUniverse() {
     const m1 = document.getElementById('m1');
     const texts = document.getElementById('intro-texts');
 
+    // 1. SAAT BELİRİR (Ortada pürüzsüzce büyür)
     setTimeout(() => {
-        wrapper.classList.add('center-focus');
+        wrapper.classList.add('active');
+        
+        // 2. KOLLAR YERİNE OTURUR (4 Nisan 2009 00:00 konumu)
         setTimeout(() => {
-            h1.style.transform = "translate(-50%, 0) rotate(720deg)";
-            m1.style.transform = "translate(-50%, 0) rotate(1440deg)";
+            h1.style.transform = "translate(-50%, 0) rotate(0deg)";
+            m1.style.transform = "translate(-50%, 0) rotate(0deg)";
+            
+            // 3. SOLA KAYAR VE KÜÇÜLÜR
             setTimeout(() => {
-                h1.style.transform = "translate(-50%, 0) rotate(360deg)";
-                m1.style.transform = "translate(-50%, 0) rotate(360deg)";
-                wrapper.classList.remove('center-focus');
                 wrapper.classList.add('docked');
+                
+                // 4. YAZILAR GELİR
                 setTimeout(() => {
                     texts.style.display = "flex";
                     setTimeout(() => texts.classList.add('visible'), 100);
-                }, 1800);
-            }, 3500);
+                }, 1500);
+            }, 2500);
         }, 1500);
     }, 500);
 }
@@ -64,7 +68,7 @@ function createCosmos() {
         s.style.width = (Math.random() * 3 + 1) + 'px';
         s.style.height = s.style.width;
         s.style.left = Math.random() * 100 + '%';
-        s.style.top = Math.random() * pageHeight + 'px';
+        s.style.top = Math.random() * pageHeight + 'px'; // Tüm sayfa boyu
         s.style.setProperty('--t', (2 + Math.random() * 5) + 's');
         field.appendChild(s);
     }
