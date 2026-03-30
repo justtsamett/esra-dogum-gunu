@@ -11,8 +11,11 @@
 
     <div id="gate">
         <div class="gate-box">
+            <div class="lock-icon">🔒</div>
+            <h2>Sisteme Erişim</h2>
+            <p>Lütfen anahtarı girin</p>
             <input type="password" id="pass" placeholder="Şifreleme Anahtarı">
-            <button onclick="startExperience()">SİSTEMİ BAŞLAT</button>
+            <button onclick="startExperience()">KİLİDİ AÇ</button>
         </div>
     </div>
 
@@ -28,45 +31,52 @@
     <main id="main-universe">
         <div class="nebula"></div>
         <div id="star-field"></div>
-        <div class="moon"></div> 
         
         <section id="hero-section">
             <div id="clock-container">
                 <div class="clock-main">
+                    <div class="clock-glass"></div>
                     <div class="brand">Esram</div>
                     <div id="h1" class="hand hour"></div>
                     <div id="m1" class="hand minute"></div>
                     <div class="center-nut"></div>
+                    <div class="clock-glow"></div>
                 </div>
             </div>
+            
             <div id="hero-texts">
                 <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
                 <h2 id="bugun-ne-oldu">Zamanın durduğu, mucizenin başladığı o an...</h2>
-                <p id="scroll-prompt">Kozmik arşivde aşağı kaydır</p>
+                <div class="scroll-indicator">
+                    <div class="mouse"></div>
+                    <p>Kozmik arşivde aşağı kaydır</p>
+                </div>
             </div>
         </section>
 
         <section class="news-container">
             <h2 class="section-title reveal">O Gün Dünya Ne Konuşuyordu?</h2>
             
-            <div class="news-row left reveal">
-                <div class="news-card">
+            <div class="news-row reveal">
+                <div class="news-card glass-panel">
+                    <div class="card-glow"></div>
                     <div class="news-badge">MANŞET</div>
                     <img src="img/haber1.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=10'">
                     <div class="news-content">
                         <h3>Dünyaya Bir Melek İndi</h3>
-                        <p>4 Nisan 2009 gecesi İstanbul sakinleri, bu gecenin normal bir geceden farklı olduğuna dair görüşler belirtmeye başlamıştı. Bu geceyi diğer gecelerden ayıran şey bu gecenin özel olması, bu gece ayın daha parlak, yıldızların mutlu ve güneşin dünyaya inen bu güzel meleği görmek için sabırsızlanmasıydı. </p>
+                        <p>4 Nisan 2009 gecesi İstanbul sakinleri, bu gecenin normal bir geceden farklı olduğuna dair görüşler belirtmeye başlamıştı. Bu geceyi diğer gecelerden ayıran şey bu gecenin özel olması, bu gece ayın daha parlak, yıldızların mutlu ve güneşin dünyaya inen bu güzel meleği görmek için sabırsızlanmasıydı.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="news-row right reveal">
-                <div class="news-card">
+            <div class="news-row reveal right-align">
+                <div class="news-card glass-panel">
+                    <div class="card-glow"></div>
                     <div class="news-badge">KOZMİK ARŞİV</div>
                     <img src="img/nasa.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=11'">
                     <div class="news-content">
                         <h3>Dünyanın Meleği Karşılaması</h3>
-                        <p>O gece yıldızlar sadece senin için parlıyordu balım. O gece benim olmak için, benimle olmak için dünyaya geldinn </p>
+                        <p>O gece yıldızlar sadece senin için parlıyordu balım. O gece benim olmak için, benimle olmak için dünyaya geldinn.</p>
                     </div>
                 </div>
             </div>
@@ -74,13 +84,11 @@
 
         <section class="stats-section">
             <div class="counters-wrapper reveal">
-                <div class="stat-box">
-                    <div class="analog-mini"><div class="hand mini-h"></div><div class="hand mini-m"></div></div>
+                <div class="stat-box glass-panel">
                     <p class="stat-label">Dünyayı,</p>
                     <div id="life-timer" class="stat-value"></div>
                 </div>
-                <div class="stat-box">
-                    <div class="analog-mini"><div class="hand mini-h"></div><div class="hand mini-m"></div></div>
+                <div class="stat-box glass-panel">
                     <p class="stat-label">Dünyamı,</p>
                     <div id="love-timer" class="stat-value"></div>
                 </div>
@@ -91,15 +99,15 @@
         <section class="slot-section reveal">
             <h2 class="slot-pre-title">Geçmişe gitmek için kilidi açmalısın...</h2>
             <div class="slot-machine-container">
-                <div class="slot-frame">
-                    <div class="slot-title">SONSUZLUK KİLİDİ</div>
+                <div class="slot-frame glass-panel">
+                    <div class="slot-title">KUANTUM KİLİDİ</div>
                     <div class="slot-screen">
-                        <div class="reel" id="r1">❔</div>
-                        <div class="reel" id="r2">❔</div>
-                        <div class="reel" id="r3">❔</div>
+                        <div class="reel" id="r1">🔒</div>
+                        <div class="reel" id="r2">🔒</div>
+                        <div class="reel" id="r3">🔒</div>
                     </div>
                     <div class="slot-controls">
-                        <p id="slot-hint">Kola dokun ve anılarımızı serbest bırak...</p>
+                        <p id="slot-hint">Sistemi başlatmak için kola dokun...</p>
                         <div class="handle-base">
                             <div class="handle-rod" id="handle">
                                 <div class="handle-knob"></div>
@@ -113,19 +121,22 @@
         <section class="timeline-section" id="hidden-timeline" style="display: none;">
             <h2 class="timeline-main-title reveal">Bizim Hikayemiz</h2>
             <div class="timeline-path">
+                <div class="timeline-line"></div>
                 
                 <div class="timeline-block reveal">
-                    <div class="timeline-img-box"><img src="img/t1.jpg" onerror="this.src='https://picsum.photos/400/400?random=20'"></div>
-                    <div class="timeline-info">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-img-box glass-panel"><img src="img/t1.jpg" onerror="this.src='https://picsum.photos/400/400?random=20'"></div>
+                    <div class="timeline-info glass-panel">
                         <span class="t-date">14 Kasım 2022</span>
                         <h3>Her Şeyin Başladığı O Gün...</h3>
                         <p>14 Kasım 2022 günü saat 14 suları. Seninle tanıştığım, hayatıma girdiğin gün. Bazen acaba o sunucuya hiç girmeseydim hayatım nasıl olurdu diye düşünüyorum ve sensiz bir hayata nasıl katlanırdım bilmiyorum güzelim. İyi ki bugün tanışmışızz, iyi ki sevgili olmuşuz prensesimm</p>
                     </div>
                 </div>
 
-                <div class="timeline-block reveal">
-                    <div class="timeline-img-box"><img src="img/t2.jpg" onerror="this.src='https://picsum.photos/400/400?random=21'"></div>
-                    <div class="timeline-info">
+                <div class="timeline-block reveal reverse">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-img-box glass-panel"><img src="img/t2.jpg" onerror="this.src='https://picsum.photos/400/400?random=21'"></div>
+                    <div class="timeline-info glass-panel">
                         <span class="t-date">1 Ocak 2023</span>
                         <h3>Sevgili Olduğumuz Gün</h3>
                         <p>Ben yeni yıldan seni diledim Esra.. Sonsuza dek yeni yıl dileğim olur musun?</p>
@@ -133,8 +144,9 @@
                 </div>
 
                 <div class="timeline-block reveal">
-                    <div class="timeline-img-box"><img src="img/t3.jpg" onerror="this.src='https://picsum.photos/400/400?random=22'"></div>
-                    <div class="timeline-info">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-img-box glass-panel"><img src="img/t3.jpg" onerror="this.src='https://picsum.photos/400/400?random=22'"></div>
+                    <div class="timeline-info glass-panel">
                         <span class="t-date">24 Ağustos 2025</span>
                         <h3>İlk Kez Yüz Yüze Dudak Dudağa</h3>
                         <p>Ne diyebilirim bilmiyorum. Seni gördüğüm anda ki heyecanımı burada tarif etmemi bekleme lütfen benden. O an hayatımda paha biçemeyeceğim en nadir anlardan biriydi. İnsan ölünce 7 dakika daha anıları kalırmış ya, o 7 dakikanın tamamı bugünümüzü düşünmekle geçerdi sevgilim.</p>
