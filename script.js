@@ -1,21 +1,15 @@
-// 1. ŞİFRE VE GİRİŞ
 function startExperience() {
     const pass = document.getElementById('pass').value.toLowerCase().trim();
-    if(pass === "esra") { // Şifreyi buradan değiştirebilirsin
+    if(pass === "esra") { 
         document.getElementById('gate').style.opacity = "0";
         setTimeout(() => {
             document.getElementById('gate').style.display = "none";
-            const music = document.getElementById('bg-music');
-            music.volume = 0.3;
-            music.play();
+            document.getElementById('bg-music').play();
             runPhotoFlow();
         }, 1000);
-    } else {
-        alert("Bu anahtar bu evrene ait değil sevgilim...");
     }
 }
 
-// 2. FOTOĞRAF AKIŞI
 function runPhotoFlow() {
     const wall = document.getElementById('photo-wall');
     for(let i=1; i<=140; i++) {
@@ -37,7 +31,6 @@ function runPhotoFlow() {
     }, 100);
 }
 
-// 3. INTRO SIRALAMASI
 function runNeonSequence() {
     const n1 = document.getElementById('neon-intro-text');
     const n2 = document.getElementById('love-intro');
@@ -50,16 +43,12 @@ function runNeonSequence() {
                 n1.style.display = "none";
                 n2.style.display = "block";
                 n2.style.opacity = "1";
-                setTimeout(() => {
-                    n2.style.opacity = "0";
-                    setTimeout(initUniverse, 1000);
-                }, 4000);
+                setTimeout(() => { n2.style.opacity = "0"; setTimeout(initUniverse, 1000); }, 4000);
             }, 1000);
         }, 2500);
     }, 100);
 }
 
-// 4. EVREN VE 10:10 SENKRONİZASYONU
 function initUniverse() {
     const clock = document.getElementById('clock-container');
     const texts = document.getElementById('hero-texts');
@@ -67,20 +56,18 @@ function initUniverse() {
     const mHand = document.getElementById('m1');
     
     document.getElementById('main-universe').style.display = "block";
-    createStars();
-
     setTimeout(() => {
         document.getElementById('main-universe').style.opacity = "1";
-        clock.classList.add('active');
-
-        // Saati 10:10'a getir
+        clock.style.opacity = "1"; clock.style.filter = "blur(0)";
+        
+        // 10:10 AYARI
         setTimeout(() => {
             hHand.style.transition = "transform 2s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
             mHand.style.transition = "transform 2s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
             hHand.style.transform = "translate(-50%, 0) rotate(305deg)";
             mHand.style.transform = "translate(-50%, 0) rotate(60deg)";
             
-            // Saat küçülürken yazı gelsin
+            // KÜÇÜLME VE YAZI GİRİŞİ
             setTimeout(() => {
                 clock.classList.add('docked');
                 texts.classList.add('visible');
@@ -88,21 +75,6 @@ function initUniverse() {
             }, 1200);
         }, 1000);
     }, 100);
-}
-
-// 5. YILDIZLAR VE SAYAÇLAR
-function createStars() {
-    const field = document.getElementById('star-field');
-    for(let i=0; i<400; i++) {
-        const s = document.createElement('div');
-        s.style.position = "absolute";
-        s.style.width = "2px"; s.style.height = "2px";
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 2000 + "px";
-        s.style.backgroundColor = "#fff";
-        s.style.opacity = Math.random();
-        field.appendChild(s);
-    }
 }
 
 function startTimers() {
@@ -125,7 +97,6 @@ function formatDiff(ms) {
     return `${y} YIL ${d} GÜN ${h}:${m}:${sn}`;
 }
 
-// 6. SLOT MAKİNESİ
 let isSpinning = false;
 function spinSlot() {
     if(isSpinning) return;
@@ -133,25 +104,21 @@ function spinSlot() {
     document.getElementById('handle').classList.add('pulled');
     const reels = [document.getElementById('r1'), document.getElementById('r2'), document.getElementById('r3')];
     const interval = setInterval(() => {
-        reels.forEach(r => r.innerText = ['❤️', '💖', '✨', '🌸'][Math.floor(Math.random()*4)]);
+        reels.forEach(r => r.innerText = ['❤️', '💖', '✨'][Math.floor(Math.random()*3)]);
     }, 100);
-
     setTimeout(() => {
         clearInterval(interval);
         reels.forEach(r => r.innerText = '❤️');
         document.getElementById('handle').classList.remove('pulled');
         document.getElementById('hidden-timeline').style.display = "block";
         isSpinning = false;
-    }, 2500);
+    }, 2000);
 }
 
-// 7. SCROLL REVEAL
 window.addEventListener('scroll', () => {
     document.querySelectorAll('.reveal').forEach(el => {
         if(el.getBoundingClientRect().top < window.innerHeight * 0.9) el.classList.add('active');
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('handle').addEventListener('click', spinSlot);
-});
+document.getElementById('handle').addEventListener('click', spinSlot);
