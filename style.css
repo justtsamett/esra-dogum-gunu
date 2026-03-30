@@ -2,44 +2,49 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-/* GATE & PHOTO WALL */
+/* GATE */
 #gate { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 1s; }
 .gate-box { text-align: center; border: 1px solid var(--neon-purple); padding: 40px; border-radius: 20px; background: rgba(0,0,0,0.9); }
-#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; }
-.photo-item { width: 100%; height: 140px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.5s; }
 
-/* 🌌 SONSUZ UZAY */
-#main-universe { display: none; position: relative; width: 100%; min-height: 100vh; }
+/* FOTO DUVARI */
+#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); z-index: 8000; opacity: 0; pointer-events: none; transition: 1.5s; }
+.photo-item { width: 100%; height: 130px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+/* ARA NEON YAZI */
+#neon-intro-text {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: 'Dancing Script', cursive; font-size: 4rem; color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 30px var(--neon-purple), 0 0 60px var(--neon-purple);
+    z-index: 8500; opacity: 0; transition: 2s; pointer-events: none; text-align: center; display: none;
+}
+
+/* ANA EVREN */
+#main-universe { display: none; position: relative; width: 100%; min-height: 100vh; opacity: 0; transition: 3s; }
 .nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(106, 27, 154, 0.2), transparent 70%); z-index: -2; pointer-events: none; }
 #star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; }
 .moon { position: fixed; top: 40px; right: 60px; width: 80px; height: 80px; border-radius: 50%; box-shadow: 15px 15px 0 0 white; transform: rotate(-20deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.4)); z-index: -1; }
 .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite ease-in-out; }
-@keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 
-/* 🕒 MİNİMALİST SAAT ANİMASYONU */
+/* SAAT: TOZDAN VAR OLMA */
 #intro-clock-wrapper { 
     display: flex; align-items: center; justify-content: center; width: 100%; 
-    opacity: 0; transform: scale(0.8);
-    transition: transform 2s ease-in-out, opacity 1.5s ease-in-out; 
+    opacity: 0; filter: blur(15px); transform: scale(1);
+    transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 3s, filter 3s; 
 }
-#intro-clock-wrapper.active { opacity: 1; transform: scale(1.5); }
+#intro-clock-wrapper.active { opacity: 1; filter: blur(0px); transform: scale(1.6); }
 #intro-clock-wrapper.docked { transform: scale(0.65) !important; justify-content: flex-start !important; padding-left: 8%; }
 
-.clock-main { width: 280px; height: 280px; border: 4px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
-.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: transform 2s ease-in-out; }
-.hour { width: 6px; height: 70px; background: var(--gold); }
-.minute { width: 4px; height: 100px; }
-.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Great Vibes'; font-size: 2.5rem; }
+.clock-main { width: 300px; height: 300px; border: 4px solid var(--gold); border-radius: 50%; position: relative; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
+.hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1); }
+.hour { width: 6px; height: 75px; background: var(--gold); z-index: 3; }
+.minute { width: 4px; height: 110px; z-index: 2; opacity: 0.8; }
+.center-nut { position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; transform: translate(-50%, -50%); z-index: 4; }
+.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: #fff; text-shadow: 0 0 10px #fff; }
 
-/* YAZILAR */
+/* YAZILAR & SCROLL */
 #intro-texts { margin-left: 50px; display: none; flex-direction: column; opacity: 0; transition: 1.5s; }
 #intro-texts.visible { display: flex; opacity: 1; }
-#birth-date-title { font-family: 'Great Vibes'; font-size: 3.5rem; text-shadow: 0 0 20px var(--neon-purple); }
-#bugun-ne-oldu { font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--gold); }
-#scroll-prompt { font-size: 0.9rem; color: rgba(255,255,255,0.4); margin-top: 20px; animation: bounce 2s infinite; }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
-/* SCROLL REVEAL (Kaydırdıkça gelenler) */
 .reveal { opacity: 0; transform: translateY(50px); transition: 1.2s ease-out; }
 .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
 
