@@ -251,4 +251,20 @@ body {
 
 /* --- MOBİL UYUM (KUSURSUZ HİZALAMA) --- */
 @media (max-width: 992px) {
-    #hero-section { flex-direction: column; text-align: center; gap: 30px; justify-content: flex-start; padding-top: 15
+    #hero-section { flex-direction: column; text-align: center; gap: 30px; justify-content: flex-start; padding-top: 15vh; }
+    
+    #clock-container { width: 280px; height: 280px; }
+    #clock-container.docked { transform: scale(0.65) translateY(-20px); margin: 0; }
+    
+    #hero-texts { transform: translateY(30px); }
+    #hero-texts.visible { transform: translateY(0); }
+    #birth-date-title { font-size: 2.5rem; }
+    .scroll-indicator { justify-content: center; }
+
+    .news-card { max-width: 100%; }
+    .timeline-line { left: 20px; }
+    .timeline-block { flex-direction: column; align-items: flex-start; padding-left: 50px; }
+    .timeline-block.reverse { flex-direction: column; }
+    .timeline-dot { left: 20px; top: 30px; transform: translate(-50%, 0); }
+    .timeline-img-box, .timeline-info { width: 100%; margin-bottom: 20px; }
+}
