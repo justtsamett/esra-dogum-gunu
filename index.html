@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esra & Samet | Sonsuzluk Arşivi</title>
+    <title>Sonsuzluk İstasyonu | Esra & Samet</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Great+Vibes&family=Orbitron:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -19,6 +19,8 @@
     <div id="photo-wall"></div>
 
     <div id="neon-intro-text">Biricik sevgilim Esra için...</div>
+    
+    <div id="love-intro">Esra <span class="heart-pulse">❤️</span> Samet</div>
 
     <main id="main-universe">
         <div class="nebula"></div>
@@ -36,7 +38,7 @@
                 <div id="intro-texts">
                     <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
                     <h2 id="bugun-ne-oldu">Bugün Neler Mi Oldu?</h2>
-                    <p id="scroll-prompt">Öğrenmek için aşağı kaydır...</p>
+                    <p id="scroll-prompt">Zaman yolculuğu için aşağı kaydır...</p>
                 </div>
             </div>
         </section>
@@ -49,23 +51,7 @@
                     <p>O günün manşetlerinde baharın heyecanı vardı. Ama tarihin en zarif haberi henüz baskıya girmemişti...</p>
                 </div>
             </div>
-
-            <div class="news-row right reveal">
-                <div class="news-card">
-                    <img src="img/nasa_hubble.jpg" class="news-img" onerror="this.src='https://picsum.photos/600/400?random=2'">
-                    <h2>NASA Arşivi: Hydra Gözlemi</h2>
-                    <p>Hubble teleskobu o gece NGC 4993 galaksisine kilitlenmişti. Milyonlarca ışık yılı uzaktan gelen bu parıltı, dünyaya yeni inen bir yıldızı selamlıyordu.</p>
-                </div>
-            </div>
-
-            <div class="news-row left reveal">
-                <div class="news-card">
-                    <img src="img/doga.jpg" class="news-img" onerror="this.src='https://picsum.photos/600/400?random=3'">
-                    <h2>Doğanın Bahar Ayini</h2>
-                    <p>Nisan'ın dördünde doğa sessizce uyandı. Açan her çiçek, Esra'nın ilk nefesiyle başlayacak olan o büyük hikayenin sessiz tanığıydı.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
         <section class="final-section">
             <h1 id="en-onemli" class="reveal">En önemlisine gelince;</h1>
@@ -80,11 +66,61 @@
                     <div class="timer-text"><div id="love-timer" class="t-val"></div><span class="t-label">Dünyamı,</span></div>
                 </div>
             </div>
+        </section>
+
+        <section class="timeline-section">
+            <h1 class="timeline-title reveal">Zaman Tünelimiz</h1>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item left reveal">
+                    <div class="timeline-content">
+                        <span class="date">01.01.2023</span>
+                        <h3>İlk Kıvılcım</h3>
+                        <p>Sonsuzluğun başladığı o ilk gün... Kalplerimizin aynı ritimde attığını anladık.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right reveal">
+                    <div class="timeline-content">
+                        <span class="date">14.02.2023</span>
+                        <h3>İlk Sevgililer Günü</h3>
+                        <p>Soğuk bir kış gününü, sıcak gülüşünle ısıttığın o an.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left reveal">
+                    <div class="timeline-content">
+                        <span class="date">4.04.2023</span>
+                        <h3>Beraber İlk Doğum Günün</h3>
+                        <p>Mumu beraber üflerken, tüm dileklerimizin "biz" olduğunu biliyordum.</p>
+                    </div>
+                </div>
+                </div>
+        </section>
+
+        <section class="slot-section">
+            <div class="slot-machine-wrapper reveal">
+                <div class="slot-machine">
+                    <div class="slot-header">LUCKY LOVE</div>
+                    <div class="slot-reel-container">
+                        <div class="reel" id="reel1">❤️</div>
+                        <div class="reel" id="reel2">❤️</div>
+                        <div class="reel" id="reel3">❤️</div>
+                    </div>
+                    <div class="slot-handle-container">
+                        <p id="slot-prompt">Çalıştırmak için dokun...</p>
+                        <div class="slot-handle" onclick="spinSlot()"></div>
+                    </div>
+                </div>
+                <div class="slot-base"></div>
+            </div>
             <h2 id="final-text" class="reveal">Aydınlatmaya başladın balımm :))</h2>
         </section>
+
     </main>
 
     <audio id="bg-music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
-    <script src="script.js"></script>
+    <audio id="slot-sound"><source src="SLOT_SES.mp3" type="audio/mpeg"></audio> <script src="script.js"></script>
 </body>
 </html>
