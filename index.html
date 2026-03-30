@@ -5,122 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sonsuzluk İstasyonu | Esra & Samet</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Great+Vibes&family=Orbitron:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Great+Vibes&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="gate">
         <div class="gate-box">
             <input type="password" id="pass" placeholder="Şifreleme Anahtarı">
-            <button onclick="startExperience()">Sistemi Başlat</button>
+            <button onclick="startExperience()">SİSTEMİ BAŞLAT</button>
         </div>
     </div>
 
     <div id="photo-wall"></div>
 
-    <div id="neon-intro-text">Biricik sevgilim Esra için...</div>
-    
-    <div id="love-intro">Esra <span class="heart-pulse">❤️</span> Samet</div>
+    <div id="neon-intro-text" class="intro-layer">Biricik sevgilim Esra için...</div>
+    <div id="love-intro" class="intro-layer">Esra <span class="heart-pulse">❤️</span> Samet</div>
 
     <main id="main-universe">
         <div class="nebula"></div>
         <div id="star-field"></div>
         <div class="moon"></div> 
         
-        <section id="clock-intro-section">
-            <div id="intro-clock-wrapper">
+        <section id="hero-section">
+            <div id="clock-container">
                 <div class="clock-main">
                     <div class="brand">Esram</div>
                     <div id="h1" class="hand hour"></div>
                     <div id="m1" class="hand minute"></div>
                     <div class="center-nut"></div>
                 </div>
-                <div id="intro-texts">
-                    <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
-                    <h2 id="bugun-ne-oldu">Bugün Neler Mi Oldu?</h2>
-                    <p id="scroll-prompt">Zaman yolculuğu için aşağı kaydır...</p>
-                </div>
+            </div>
+            <div id="hero-texts">
+                <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
+                <h2 id="bugun-ne-oldu">Zamanın durduğu, mucizenin başladığı o an...</h2>
+                <p id="scroll-prompt">Kozmik arşivde aşağı kaydır</p>
             </div>
         </section>
 
         <section class="news-container">
+            <h2 class="section-title reveal">O Gün Dünya Ne Konuşuyordu?</h2>
+            
             <div class="news-row left reveal">
                 <div class="news-card">
-                    <img src="img/milli_gazete.jpg" class="news-img" onerror="this.src='https://picsum.photos/600/400?random=1'">
-                    <h2>4 Nisan 2009: Milli Gazete</h2>
-                    <p>O günün manşetlerinde baharın heyecanı vardı. Ama tarihin en zarif haberi henüz baskıya girmemişti...</p>
+                    <div class="news-badge">MANŞET</div>
+                    <img src="img/haber1.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=10'">
+                    <div class="news-content">
+                        <h3>Nisan'ın Dördü: Bir Bahar Uyanışı</h3>
+                        <p>2009 yılının bu Cumartesi sabahında, Türkiye baharın en taze nefesini içine çekiyordu. Gazeteler yerel seçimlerin ardından gelen yeni dönemi ve yaklaşan bahar festivallerini müjdeliyordu. Ancak kimse bilmiyordu ki, o gün Adana'da dünyaya gözlerini açan o küçük kız çocuğu, ileride birinin bütün dünyasını aydınlatacak en parlak yıldız olacaktı.</p>
+                    </div>
                 </div>
             </div>
-            </section>
 
-        <section class="final-section">
-            <h1 id="en-onemli" class="reveal">En önemlisine gelince;</h1>
-            <p id="bugun-itibariyle" class="reveal">BUGÜN İTİBARİYLE</p>
-            <div class="dual-clocks reveal" id="clocks-trigger">
-                <div class="clock-unit">
-                    <div class="analog-small"><div id="h2" class="hand hour-s"></div><div id="m2" class="hand minute-s"></div></div>
-                    <div class="timer-text"><div id="life-timer" class="t-val"></div><span class="t-label">Dünyayı,</span></div>
-                </div>
-                <div class="clock-unit">
-                    <div class="analog-small"><div id="h3" class="hand hour-s"></div><div id="m3" class="hand minute-s"></div></div>
-                    <div class="timer-text"><div id="love-timer" class="t-val"></div><span class="t-label">Dünyamı,</span></div>
+            <div class="news-row right reveal">
+                <div class="news-card">
+                    <div class="news-badge">NASA KOZMİK ARŞİV</div>
+                    <img src="img/nasa.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=11'">
+                    <div class="news-content">
+                        <h3>Hubble ve Hydra'nın Gizemi</h3>
+                        <p>4 Nisan 2009 gecesi NASA'nın Hubble teleskobu, Hydra takımyıldızındaki uzak galaksileri görüntülüyordu. Evrenin derinliklerinden gelen bu kadim ışıklar dünyaya ulaşırken, yeryüzünde çok daha saf ve güçlü bir ışık doğuyordu. Kozmos o gece sessizce yeni bir parıltıyı selamladı: Senin ilk nefesini.</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="news-row left reveal">
+                <div class="news-card">
+                    <div class="news-badge">KÜLTÜR & SANAT</div>
+                    <img src="img/muzik.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=12'">
+                    <div class="news-content">
+                        <h3>"Düm Tek Tek" ve Bahar Melodileri</h3>
+                        <p>O dönem Türkiye Hadise'nin Eurovision heyecanıyla çalkalanıyordu. Her yerde neşeli melodiler duyuluyordu. Doğa uyanmış, çiçekler en güzel renklerini sergilemeye başlamıştı. Sanki tüm dünya, 4 Nisan'ın sıradan bir gün olmadığını hissetmiş gibi en güzel şarkılarını söylüyordu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="counters-wrapper reveal">
+                <div class="stat-box">
+                    <div class="analog-mini"><div id="h2" class="hand mini-h"></div><div id="m2" class="hand mini-m"></div></div>
+                    <p class="stat-label">Dünyayı,</p>
+                    <div id="life-timer" class="stat-value"></div>
+                </div>
+                <div class="stat-box">
+                    <div class="analog-mini"><div id="h3" class="hand mini-h"></div><div id="m3" class="hand mini-m"></div></div>
+                    <p class="stat-label">Dünyamı,</p>
+                    <div id="love-timer" class="stat-value"></div>
+                </div>
+            </div>
+            <h1 id="highlight-text" class="reveal">...aydınlatmaya başladın balımm :))</h1>
         </section>
 
         <section class="timeline-section">
-            <h1 class="timeline-title reveal">Zaman Tünelimiz</h1>
-            <div class="timeline-container">
-                <div class="timeline-line"></div>
-                
-                <div class="timeline-item left reveal">
-                    <div class="timeline-content">
-                        <span class="date">01.01.2023</span>
-                        <h3>İlk Kıvılcım</h3>
-                        <p>Sonsuzluğun başladığı o ilk gün... Kalplerimizin aynı ritimde attığını anladık.</p>
+            <h2 class="timeline-main-title reveal">Bizim Hikayemiz</h2>
+            <div class="timeline-path">
+                <div class="timeline-block reveal">
+                    <div class="timeline-img-box"><img src="img/t1.jpg" onerror="this.src='https://picsum.photos/400/400?random=20'"></div>
+                    <div class="timeline-info">
+                        <span class="t-date">01 OCAK 2023</span>
+                        <h3>Her Şeyin Başladığı Nokta</h3>
+                        <p>Zamanın ve mekanın ötesinde, kalplerimizin ilk kez aynı frekansta titrediği o an. Bakışlarınla dünyama ilk girişi yaptığın, sessizce başlayan ama fırtınalar koparan o ilk kıvılcım. Seninle geçen 3.5 yılın (ve daha nicelerinin) en saf hali.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item right reveal">
-                    <div class="timeline-content">
-                        <span class="date">14.02.2023</span>
-                        <h3>İlk Sevgililer Günü</h3>
-                        <p>Soğuk bir kış gününü, sıcak gülüşünle ısıttığın o an.</p>
+
+                <div class="timeline-block reveal">
+                    <div class="timeline-img-box"><img src="img/t2.jpg" onerror="this.src='https://picsum.photos/400/400?random=21'"></div>
+                    <div class="timeline-info">
+                        <span class="t-date">14 ŞUBAT 2023</span>
+                        <h3>İlk Kış Güneşi</h3>
+                        <p>Dışarısı buz gibi olsa da, senin yanındayken mevsimlerin hiçbir önemi kalmıyordu. İlk sevgililer günümüzü sadece birbirimize bakarak geçirdiğimiz o gün, aslında "biz" olmanın ne kadar kolay ve güzel olduğunu bir kez daha anlamıştık.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item left reveal">
-                    <div class="timeline-content">
-                        <span class="date">4.04.2023</span>
-                        <h3>Beraber İlk Doğum Günün</h3>
-                        <p>Mumu beraber üflerken, tüm dileklerimizin "biz" olduğunu biliyordum.</p>
+
+                <div class="timeline-block reveal">
+                    <div class="timeline-img-box"><img src="img/t3.jpg" onerror="this.src='https://picsum.photos/400/400?random=22'"></div>
+                    <div class="timeline-info">
+                        <span class="t-date">NİSAN 2024</span>
+                        <h3>Sonsuzluğa Bir Adım Daha</h3>
+                        <p>Her geçen gün, her geçen saat birbirimize biraz daha bağlandık. Zorluklar olsa da, mesafeler olsa da elini hiç bırakmadım. Bu interaktif yolculukta her bir fotoğraf karesi, senin gülüşünün kalbimdeki izdüşümüdür.</p>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
 
         <section class="slot-section">
-            <div class="slot-machine-wrapper reveal">
-                <div class="slot-machine">
-                    <div class="slot-header">LUCKY LOVE</div>
-                    <div class="slot-reel-container">
-                        <div class="reel" id="reel1">❤️</div>
-                        <div class="reel" id="reel2">❤️</div>
-                        <div class="reel" id="reel3">❤️</div>
+            <div class="slot-machine-container reveal">
+                <div class="slot-frame">
+                    <div class="slot-leds"></div>
+                    <div class="slot-title">LUCKY LOVE</div>
+                    <div class="slot-screen">
+                        <div class="reel" id="r1">❤️</div>
+                        <div class="reel" id="r2">❤️</div>
+                        <div class="reel" id="r3">❤️</div>
                     </div>
-                    <div class="slot-handle-container">
-                        <p id="slot-prompt">Çalıştırmak için dokun...</p>
-                        <div class="slot-handle" onclick="spinSlot()"></div>
+                    <div class="slot-controls">
+                        <p id="slot-hint">Çalıştırmak için kola dokun...</p>
+                        <div class="handle-base">
+                            <div class="handle-rod" id="handle">
+                                <div class="handle-knob"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="slot-base"></div>
             </div>
-            <h2 id="final-text" class="reveal">Aydınlatmaya başladın balımm :))</h2>
         </section>
 
     </main>
 
     <audio id="bg-music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
-    <audio id="slot-sound"><source src="SLOT_SES.mp3" type="audio/mpeg"></audio> <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
