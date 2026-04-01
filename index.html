@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sonsuzluk İstasyonu | Esra & Samet</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&family=Great+Vibes&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
@@ -12,150 +12,124 @@
     <div id="gate">
         <div class="gate-box">
             <div class="lock-icon">🔒</div>
-            <h2>Sisteme Erişim</h2>
-            <p>Lütfen anahtarı girin</p>
+            <h2>Kalbimin Anahtarı</h2>
+            <p>Sadece bize özel o kelimeyi fısılda...</p>
             <input type="password" id="pass" placeholder="Şifreleme Anahtarı">
             <button onclick="startExperience()">KİLİDİ AÇ</button>
         </div>
     </div>
 
     <div id="photo-wall"></div>
+    <div id="star-field"></div>
+    <div class="nebula"></div>
 
-    <div id="neon-intro-text" class="intro-layer">Biricik sevgilim Esra için...</div>
-    <div id="love-intro" class="intro-layer cinematic-intro">
-        <span class="name">Esra</span> 
-        <span class="heart-pulse">❤️</span> 
-        <span class="name">Samet</span>
-    </div>
-
-    <main id="main-universe">
-        <div class="nebula"></div>
-        <div id="star-field"></div>
+    <main id="main-universe" style="display:none; opacity:0;">
         
         <section id="hero-section">
             <div id="clock-container">
                 <div class="clock-main">
-                    <div class="clock-glass"></div>
                     <div class="brand">Esram</div>
                     <div id="h1" class="hand hour"></div>
                     <div id="m1" class="hand minute"></div>
                     <div class="center-nut"></div>
-                    <div class="clock-glow"></div>
                 </div>
             </div>
             
             <div id="hero-texts">
-                <h1 id="birth-date-title">4 Nisan 2009 Cumartesi</h1>
+                <h1 id="birth-date-title">4 Nisan 2009</h1>
                 <h2 id="bugun-ne-oldu">Zamanın durduğu, mucizenin başladığı o an...</h2>
-                <div class="scroll-indicator">
-                    <div class="mouse"></div>
-                    <p>Kozmik arşivde aşağı kaydır</p>
+                <div class="scroll-hint">Anılarımıza doğru kaydır ↓</div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="news-card reveal glass">
+                <div class="badge">MANŞET</div>
+                <img src="img/haber1.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/400?random=10'">
+                <div class="news-body">
+                    <h3>Dünyaya Bir Melek İndi</h3>
+                    <p>4 Nisan 2009 gecesi İstanbul sakinleri, bu gecenin normal bir geceden farklı olduğuna dair görüşler belirtmeye başlamıştı. Bu geceyi diğer gecelerden ayıran şey bu gecenin özel olmasıydı.</p>
+                </div>
+            </div>
+
+            <div class="news-card reveal glass right">
+                <div class="badge">KOZMİK GÜNCE</div>
+                <img src="img/nasa.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/400?random=11'">
+                <div class="news-body">
+                    <h3>Dünyanın Meleği Karşılaması</h3>
+                    <p>O gece yıldızlar sadece senin için parlıyordu balım. Benimle olmak için dünyaya geldinn.</p>
                 </div>
             </div>
         </section>
 
-        <section class="news-container">
-            <h2 class="section-title reveal">O Gün Dünya Ne Konuşuyordu?</h2>
-            
-            <div class="news-row reveal">
-                <div class="news-card glass-panel">
-                    <div class="card-glow"></div>
-                    <div class="news-badge">MANŞET</div>
-                    <img src="img/haber1.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=10'">
-                    <div class="news-content">
-                        <h3>Dünyaya Bir Melek İndi</h3>
-                        <p>4 Nisan 2009 gecesi İstanbul sakinleri, bu gecenin normal bir geceden farklı olduğuna dair görüşler belirtmeye başlamıştı. Bu geceyi diğer gecelerden ayıran şey bu gecenin özel olması, bu gece ayın daha parlak, yıldızların mutlu ve güneşin dünyaya inen bu güzel meleği görmek için sabırsızlanmasıydı.</p>
-                    </div>
-                </div>
+        <section class="stats-grid container">
+            <div class="stat-card glass reveal">
+                <span>DÜNYAYI,</span>
+                <div id="life-timer" class="timer-val">Hesaplanıyor...</div>
             </div>
-
-            <div class="news-row reveal right-align">
-                <div class="news-card glass-panel">
-                    <div class="card-glow"></div>
-                    <div class="news-badge">KOZMİK ARŞİV</div>
-                    <img src="img/nasa.jpg" class="news-img" onerror="this.src='https://picsum.photos/800/500?random=11'">
-                    <div class="news-content">
-                        <h3>Dünyanın Meleği Karşılaması</h3>
-                        <p>O gece yıldızlar sadece senin için parlıyordu balım. O gece benim olmak için, benimle olmak için dünyaya geldinn.</p>
-                    </div>
-                </div>
+            <div class="stat-card glass reveal">
+                <span>DÜNYAMI,</span>
+                <div id="love-timer" class="timer-val">Hesaplanıyor...</div>
             </div>
         </section>
 
-        <section class="stats-section">
-            <div class="counters-wrapper reveal">
-                <div class="stat-box glass-panel">
-                    <p class="stat-label">Dünyayı,</p>
-                    <div id="life-timer" class="stat-value"></div>
+        <section class="slot-area reveal">
+            <div class="slot-box glass">
+                <h3>KALBİMİN ANAHTARI</h3>
+                <div class="reels">
+                    <div class="reel" id="r1">🔒</div>
+                    <div class="reel" id="r2">🔒</div>
+                    <div class="reel" id="r3">🔒</div>
                 </div>
-                <div class="stat-box glass-panel">
-                    <p class="stat-label">Dünyamı,</p>
-                    <div id="love-timer" class="stat-value"></div>
-                </div>
-            </div>
-            <h1 id="highlight-text" class="reveal">...aydınlatmaya başladın balımm :))</h1>
-        </section>
-
-        <section class="slot-section reveal">
-            <h2 class="slot-pre-title">Geçmişe gitmek için kilidi açmalısın...</h2>
-            <div class="slot-machine-container">
-                <div class="slot-frame glass-panel">
-                    <div class="slot-title">KUANTUM KİLİDİ</div>
-                    <div class="slot-screen">
-                        <div class="reel" id="r1">🔒</div>
-                        <div class="reel" id="r2">🔒</div>
-                        <div class="reel" id="r3">🔒</div>
-                    </div>
-                    <div class="slot-controls">
-                        <p id="slot-hint">Sistemi başlatmak için kola dokun...</p>
-                        <div class="handle-base">
-                            <div class="handle-rod" id="handle">
-                                <div class="handle-knob"></div>
-                            </div>
-                        </div>
+                <div class="handle-container" id="handle">
+                    <div class="rod">
+                        <div class="knob"></div>
                     </div>
                 </div>
+                <p id="slot-hint">Anıları serbest bırakmak için çek...</p>
             </div>
         </section>
 
-        <section class="timeline-section" id="hidden-timeline" style="display: none;">
-            <h2 class="timeline-main-title reveal">Bizim Hikayemiz</h2>
-            <div class="timeline-path">
-                <div class="timeline-line"></div>
+        <section id="hidden-timeline" class="container" style="display:none;">
+            <h2 class="timeline-title">Anı Odası</h2>
+            <div class="timeline">
+                <div class="t-line"></div>
                 
-                <div class="timeline-block reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-img-box glass-panel"><img src="img/t1.jpg" onerror="this.src='https://picsum.photos/400/400?random=20'"></div>
-                    <div class="timeline-info glass-panel">
-                        <span class="t-date">14 Kasım 2022</span>
-                        <h3>Her Şeyin Başladığı O Gün...</h3>
-                        <p>14 Kasım 2022 günü saat 14 suları. Seninle tanıştığım, hayatıma girdiğin gün. Bazen acaba o sunucuya hiç girmeseydim hayatım nasıl olurdu diye düşünüyorum ve sensiz bir hayata nasıl katlanırdım bilmiyorum güzelim. İyi ki bugün tanışmışızz, iyi ki sevgili olmuşuz prensesimm</p>
+                <div class="t-item reveal">
+                    <div class="t-img glass"><img src="img/t1.jpg" onerror="this.src='https://picsum.photos/400/300?random=20'"></div>
+                    <div class="t-content glass">
+                        <span class="date">14 Kasım 2022</span>
+                        <p>Seninle tanıştığım gün. İyi ki bugün tanışmışızz sevgilim.</p>
                     </div>
                 </div>
 
-                <div class="timeline-block reveal reverse">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-img-box glass-panel"><img src="img/t2.jpg" onerror="this.src='https://picsum.photos/400/400?random=21'"></div>
-                    <div class="timeline-info glass-panel">
-                        <span class="t-date">1 Ocak 2023</span>
-                        <h3>Sevgili Olduğumuz Gün</h3>
-                        <p>Ben yeni yıldan seni diledim Esra.. Sonsuza dek yeni yıl dileğim olur musun?</p>
+                <div class="t-item reveal">
+                    <div class="t-img glass"><img src="img/t2.jpg" onerror="this.src='https://picsum.photos/400/300?random=21'"></div>
+                    <div class="t-content glass">
+                        <span class="date">24 Ağustos 2025</span>
+                        <p>O 7 dakikanın tamamı bugünümüzü düşünmekle geçerdi.</p>
                     </div>
                 </div>
+            </div>
 
-                <div class="timeline-block reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-img-box glass-panel"><img src="img/t3.jpg" onerror="this.src='https://picsum.photos/400/400?random=22'"></div>
-                    <div class="timeline-info glass-panel">
-                        <span class="t-date">24 Ağustos 2025</span>
-                        <h3>İlk Kez Yüz Yüze Dudak Dudağa</h3>
-                        <p>Ne diyebilirim bilmiyorum. Seni gördüğüm anda ki heyecanımı burada tarif etmemi bekleme lütfen benden. O an hayatımda paha biçemeyeceğim en nadir anlardan biriydi. İnsan ölünce 7 dakika daha anıları kalırmış ya, o 7 dakikanın tamamı bugünümüzü düşünmekle geçerdi sevgilim.</p>
+            <div class="interactive-zone reveal">
+                <h2 class="zone-title">Sana Özel Sürprizler</h2>
+                <div class="games-grid">
+                    <div class="game-card glass" onclick="drawCompliment()">
+                        <div class="game-icon">💌</div>
+                        <h3>Ruh Eşimden Notlar</h3>
+                        <div id="compliment-display" class="note-paper">Dokun ve oku...</div>
+                    </div>
+                    <div class="game-card glass" onclick="getFutureLuck()">
+                        <div class="game-icon">🔮</div>
+                        <h3>Bizim Geleceğimiz</h3>
+                        <div id="fortune-display" class="fortune-text">Küreye fısılda...</div>
                     </div>
                 </div>
-                
             </div>
         </section>
-
+        
+        <p style="text-align:center; padding: 100px 50px; opacity: 0.5; font-family: 'Great Vibes'; font-size: 2.5rem; color: #ff7096;">Seni Seviyorum...</p>
     </main>
 
     <audio id="bg-music" loop><source src="MUZIK.mp3" type="audio/mpeg"></audio>
