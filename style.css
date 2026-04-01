@@ -1,99 +1,99 @@
-/* RESET & TEMEL */
+:root {
+    --soft-pink: #ff7096;
+    --deep-purple: #bc13fe;
+    --gold: #ffd700;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #030005; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+body { background: #030005; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; line-height: 1.6; }
 
 /* CAM EFEKTİ */
-.glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+.glass { 
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(15px); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 20px; 
+}
 
-/* GİRİŞ SİSTEMİ */
-#gate { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
-.gate-box { text-align: center; padding: 40px; width: 90%; max-width: 400px; border: 1px solid #ff7096; border-radius: 24px; box-shadow: 0 0 30px rgba(255, 112, 150, 0.2); }
-.gate-box input { width: 100%; padding: 15px; margin: 20px 0; background: rgba(255,255,255,0.05); border: 1px solid #ff7096; color: #fff; text-align: center; border-radius: 12px; }
-.gate-box button { width: 100%; padding: 15px; background: linear-gradient(45deg, #bc13fe, #ff7096); border: none; border-radius: 12px; color: #fff; font-weight: bold; cursor: pointer; letter-spacing: 1px; }
+/* GİRİŞ */
+#gate { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: 1s; }
+.gate-box { text-align: center; padding: 40px; width: 90%; max-width: 400px; border: 1px solid var(--soft-pink); border-radius: 24px; }
+.gate-box input { width: 100%; padding: 15px; margin: 20px 0; background: rgba(255,255,255,0.05); border: 1px solid var(--soft-pink); color: #fff; text-align: center; border-radius: 12px; font-size: 1rem; }
+.gate-box button { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--deep-purple), var(--soft-pink)); border: none; border-radius: 12px; color: #fff; font-weight: bold; cursor: pointer; }
 
 /* ARKA PLAN */
 #star-field { position: fixed; inset: 0; z-index: -1; }
 .nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 30%, rgba(188, 19, 254, 0.1), transparent 70%); z-index: -2; }
-#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 9000; pointer-events: none; opacity: 0; gap: 5px; }
-.photo-item { width: 100%; height: 120px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s; border-radius: 8px; }
+#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 9000; pointer-events: none; opacity: 0; transition: 1s; }
+.photo-item { width: 100%; height: 120px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s; }
 
 /* INTRO */
-.intro-layer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9500; display: none; text-align: center; width: 100%; }
-#neon-intro-text { font-family: 'Great Vibes'; font-size: 3.5rem; text-shadow: 0 0 20px #ff7096; }
-.cinematic-intro { font-family: 'Great Vibes'; font-size: 6rem; }
+.intro-layer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9500; display: none; text-align: center; width: 100%; opacity: 0; transition: 1s; }
+#neon-intro-text { font-family: 'Great Vibes'; font-size: 3.5rem; color: #fff; text-shadow: 0 0 20px var(--soft-pink); }
+.cinematic-intro { font-family: 'Great Vibes'; font-size: 5rem; color: #fff; }
 .heart-pulse { display: inline-block; animation: beat 1.2s infinite; color: #ff0040; margin: 0 20px; }
 @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
 
-/* HERO & SAAT */
-#hero-section { height: 100vh; display: flex; align-items: center; justify-content: center; gap: 60px; padding: 20px; flex-wrap: wrap; }
-#clock-container { width: 340px; height: 340px; position: relative; transition: 1.8s cubic-bezier(0.25, 1, 0.5, 1); }
-.clock-main { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #ffd700; background: rgba(10,10,20,0.8); position: relative; box-shadow: 0 0 50px rgba(255,215,0,0.15); }
-.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; color: #ffd700; opacity: 0.8; }
+/* HERO */
+#hero-section { height: 100vh; display: flex; align-items: center; justify-content: center; gap: 50px; flex-wrap: wrap; padding: 20px; }
+#clock-container { width: 320px; height: 320px; position: relative; transition: 1.8s ease-in-out; }
+.clock-main { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--gold); background: rgba(0,0,0,0.6); position: relative; }
+.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2rem; color: var(--gold); }
 .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; border-radius: 10px; }
-.hour { width: 8px; height: 85px; z-index: 3; background: linear-gradient(to top, #ffd700, #fff); }
-.minute { width: 5px; height: 120px; z-index: 2; }
-.center-nut { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: #ffd700; border-radius: 50%; z-index: 4; border: 2px solid #000; }
+.hour { width: 7px; height: 80px; z-index: 3; }
+.minute { width: 4px; height: 110px; z-index: 2; }
+.center-nut { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--gold); border-radius: 50%; z-index: 4; }
 #clock-container.docked { transform: scale(0.6) translateX(-30%); }
 
-#hero-texts { max-width: 550px; opacity: 0; transform: translateX(30px); transition: 1.5s; }
-#hero-texts.visible { opacity: 1; transform: translateX(0); }
-#birth-date-title { font-family: 'Playfair Display'; font-size: 3.5rem; color: #ffd700; line-height: 1.1; margin-bottom: 10px; }
-.scroll-hint { margin-top: 30px; font-size: 0.9rem; letter-spacing: 2px; color: #ff7096; animation: float 2s infinite; }
+#hero-texts { max-width: 500px; opacity: 0; transition: 1.5s; }
+#hero-texts.visible { opacity: 1; }
+#birth-date-title { font-family: 'Playfair Display'; font-size: 3.5rem; color: var(--gold); }
+.scroll-hint { margin-top: 20px; color: var(--soft-pink); animation: float 2s infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* KONTEYNERLAR */
-.container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 80px 0; }
-.news-card { display: flex; flex-direction: column; overflow: hidden; margin-bottom: 80px; position: relative; padding: 20px; }
-.news-img { width: 100%; height: 380px; object-fit: cover; border-radius: 15px; margin-bottom: 25px; }
-.news-body h3 { font-family: 'Playfair Display'; font-size: 2.2rem; color: #ffd700; margin-bottom: 15px; }
-.badge { position: absolute; top: 35px; left: 35px; background: #bc13fe; padding: 6px 18px; font-size: 0.8rem; font-weight: bold; border-radius: 50px; }
-
 /* SAYAÇLAR */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
-.stat-card { padding: 45px; text-align: center; }
-.stat-card span { font-size: 1.1rem; opacity: 0.6; letter-spacing: 3px; display: block; margin-bottom: 15px; }
-.timer-val { font-family: 'Orbitron'; font-size: 1.6rem; color: #ff7096; font-weight: bold; }
+.container { width: 90%; max-width: 1000px; margin: 0 auto; padding: 80px 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.stat-card { padding: 40px; text-align: center; }
+.timer-val { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--soft-pink); margin-top: 15px; }
 
-/* SLOT MAKİNESİ */
-.slot-area { text-align: center; padding: 120px 0; }
-.slot-box { max-width: 450px; margin: 0 auto; padding: 50px; border: 1px solid #ff7096; }
-.slot-box h3 { font-family: 'Orbitron'; color: #ffd700; margin-bottom: 30px; letter-spacing: 2px; }
-.reels { display: flex; justify-content: space-around; margin: 40px 0; font-size: 4.5rem; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 15px; }
-.handle-container { width: 12px; height: 90px; background: #222; margin: 0 auto; position: relative; cursor: pointer; border-radius: 6px; }
-.rod { width: 100%; height: 100%; background: #444; position: absolute; transform-origin: bottom; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.knob { width: 44px; height: 44px; background: #ff0040; border-radius: 50%; position: absolute; top: -22px; left: -16px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
-.rod.pulled { transform: rotateX(65deg) scaleY(0.5); }
+/* KALP KİLİDİ (SLOT) - DÜZELTİLMİŞ KOL */
+.slot-area { text-align: center; padding: 100px 0; }
+.slot-box { max-width: 400px; margin: 0 auto; padding: 40px; border: 1px solid var(--soft-pink); position: relative; }
+.reels { display: flex; justify-content: space-around; margin: 30px 0; font-size: 4rem; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 10px; }
+
+/* KOL MEKANİZMASI */
+.handle-container { width: 14px; height: 100px; background: #222; margin: 0 auto; position: relative; cursor: pointer; border-radius: 7px; overflow: visible; }
+.rod { width: 100%; height: 100%; background: #444; position: absolute; transform-origin: bottom; transition: 0.4s; }
+.knob { width: 46px; height: 46px; background: #ff0040; border-radius: 50%; position: absolute; top: -23px; left: -16px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.rod.pulled { transform: rotateX(60deg) scaleY(0.5); }
 
 /* ZAMAN TÜNELİ */
-.timeline { position: relative; padding: 60px 0; }
-.t-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent, #bc13fe, #ff7096, transparent); transform: translateX(-50%); }
-.t-item { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 120px; position: relative; }
-.t-img { width: 46%; padding: 12px; }
-.t-img img { width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.t-content { width: 46%; padding: 35px; }
-.date { color: #ffd700; font-family: 'Orbitron'; display: block; margin-bottom: 15px; font-size: 0.9rem; }
+.timeline { position: relative; padding: 50px 0; }
+.t-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--deep-purple); transform: translateX(-50%); }
+.t-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; width: 100%; }
+.t-img { width: 45%; padding: 10px; }
+.t-img img { width: 100%; border-radius: 15px; }
+.t-content { width: 45%; padding: 30px; }
 
 /* OYUNLAR */
-.interactive-zone { margin-top: 100px; text-align: center; }
-.zone-title { font-family: 'Great Vibes'; font-size: 4rem; color: #ff7096; margin-bottom: 60px; }
-.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
-.game-card { padding: 40px; cursor: pointer; transition: 0.4s; }
-.game-card:hover { transform: translateY(-10px); border-color: #ff7096; }
-.game-icon { font-size: 4rem; margin-bottom: 20px; }
-.note-paper { margin-top: 25px; padding: 20px; background: #fffbe6; color: #333; font-family: 'Dancing Script'; font-size: 1.5rem; border-radius: 5px; transform: rotate(-2deg); box-shadow: 5px 5px 15px rgba(0,0,0,0.3); min-height: 100px; display: flex; align-items: center; justify-content: center; }
-.fortune-text { margin-top: 25px; font-family: 'Orbitron'; color: #ffd700; font-size: 1.1rem; }
+.interactive-zone { margin-top: 80px; text-align: center; }
+.zone-title { font-family: 'Great Vibes'; font-size: 3.5rem; color: var(--soft-pink); margin-bottom: 50px; }
+.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.game-card { padding: 30px; cursor: pointer; transition: 0.3s; }
+.game-card:hover { transform: translateY(-5px); border-color: var(--soft-pink); }
+.note-paper { background: #fffbe6; color: #333; font-family: 'Dancing Script'; font-size: 1.4rem; padding: 20px; margin-top: 20px; border-radius: 5px; transform: rotate(-2deg); min-height: 80px; display: flex; align-items: center; justify-content: center; }
+.fortune-text { font-family: 'Orbitron'; color: var(--gold); margin-top: 20px; font-size: 1.1rem; }
 
 /* REVEAL */
-.reveal { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+.reveal { opacity: 0; transform: translateY(40px); transition: 1s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* MOBILE */
+/* MOBİL */
 @media (max-width: 768px) {
-    #hero-section { flex-direction: column; height: auto; padding-top: 120px; }
-    #clock-container.docked { transform: scale(0.6) translateY(-40px); }
-    .t-item { flex-direction: column; text-align: center; }
-    .t-img, .t-content { width: 100%; margin-bottom: 30px; }
+    #hero-section { flex-direction: column; text-align: center; padding-top: 100px; }
+    #clock-container.docked { transform: scale(0.6) translateY(-20px); }
+    .t-item { flex-direction: column; }
+    .t-img, .t-content { width: 100%; }
     .t-line { left: 20px; }
-    #birth-date-title { font-size: 2.8rem; }
-    .cinematic-intro { font-size: 4rem; }
 }
