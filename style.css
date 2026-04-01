@@ -18,82 +18,95 @@ body { background: #030005; color: #fff; font-family: 'Montserrat', sans-serif; 
 /* GİRİŞ */
 #gate { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: 1s; }
 .gate-box { text-align: center; padding: 40px; width: 90%; max-width: 400px; border: 1px solid var(--soft-pink); border-radius: 24px; }
-.gate-box input { width: 100%; padding: 15px; margin: 20px 0; background: rgba(255,255,255,0.05); border: 1px solid var(--soft-pink); color: #fff; text-align: center; border-radius: 12px; font-size: 1rem; }
-.gate-box button { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--deep-purple), var(--soft-pink)); border: none; border-radius: 12px; color: #fff; font-weight: bold; cursor: pointer; }
+.lock-icon { font-size: 3rem; margin-bottom: 15px; }
+.gate-box h2 { color: var(--soft-pink); margin-bottom: 10px; font-family: 'Playfair Display', serif; }
+.gate-box p { color: #aaa; margin-bottom: 20px; font-size: 0.9rem; }
+.gate-box input { width: 100%; padding: 15px; margin: 20px 0; background: rgba(255,255,255,0.05); border: 1px solid var(--soft-pink); color: #fff; text-align: center; border-radius: 12px; font-size: 1rem; outline: none; }
+.gate-box button { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--deep-purple), var(--soft-pink)); border: none; border-radius: 12px; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; }
+.gate-box button:hover { opacity: 0.8; transform: scale(1.02); }
 
 /* ARKA PLAN */
 #star-field { position: fixed; inset: 0; z-index: -1; }
 .nebula { position: fixed; inset: 0; background: radial-gradient(circle at 50% 30%, rgba(188, 19, 254, 0.1), transparent 70%); z-index: -2; }
-#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 9000; pointer-events: none; opacity: 0; transition: 1s; }
-.photo-item { width: 100%; height: 120px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s; }
+#photo-wall { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); z-index: 9000; pointer-events: none; opacity: 0; transition: 1s; gap: 5px; }
+.photo-item { width: 100%; height: 120px; object-fit: cover; opacity: 0; transform: scale(0.5); transition: 0.8s; border-radius: 8px; }
 
-/* INTRO */
-.intro-layer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9500; display: none; text-align: center; width: 100%; opacity: 0; transition: 1s; }
-#neon-intro-text { font-family: 'Great Vibes'; font-size: 3.5rem; color: #fff; text-shadow: 0 0 20px var(--soft-pink); }
-.cinematic-intro { font-family: 'Great Vibes'; font-size: 5rem; color: #fff; }
-.heart-pulse { display: inline-block; animation: beat 1.2s infinite; color: #ff0040; margin: 0 20px; }
-@keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-
-/* HERO */
+/* HERO VE SAAT */
 #hero-section { height: 100vh; display: flex; align-items: center; justify-content: center; gap: 50px; flex-wrap: wrap; padding: 20px; }
 #clock-container { width: 320px; height: 320px; position: relative; transition: 1.8s ease-in-out; }
-.clock-main { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--gold); background: rgba(0,0,0,0.6); position: relative; }
-.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2rem; color: var(--gold); }
+.clock-main { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--gold); background: rgba(0,0,0,0.6); position: relative; box-shadow: 0 0 30px rgba(255,215,0,0.1); }
+.brand { position: absolute; top: 25%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2rem; color: var(--gold); opacity: 0.8; }
 .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; background: #fff; border-radius: 10px; }
-.hour { width: 7px; height: 80px; z-index: 3; }
+.hour { width: 7px; height: 80px; z-index: 3; background: linear-gradient(to top, var(--gold), #fff); }
 .minute { width: 4px; height: 110px; z-index: 2; }
-.center-nut { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--gold); border-radius: 50%; z-index: 4; }
+.center-nut { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--gold); border-radius: 50%; z-index: 4; border: 2px solid #000; }
 #clock-container.docked { transform: scale(0.6) translateX(-30%); }
 
-#hero-texts { max-width: 500px; opacity: 0; transition: 1.5s; }
-#hero-texts.visible { opacity: 1; }
-#birth-date-title { font-family: 'Playfair Display'; font-size: 3.5rem; color: var(--gold); }
-.scroll-hint { margin-top: 20px; color: var(--soft-pink); animation: float 2s infinite; }
+#hero-texts { max-width: 500px; opacity: 0; transition: 1.5s; transform: translateX(20px); }
+#hero-texts.visible { opacity: 1; transform: translateX(0); }
+#birth-date-title { font-family: 'Playfair Display'; font-size: 3.5rem; color: var(--gold); line-height: 1.2; margin-bottom: 15px; }
+#bugun-ne-oldu { font-size: 1.2rem; font-weight: 300; opacity: 0.9; }
+.scroll-hint { margin-top: 30px; font-size: 0.9rem; letter-spacing: 2px; color: var(--soft-pink); animation: float 2s infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* SAYAÇLAR */
+/* HABERLER VE SAYAÇLAR */
 .container { width: 90%; max-width: 1000px; margin: 0 auto; padding: 80px 0; }
+
+.news-card { display: flex; flex-direction: column; overflow: hidden; margin-bottom: 60px; position: relative; padding: 20px; }
+.news-img { width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
+.news-body h3 { font-family: 'Playfair Display'; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+.news-body p { color: #ddd; }
+.badge { position: absolute; top: 35px; left: 35px; background: var(--deep-purple); padding: 5px 15px; font-size: 0.8rem; font-weight: bold; border-radius: 50px; letter-spacing: 1px; }
+
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 .stat-card { padding: 40px; text-align: center; }
-.timer-val { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--soft-pink); margin-top: 15px; }
+.stat-card span { font-size: 1rem; opacity: 0.7; letter-spacing: 2px; }
+.timer-val { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--soft-pink); margin-top: 15px; font-weight: bold; }
 
-/* KALP KİLİDİ (SLOT) - DÜZELTİLMİŞ KOL */
+/* KALP KİLİDİ (SLOT) */
 .slot-area { text-align: center; padding: 100px 0; }
 .slot-box { max-width: 400px; margin: 0 auto; padding: 40px; border: 1px solid var(--soft-pink); position: relative; }
-.reels { display: flex; justify-content: space-around; margin: 30px 0; font-size: 4rem; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 10px; }
+.slot-box h3 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 2px; }
+.reels { display: flex; justify-content: space-around; margin: 30px 0; font-size: 4rem; background: rgba(0,0,0,0.4); border-radius: 15px; padding: 15px; }
+#slot-hint { font-size: 0.9rem; opacity: 0.7; margin-top: 20px; }
 
 /* KOL MEKANİZMASI */
 .handle-container { width: 14px; height: 100px; background: #222; margin: 0 auto; position: relative; cursor: pointer; border-radius: 7px; overflow: visible; }
-.rod { width: 100%; height: 100%; background: #444; position: absolute; transform-origin: bottom; transition: 0.4s; }
+.rod { width: 100%; height: 100%; background: #444; position: absolute; transform-origin: bottom; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .knob { width: 46px; height: 46px; background: #ff0040; border-radius: 50%; position: absolute; top: -23px; left: -16px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .rod.pulled { transform: rotateX(60deg) scaleY(0.5); }
 
 /* ZAMAN TÜNELİ */
 .timeline { position: relative; padding: 50px 0; }
-.t-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--deep-purple); transform: translateX(-50%); }
+.timeline-title { text-align: center; font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--gold); margin-bottom: 50px; }
+.t-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent, var(--deep-purple), var(--soft-pink), transparent); transform: translateX(-50%); }
 .t-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; width: 100%; }
 .t-img { width: 45%; padding: 10px; }
-.t-img img { width: 100%; border-radius: 15px; }
+.t-img img { width: 100%; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 .t-content { width: 45%; padding: 30px; }
+.date { color: var(--gold); font-family: 'Orbitron'; display: block; margin-bottom: 10px; font-size: 0.9rem; letter-spacing: 1px; }
 
-/* OYUNLAR */
+/* OYUNLAR (SÜPRİZLER) */
 .interactive-zone { margin-top: 80px; text-align: center; }
 .zone-title { font-family: 'Great Vibes'; font-size: 3.5rem; color: var(--soft-pink); margin-bottom: 50px; }
 .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-.game-card { padding: 30px; cursor: pointer; transition: 0.3s; }
-.game-card:hover { transform: translateY(-5px); border-color: var(--soft-pink); }
-.note-paper { background: #fffbe6; color: #333; font-family: 'Dancing Script'; font-size: 1.4rem; padding: 20px; margin-top: 20px; border-radius: 5px; transform: rotate(-2deg); min-height: 80px; display: flex; align-items: center; justify-content: center; }
-.fortune-text { font-family: 'Orbitron'; color: var(--gold); margin-top: 20px; font-size: 1.1rem; }
+.game-card { padding: 30px; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+.game-card:hover { transform: translateY(-10px); border-color: var(--soft-pink); box-shadow: 0 10px 20px rgba(255,112,150,0.2); }
+.game-icon { font-size: 3.5rem; margin-bottom: 15px; }
+.game-card h3 { font-family: 'Playfair Display'; margin-bottom: 10px; color: #fff; }
+.note-paper { background: #fffbe6; color: #333; font-family: 'Dancing Script'; font-size: 1.4rem; padding: 20px; margin-top: 20px; border-radius: 5px; transform: rotate(-2deg); min-height: 80px; display: flex; align-items: center; justify-content: center; box-shadow: 3px 3px 10px rgba(0,0,0,0.2); transition: 0.5s; }
+.fortune-text { font-family: 'Orbitron'; color: var(--gold); margin-top: 20px; font-size: 1.1rem; text-shadow: 0 0 10px rgba(255,215,0,0.3); transition: 0.4s; }
 
-/* REVEAL */
+/* REVEAL (KAYDIRMA EFEKTİ) */
 .reveal { opacity: 0; transform: translateY(40px); transition: 1s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* MOBİL */
+/* MOBİL UYUM */
 @media (max-width: 768px) {
     #hero-section { flex-direction: column; text-align: center; padding-top: 100px; }
     #clock-container.docked { transform: scale(0.6) translateY(-20px); }
     .t-item { flex-direction: column; }
-    .t-img, .t-content { width: 100%; }
+    .t-img, .t-content { width: 100%; margin-bottom: 20px; }
     .t-line { left: 20px; }
+    #hero-texts { transform: translateX(0); }
 }
