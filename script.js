@@ -253,3 +253,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') startExperience();
     });
 });
+
+function openLetter() {
+    const wrapper = document.querySelector('.envelope-wrapper');
+    wrapper.classList.toggle('open');
+    
+    // Mektup açıldığında hafif bir konfeti ya da ses efekti ekleyebilirsin
+    if(wrapper.classList.contains('open')) {
+        console.log("Mektup açıldı, Esra okuyor...");
+    }
+}
